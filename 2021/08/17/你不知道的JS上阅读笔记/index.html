@@ -6,15 +6,15 @@
   
   <title>你不知道的JS上阅读笔记 | Ydream&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="最近在准备秋招，知乎上无意间看到了这本书，扫了眼内容以后觉得这本书写的很好，因此抽空读一遍。 这个系列的读书笔记主要是我对书中学到的知识进行的摘抄。偶尔会有一些个人想法， 作用域是什么对于 var a &#x3D; 2 的理解 编译器将 var a 当作一句声明，会查看作用域内是否有a，有的话忽略，没有的话在作用域内新增变量a 引擎将 a &#x3D; 2 当作一句运行语句，去查找 a  (这里也让我明白了为什么 j">
+  <meta name="description" content="最近在准备秋招，知乎上无意间看到了这本书，扫了眼内容以后觉得这本书写的很好，因此抽空读一遍。 这个系列的读书笔记主要是我对书中学到的知识进行的摘抄。偶尔会有一些个人想法， 1、作用域是什么对于 var a &#x3D; 2 的理解 编译器将 var a 当作一句声明，会查看作用域内是否有a，有的话忽略，没有的话在作用域内新增变量a 引擎将 a &#x3D; 2 当作一句运行语句，去查找 a  (这里也让我明白了为什么">
 <meta property="og:type" content="article">
 <meta property="og:title" content="你不知道的JS上阅读笔记">
 <meta property="og:url" content="https://ydreamw.github.io/2021/08/17/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JS%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="Ydream&#39;s Blog">
-<meta property="og:description" content="最近在准备秋招，知乎上无意间看到了这本书，扫了眼内容以后觉得这本书写的很好，因此抽空读一遍。 这个系列的读书笔记主要是我对书中学到的知识进行的摘抄。偶尔会有一些个人想法， 作用域是什么对于 var a &#x3D; 2 的理解 编译器将 var a 当作一句声明，会查看作用域内是否有a，有的话忽略，没有的话在作用域内新增变量a 引擎将 a &#x3D; 2 当作一句运行语句，去查找 a  (这里也让我明白了为什么 j">
+<meta property="og:description" content="最近在准备秋招，知乎上无意间看到了这本书，扫了眼内容以后觉得这本书写的很好，因此抽空读一遍。 这个系列的读书笔记主要是我对书中学到的知识进行的摘抄。偶尔会有一些个人想法， 1、作用域是什么对于 var a &#x3D; 2 的理解 编译器将 var a 当作一句声明，会查看作用域内是否有a，有的话忽略，没有的话在作用域内新增变量a 引擎将 a &#x3D; 2 当作一句运行语句，去查找 a  (这里也让我明白了为什么">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-08-17T04:51:35.000Z">
-<meta property="article:modified_time" content="2021-08-17T05:32:55.716Z">
+<meta property="article:modified_time" content="2021-08-20T16:49:15.947Z">
 <meta property="article:author" content="Ydream">
 <meta name="twitter:card" content="summary">
   
@@ -50,7 +50,7 @@
       </h1>
       
         <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">test</a>
+          <a href="/" id="subtitle">个人向博客，记录一下个人的碎碎念和一些成长</a>
         </h2>
       
     </div>
@@ -101,7 +101,7 @@
       
         <p>最近在准备秋招，知乎上无意间看到了这本书，扫了眼内容以后觉得这本书写的很好，因此抽空读一遍。</p>
 <p>这个系列的读书笔记主要是我对书中学到的知识进行的摘抄。偶尔会有一些个人想法，</p>
-<h2 id="作用域是什么"><a href="#作用域是什么" class="headerlink" title="作用域是什么"></a>作用域是什么</h2><p>对于 <code>var a = 2</code> 的理解</p>
+<h2 id="1、作用域是什么"><a href="#1、作用域是什么" class="headerlink" title="1、作用域是什么"></a>1、作用域是什么</h2><p>对于 <code>var a = 2</code> 的理解</p>
 <p>编译器将 <code>var a </code>当作一句声明，会查看作用域内是否有a，有的话忽略，没有的话在作用域内新增变量a</p>
 <p>引擎将 <code>a = 2 </code>当作一句运行语句，去查找 a </p>
 <p>(这里也让我明白了为什么 js会有变量的声明提升，因为他的编译和运行是分开来的两个过程)</p>
@@ -112,7 +112,7 @@
 <blockquote>
 <p>ReferenceError 同作用域判别失败相关，而TypeError 则代表作用域判别成功了，但是对<br> 结果的操作是非法或不合理的。</p>
 </blockquote>
-<h2 id="词法作用域"><a href="#词法作用域" class="headerlink" title="词法作用域"></a>词法作用域</h2><h3 id="词法阶段"><a href="#词法阶段" class="headerlink" title="词法阶段"></a>词法阶段</h3><blockquote>
+<h2 id="2、词法作用域"><a href="#2、词法作用域" class="headerlink" title="2、词法作用域"></a>2、词法作用域</h2><h3 id="词法阶段"><a href="#词法阶段" class="headerlink" title="词法阶段"></a>词法阶段</h3><blockquote>
 <p>全局变量会自动成为全局对象（比如浏览器中的window 对象）的属性，因此<br>可以不直接通过全局对象的词法名称，而是间接地通过对全局对象属性的引<br>用来对其进行访问。<br><code>window.a</code><br>通过这种技术可以访问那些被同名变量所遮蔽的全局变量。但非全局的变量<br>如果被遮蔽了，无论如何都无法被访问到。</p>
 </blockquote>
 <blockquote>
@@ -156,7 +156,28 @@
 <blockquote>
 <p>最悲观的情况是如果出现了eval(..) 或with，所有的优化可能都是无意义的，因此最简<br> 单的做法就是完全不做任何优化。</p>
 </blockquote>
-<h2 id="函数作用域与块作用域"><a href="#函数作用域与块作用域" class="headerlink" title="函数作用域与块作用域"></a>函数作用域与块作用域</h2>
+<h2 id="3、函数作用域与块作用域"><a href="#3、函数作用域与块作用域" class="headerlink" title="3、函数作用域与块作用域"></a>3、函数作用域与块作用域</h2><h3 id="函数作用域"><a href="#函数作用域" class="headerlink" title="函数作用域"></a>函数作用域</h3><p>es5 中函数会创建一个新的作用域，这个作用域包括函数的参数、函数内部声明的各个变量。并且值得注意的是嵌套在函数内部定义的函数，是可以访问其外层的作用域的。</p>
+<p>声明在一个函数内部的变量或函数会在所处的作用域中“隐藏”起来。</p>
+<h3 id="块作用域"><a href="#块作用域" class="headerlink" title="块作用域"></a>块作用域</h3><p>es6 中let和const声明的变量支持块作用域</p>
+<p>es5中 with是块作用域的一个例子</p>
+<p>另一个不常被人注意的例子是 try/catch</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="literal">undefined</span>(); <span class="comment">// 执行一个非法操作来强制制造一个异常</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span> (err) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log( err ); <span class="comment">// 能够正常执行！</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log( err ); <span class="comment">// ReferenceError: err not found</span></span><br></pre></td></tr></table></figure>
+<p>catch语句中是一个块作用域。 （这也是es6语法转化为es5的一个解决方案）</p>
+<h2 id="4、提升"><a href="#4、提升" class="headerlink" title="4、提升"></a>4、提升</h2><p>变量的声明提升其实按照先前提过的 编译器和引擎 两步走的方式是很容易理解的，这里可以重申一次：</p>
+<p>我们的编译器先对代码进行一次执行，它会把所有的变量声明都进行处理。在此之后，引擎再从头开始执行代码，这样我们就会感受到后面声明的变量被提升。</p>
+<p>而且变量的声明可以覆盖。</p>
+<p>另一个原则是： <strong>函数的声明会被优先提升</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">foo(); <span class="comment">// 3</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log( <span class="number">1</span> );</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> foo = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log( <span class="number">2</span> );</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log( <span class="number">3</span> );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>foo进行了两次函数声明，一次变量声明，这里被提升为了函数，输出了3。而如果第三个函数没有声明的话，输出的结果应当是1，尽管在第一次函数声明之后又再一次对foo进行了变量声明。</p>
+<p>一个普通块内部的函数声明通常会被提升到所在作用域的顶部，这个过程不会像下面的代码暗示的那样可以被条件判断所控制：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">foo(); <span class="comment">// &quot;b&quot;</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="literal">true</span>;</span><br><span class="line"><span class="keyword">if</span> (a) &#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(<span class="string">&quot;a&quot;</span>); &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(<span class="string">&quot;b&quot;</span>); &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>很明显，因为我们的编译器不会执行代码，它没有办法判断a到底是true还是false</p>
+<h2 id="5、作用域闭包"><a href="#5、作用域闭包" class="headerlink" title="5、作用域闭包"></a>5、作用域闭包</h2><p>下面这一章的内容十分重要。它让我重新审视闭包，也刷新了我之前对于闭包的粗浅的认识。正如作者说的，闭包它其实并没有特别神秘，相反，它时常出现在我们写下的代码之中。只要我们对于作用域的理解足够深刻，那么闭包的概念就显得十分自然。事实上闭包是作用域下的必然产物。</p>
+<blockquote>
+<p>当函数可以记住并访问所在的词法作用域时，就产生了闭包，即使函数是在当前词法作用域之外执行。</p>
+</blockquote>
+<p>这句话也可以这样理解，函数与其所在的词法作用域共同构成了闭包。（这个词法作用域会被函数记住，并且可以访问）。</p>
+
       
     </div>
     <footer class="article-footer">
@@ -170,10 +191,19 @@
     
 <nav id="article-nav">
   
+    <a href="/2021/08/19/%E3%80%8A%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BAnodejs%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          《深入浅出nodejs》阅读笔记
+        
+      </div>
+    </a>
   
-    <a href="/2021/08/16/%E5%A4%9A%E8%AF%91%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97%E9%A1%B5%E9%9D%A2%E5%BC%80%E5%8F%91-%E4%BA%94-eggjs%E5%92%8CMongoDB/" id="article-nav-older" class="article-nav-link-wrap">
+  
+    <a href="/2021/08/15/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">后一篇</strong>
-      <div class="article-nav-title">多译更新日志页面开发(五)  eggjs和MongoDB</div>
+      <div class="article-nav-title">Hello World</div>
     </a>
   
 </nav>
@@ -190,7 +220,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/INA/">INA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/">Web开发实践</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E5%A4%9A%E8%AF%91/">多译</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/">个人课程作业</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/19aw/">19aw</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E9%9A%8F%E7%AC%94/">个人随笔</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/INA/">INA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/">Web开发实践</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E5%A4%9A%E8%AF%91/">多译</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E8%AF%BE%E5%90%A6/">课否</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/">个人课程作业</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/19aw/">19aw</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E9%9A%8F%E7%AC%94/">个人随笔</a></li></ul>
     </div>
   </div>
 
@@ -200,7 +230,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redux/" rel="tag">Redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ant-Design/" rel="tag">Ant Design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dva/" rel="tag">Dva</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Egg-js/" rel="tag">Egg.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hooks/" rel="tag">Hooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/" rel="tag">MongoDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redux/" rel="tag">Redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TODO/" rel="tag">TODO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Umi/" rel="tag">Umi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebStorm/" rel="tag">WebStorm</a></li></ul>
     </div>
   </div>
 
@@ -210,7 +240,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/React/" style="font-size: 20px;">React</a> <a href="/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/tags/Web/" style="font-size: 20px;">Web</a>
+      <a href="/tags/Ant-Design/" style="font-size: 10px;">Ant Design</a> <a href="/tags/Dva/" style="font-size: 10px;">Dva</a> <a href="/tags/Egg-js/" style="font-size: 10px;">Egg.js</a> <a href="/tags/Hooks/" style="font-size: 10px;">Hooks</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/React/" style="font-size: 20px;">React</a> <a href="/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/tags/TODO/" style="font-size: 15px;">TODO</a> <a href="/tags/TypeScript/" style="font-size: 10px;">TypeScript</a> <a href="/tags/Umi/" style="font-size: 10px;">Umi</a> <a href="/tags/Web/" style="font-size: 20px;">Web</a> <a href="/tags/WebStorm/" style="font-size: 10px;">WebStorm</a>
     </div>
   </div>
 
@@ -219,7 +249,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
     </div>
   </div>
 
@@ -232,23 +262,23 @@
       <ul>
         
           <li>
+            <a href="/2021/08/19/%E3%80%8A%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BAnodejs%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/">《深入浅出nodejs》阅读笔记</a>
+          </li>
+        
+          <li>
             <a href="/2021/08/17/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JS%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/">你不知道的JS上阅读笔记</a>
           </li>
         
           <li>
-            <a href="/2021/08/16/%E5%A4%9A%E8%AF%91%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97%E9%A1%B5%E9%9D%A2%E5%BC%80%E5%8F%91-%E4%BA%94-eggjs%E5%92%8CMongoDB/">多译更新日志页面开发(五)  eggjs和MongoDB</a>
-          </li>
-        
-          <li>
-            <a href="/2021/08/16/%E5%A4%9A%E8%AF%91%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97%E9%A1%B5%E9%9D%A2%E5%BC%80%E5%8F%91-%E5%9B%9B-%E4%BD%BF%E7%94%A8antd/">多译更新日志页面开发(四)  使用antd</a>
-          </li>
-        
-          <li>
-            <a href="/2021/08/16/%E5%A4%9A%E8%AF%91%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97%E9%A1%B5%E9%9D%A2%E5%BC%80%E5%8F%91-%E4%B8%89-%E5%88%9D%E8%AF%86%E5%88%ABredux-dva/">多译更新日志页面开发(三)  初识别redux dva</a>
-          </li>
-        
-          <li>
             <a href="/2021/08/15/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/14/hello-hexo/">hello hexo</a>
+          </li>
+        
+          <li>
+            <a href="/2020/02/29/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E4%B8%89-%E5%AF%B9%E4%BA%8E%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%80%9D%E8%80%83/">课否 · 回复功能开发实践(三)： 对于业务的思考</a>
           </li>
         
       </ul>

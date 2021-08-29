@@ -347,14 +347,14 @@
 
 
   
-    <article id="post-课否-回复功能开发实践三-对于业务的思考" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-Linux-Lab3" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2020/02/29/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E4%B8%89-%E5%AF%B9%E4%BA%8E%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%80%9D%E8%80%83/" class="article-date">
-  <time class="dt-published" datetime="2020-02-29T15:17:48.000Z" itemprop="datePublished">2020-02-29</time>
+    <a href="/2020/06/21/Linux-Lab3/" class="article-date">
+  <time class="dt-published" datetime="2020-06-20T17:03:12.000Z" itemprop="datePublished">2020-06-21</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/">Web开发实践</a>►<a class="article-category-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E8%AF%BE%E5%90%A6/">课否</a>
+    <a class="article-category-link" href="/categories/20ss/">20ss</a>►<a class="article-category-link" href="/categories/20ss/Linux/">Linux</a>
   </div>
 
   </div>
@@ -365,7 +365,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/02/29/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E4%B8%89-%E5%AF%B9%E4%BA%8E%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%80%9D%E8%80%83/">课否 · 回复功能开发实践(三)： 对于业务的思考</a>
+      <a class="p-name article-title" href="/2020/06/21/Linux-Lab3/">Linux-Lab3</a>
     </h1>
   
 
@@ -373,31 +373,100 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>这个月大部分闲暇时间都在开发《课否》的这个回复功能，今天终于把完整的代码commit并且push掉了。在这期间，我走了一些弯路，同时也有了一些感悟，想要记录下来。</p>
-<p>首先先来聊一聊我们的这个回复功能到底是什么吧。</p>
-<p>课否之前的界面是这样的，对于每一个老师展示其所有的评价。（回复按钮由我新增）</p>
- <img src="/2020/02/29/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E4%B8%89-%E5%AF%B9%E4%BA%8E%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%80%9D%E8%80%83/kefou.jpg" width="300" height="200" alt="课否原界面" align="center">
+        <h1 id="shell程序设计"><a href="#shell程序设计" class="headerlink" title="shell程序设计"></a>shell程序设计</h1><p><code>课程名称：  Linux应用技术基础</code></p>
+<p><code>实验类型：综合型</code></p>
+<p><code>实验项目名称： shell程序设计</code></p>
+<h2 id="一、实验环境"><a href="#一、实验环境" class="headerlink" title="一、实验环境"></a>一、实验环境</h2><p>操作系统：Windows 10 家庭中文版 64位操作系统，基于x64的处理器</p>
+<p>处理器： Intel(R) Core(TM)i7-8750H CPU 2.20GHz 2.21 GHz</p>
+<p>内存(RAM ) ： 16.0GB</p>
+<p>Linux版本： Ubuntu-1904</p>
+<h2 id="二、实验内容和结果及分析"><a href="#二、实验内容和结果及分析" class="headerlink" title="二、实验内容和结果及分析"></a>二、实验内容和结果及分析</h2><h4 id="1、编写一个shell脚本程序，它带一个命令行参数，这个参数是一个文件名。如果这个文件是一个普通文件，则打印文件所有者的名字和最后的修改日期。如果程序带有多个参数，则输出出错信息。"><a href="#1、编写一个shell脚本程序，它带一个命令行参数，这个参数是一个文件名。如果这个文件是一个普通文件，则打印文件所有者的名字和最后的修改日期。如果程序带有多个参数，则输出出错信息。" class="headerlink" title="1、编写一个shell脚本程序，它带一个命令行参数，这个参数是一个文件名。如果这个文件是一个普通文件，则打印文件所有者的名字和最后的修改日期。如果程序带有多个参数，则输出出错信息。"></a>1、编写一个shell脚本程序，它带一个命令行参数，这个参数是一个文件名。如果这个文件是一个普通文件，则打印文件所有者的名字和最后的修改日期。如果程序带有多个参数，则输出出错信息。</h4><p>code</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">if [ $2 ];then  #more than one parameter</span><br><span class="line">    echo &quot;Too many parmeters, please input exactly one parameter!&quot;</span><br><span class="line">elif [ $1 ];then</span><br><span class="line">    if test -f &quot;$1&quot;;then #get input</span><br><span class="line">        ownername=$(ls -l $1 | awk &#x27;&#123;print $3&#125;&#x27;) #get name</span><br><span class="line">        month=$(ls -l $1 | awk &#x27;&#123;print $6&#125;&#x27;) #get month</span><br><span class="line">        day=$(ls -l $1 | awk &#x27;&#123;print $7&#125;&#x27;) #get day</span><br><span class="line">        time=$(ls -l $1 | awk &#x27;&#123;print $8&#125;&#x27;) #get time</span><br><span class="line">        #output</span><br><span class="line">        echo &quot;Filename:$1&quot;</span><br><span class="line">        echo &quot;Owner&#x27;s name:$ownername&quot;</span><br><span class="line">        echo &quot;Modify time:$month $day $time&quot;</span><br><span class="line">    else 	#not a file</span><br><span class="line">        echo &quot;$1 is not a ordinary file&quot;</span><br><span class="line">    fi</span><br><span class="line">else</span><br><span class="line">    echo &quot;You should input one parameter!&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
 
-<p>我们的需求是针对每一条评价进行回复，并且对于回复也可以进行回复。我仿照了浙大云朵朵小程序的设计方式：在每一条评论的下面显示若干条回复，如果回复较多，则提供展开回复的按钮，通过点击按钮来展现左右的回复。按照这个思路，我在数据库中为每一个comment下添加了replies字段。</p>
-<p>这里我同色老师进行过一次交流，针对设计方案的选择进行讨论。色老师提议采用微博的回复方式，在每一条评论下放置几条回复以及一个查看所有回复的按钮，点击按钮之后跳转到一个新的界面，这个界面上方呈现被评论的评价，下方呈现该评价的各种回复。</p>
-<p>色老师的这个建议让我拨开云雾见到了青天。</p>
-<p>在此之前，我对于数据库的设计十分纠结，不知道是该服用comment还是新建一个replies的表。按照色老师的建议，我们自然而然的想到，要新建一个replies的表，每个reply保存其root是哪个comment，而在comment下保存reply的外键数组。</p>
-<p>解决了数据库的结构和界面的设计问题之后，我很快的完成了这些功能。</p>
-<p>这次实践给了我很多反思。</p>
-<p>其一是技术层面的，关于redux和state的选择。在开发时，我最开始把很多数据都一股脑塞进了redux中，后来我才回想起redux的作用是为了不同组件共享数据。于是我才想到应当把一些数据写进组件里，用state就足够了。</p>
-<p>其二则是开发经验上的。在此之前我总觉得前端开发就是学框架、学语言。框架会用了，自然就会开发了。但是经过这次开发我才发现，我们如何完成需求往往才开发人员要做的。或者说，我们应当用怎样的方式去设计、去完成这个需求。</p>
-<p>写到这里，我对于这篇博客很不满意。觉得自己不知所云。觉得自己没有把内心的那种感悟写出来。不知道是不是我的表达能力出了问题。</p>
-<p>也可能是我经验还不够足，对于开发的认知也很浅薄。</p>
-<p>总之，在以后的开发中，我应当先好好地分析需求，分析业务逻辑，再去写代码。而不是写了半天不知道自己在写什么。</p>
+<p>test:</p>
+<p>创建test文件和dir文件夹</p>
+<p><img src="/2020/06/21/Linux-Lab3/image-20200617210417017.png" alt="image-20200617210417017"></p>
+<p>以依次通过没有参数、一个文件参数、一个目录参数、两个参数来测试sh</p>
+<p><img src="/2020/06/21/Linux-Lab3/image-20200617211223892.png" alt="image-20200617211223892"></p>
+<p>如图  获得了预期的结果。</p>
+<h4 id="2、-编写shell程序，统计指定目录下的普通文件、子目录及可执行文件的数目，统计该目录下所有普通文件字节数总和，目录的路径名字由参数传入。"><a href="#2、-编写shell程序，统计指定目录下的普通文件、子目录及可执行文件的数目，统计该目录下所有普通文件字节数总和，目录的路径名字由参数传入。" class="headerlink" title="2、 编写shell程序，统计指定目录下的普通文件、子目录及可执行文件的数目，统计该目录下所有普通文件字节数总和，目录的路径名字由参数传入。"></a>2、 编写shell程序，统计指定目录下的普通文件、子目录及可执行文件的数目，统计该目录下所有普通文件字节数总和，目录的路径名字由参数传入。</h4><p>code</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">echo &quot;normal files:&quot; `find $1 -type f | wc -l` #normal files</span><br><span class="line">echo &quot;subdirectory:&quot;`find $1 -type d | wc -l` #subdirectory</span><br><span class="line">echo &quot;executable files:&quot; `find $1 -type f -executable | wc -l` #executable files</span><br><span class="line">num=0 </span><br><span class="line">for file_name in `ls $1` #for each file</span><br><span class="line">do</span><br><span class="line">    file=$1&quot;/&quot;$file_name #get the path</span><br><span class="line">    if [ -f $file ] #if it is an ordinary file</span><br><span class="line">	    then</span><br><span class="line">		    ch=$(cat $file | wc -c) #get the number of  chars</span><br><span class="line">		    num=$(($num+$ch)) </span><br><span class="line">    fi</span><br><span class="line">done</span><br><span class="line">echo &quot;total char num: $num&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2020/06/21/Linux-Lab3/image-20200617213350746.png" alt="image-20200617213350746"></p>
+<p>在lab3中实验，可以看到结果正确。</p>
+<h4 id="3、编写一个shell-脚本，输入一个字符串，忽略（删除）非字母后，检测该字符串是否为回文-palindrome-。对于一个字符串，如果从前向后读和从后向前读都是同一个字符串，则称之为回文串。例如，单词“mom”，“dad”和“noon”都是回文串。"><a href="#3、编写一个shell-脚本，输入一个字符串，忽略（删除）非字母后，检测该字符串是否为回文-palindrome-。对于一个字符串，如果从前向后读和从后向前读都是同一个字符串，则称之为回文串。例如，单词“mom”，“dad”和“noon”都是回文串。" class="headerlink" title="3、编写一个shell 脚本，输入一个字符串，忽略（删除）非字母后，检测该字符串是否为回文(palindrome)。对于一个字符串，如果从前向后读和从后向前读都是同一个字符串，则称之为回文串。例如，单词“mom”，“dad”和“noon”都是回文串。"></a>3、编写一个shell 脚本，输入一个字符串，忽略（删除）非字母后，检测该字符串是否为回文(palindrome)。对于一个字符串，如果从前向后读和从后向前读都是同一个字符串，则称之为回文串。例如，单词“mom”，“dad”和“noon”都是回文串。</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">echo -n &quot;Please input the string:&quot;</span><br><span class="line">read line     ##get input</span><br><span class="line">str=`echo $line | tr -c -d [:alpha:] `   ##delete other chars</span><br><span class="line">reverse=`echo $str | rev`</span><br><span class="line">if [ $str = $reverse ];     ##check if int the same</span><br><span class="line">then</span><br><span class="line">    echo &quot;$str is palindorme.&quot;</span><br><span class="line">else</span><br><span class="line">    echo &quot;$str isn&#x27;t palindorme&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2020/06/21/Linux-Lab3/image-20200617214722800.png" alt="image-20200617214722800"></p>
+<p>尝试了几组测试结果，成功忽略了非字母，并且判断回文结果正确。</p>
+<h4 id="4、编写一个shell脚本，把当前目录下文件大小大于100K的文件全部移动到-tmp-目录下。"><a href="#4、编写一个shell脚本，把当前目录下文件大小大于100K的文件全部移动到-tmp-目录下。" class="headerlink" title="4、编写一个shell脚本，把当前目录下文件大小大于100K的文件全部移动到~/tmp/ 目录下。"></a>4、编写一个shell脚本，把当前目录下文件大小大于100K的文件全部移动到~/tmp/ 目录下。</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">find ./ -type f -size +100k -exec mv &#123;&#125; ~/tmp/ \;  ##find语句来实现</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2020/06/21/Linux-Lab3/image-20200617215559497.png" alt="image-20200617215559497"></p>
+<p>创建好tmp后，我们执行shell后发现两个大于100k的文件被移动到了/home/ydream/tmp下</p>
+<p>####5、编写一个实现文件备份和同步的shell脚本程序dirsync。程序的参数是两个需要备份同步的目录，如:</p>
+<p>$dirsync <del>/dir1 ~/dir2$  # $</del>/dir1$为源目录，$~/dir2$为目标目录​</p>
+<p><strong>dirsync程序实现两个目录内的所有文件和子目录（递归所有的子目录）内容保持一致。程序基本功能如下。</strong></p>
+<p><strong>1)     备份功能：目标目录将使用来自源目录的最新文件，新文件和新子目录进行升级，源目录将保持不变。dirsync程序能够实现增量备份。</strong></p>
+<p><strong>2)     同步功能：两个方向上的旧文件都将被最新文件替换，新文件都将被双向复制。源目录被删除的文件和子目录，目标目录也要对应删除。</strong></p>
+<p><strong>代码1</strong></p>
+<p>代码1通过比较文件更改时间来进行，子目录使用递归进行更新备份</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> dirsync.sh</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Two modes:</span> </span><br><span class="line"><span class="meta">#</span><span class="bash"> 1. back-up</span> </span><br><span class="line"><span class="meta">#</span><span class="bash"> 2. synchronize</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Judge the input parameter</span></span><br><span class="line">if [ $# -ne 2 ] #judge the number of parameter</span><br><span class="line">then</span><br><span class="line">        echo &quot;program: $0 needs one prameter.&quot;</span><br><span class="line">        exit 1</span><br><span class="line">fi</span><br><span class="line">if [[ ! -d $1 || ! -d $2 ]] #check if they are dictionary</span><br><span class="line">then</span><br><span class="line">	echo &quot;parameters must be dirctory&quot;</span><br><span class="line">	exit 1</span><br><span class="line">fi</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> The definitions of <span class="built_in">functions</span> used</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> To update file.</span> </span><br><span class="line"><span class="meta">#</span><span class="bash"> @parameters : <span class="built_in">source</span> file, destination path and <span class="built_in">source</span> path</span></span><br><span class="line"></span><br><span class="line">function update_file &#123;</span><br><span class="line">    new_file=$2\/$1</span><br><span class="line">    source_file=$3\/$1   </span><br><span class="line">    if [`! -f $new_file`] &amp;&amp; [ `stat -c %Y $new_file` -gt `stat -c %Y $source_file` ] </span><br><span class="line">    then </span><br><span class="line">        cp -fp $source_file $new_file </span><br><span class="line">        echo &quot;File &quot;$source_file&quot; has been copied&quot;</span><br><span class="line">        cnt_update=$cnt_update+1    # cnt the number</span><br><span class="line">        return 1</span><br><span class="line">    fi</span><br><span class="line">    return 0</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> To delete the file that doesn<span class="string">&#x27;t exist in the given source file.</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="string"> @Parameters : source file, destination path and source path</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="string"> Use a dictionary /tmp to replace rm</span></span></span><br><span class="line">function delete_file &#123;</span><br><span class="line">    if test -f $2\/$1</span><br><span class="line">    then</span><br><span class="line">        :</span><br><span class="line">    else</span><br><span class="line">        mv $3\/$1 \/tmp </span><br><span class="line">        echo &quot;File &quot;$3\/$1&quot; has been deleted&quot;</span><br><span class="line">        cnt_delete=$cnt_delete+1 # cnt the number</span><br><span class="line">        return 1</span><br><span class="line">    fi</span><br><span class="line">    return 0</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="string"> To update a directory.</span></span> </span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="string"> @Parameters : source dir, destination path and source path</span></span></span><br><span class="line"></span><br><span class="line">function update_dir &#123;</span><br><span class="line">    cnt=0</span><br><span class="line">    if test -d $2\/$1    </span><br><span class="line">    then</span><br><span class="line">        for item in $(ls $3\/$1)</span><br><span class="line">        do</span><br><span class="line">            if test -d $3\/$1\/$item</span><br><span class="line">            then</span><br><span class="line">                update_dir $item $2\/$item $3\/$1 # recursively update</span><br><span class="line">            elif test -f $3\/$1\/$item</span><br><span class="line">            then </span><br><span class="line">                update_file $item $2\/$1 $3\/$1 # check the file</span><br><span class="line">                if (( $? == 1 )) </span><br><span class="line">                then </span><br><span class="line">                    cnt=$cnt+1</span><br><span class="line">                fi</span><br><span class="line">            fi</span><br><span class="line">        done</span><br><span class="line">    else </span><br><span class="line">        cp -fpr $3\/$1 $2\/$1</span><br><span class="line">        echo &quot;Directory &quot;$3\/$1&quot; has been copied&quot;</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="string"> To delete the directory that doesn&#x27;</span>t exist <span class="keyword">in</span> the given <span class="built_in">source</span> file.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> @Parameters : <span class="built_in">source</span> dir(<span class="variable">$1</span>), destination path(<span class="variable">$2</span>) and <span class="built_in">source</span> path(<span class="variable">$3</span>)</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Use a dictionary /tmp to replace rm</span></span><br><span class="line">function delete_dir &#123;</span><br><span class="line">    cnt=0</span><br><span class="line">    if test -d $2\/$1  </span><br><span class="line">    then</span><br><span class="line">        for item in $(ls $3\/$1) </span><br><span class="line">        do</span><br><span class="line">            if test -d $3\/$1\/$item # check if it is a dir</span><br><span class="line">            then</span><br><span class="line">                delete_dir $item $2\/$item $3\/$1 # recursively delete</span><br><span class="line">                continue</span><br><span class="line">            fi</span><br><span class="line">            if test -f $3\/$1\/$item # check if it is a file</span><br><span class="line">            then </span><br><span class="line">                delete_file $item $2\/$1 $3\/$1 # delete a file</span><br><span class="line">                if (( $? == 1 ))</span><br><span class="line">                then </span><br><span class="line">                    cnt=$cnt+1</span><br><span class="line">                fi</span><br><span class="line">                continue</span><br><span class="line">            fi</span><br><span class="line">        done</span><br><span class="line">    else</span><br><span class="line">        mv $3\/$1 \/tmp # safely remove</span><br><span class="line">        echo &quot;Directory &quot;$3\/$1&quot; has been deleted&quot;</span><br><span class="line">    fi </span><br><span class="line">&#125;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Main</span></span><br><span class="line"></span><br><span class="line">source_dir=$&#123;1:-./&#125;       </span><br><span class="line">destination_dir=$&#123;2:-./&#125;  </span><br><span class="line">declare -i cnt_update=0 # counter of update</span><br><span class="line">declare -i cnt_delete=0 # counter of deletion</span><br><span class="line">echo &quot;---------------------------------Welcome To Dirsync---------------------------------&quot;</span><br><span class="line">echo -e &quot;Source directory       : \033[33m $&#123;source_dir&#125; \033[0m&quot;</span><br><span class="line">echo -e &quot;Destination directory  : \033[33m $&#123;destination_dir&#125; \033[0m&quot;</span><br><span class="line">echo &quot;mode1 Backup : $&#123;destination_dir&#125; will be updated with the file from $&#123;source_dir&#125;&quot; </span><br><span class="line">echo &quot;mode2 Synchronize: all the old files will be updated.&quot;</span><br><span class="line">read -p &quot;Please input mode and press Enter (1/2) : &quot; mode</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if [ $mode = 1 ]</span><br><span class="line">then</span><br><span class="line">    # back-up </span><br><span class="line">    echo -e &quot;\033[31mbackup... \033[0m&quot;</span><br><span class="line">    # Note that the &#x27;/&#x27; is removed</span><br><span class="line">    source_dir=$&#123;source_dir%/&#125;</span><br><span class="line">    destination_dir=$&#123;destination_dir%/&#125;</span><br><span class="line">    for item in $(ls $&#123;source_dir&#125;\/)</span><br><span class="line">    do</span><br><span class="line">        tmp_path=$source_dir\/$item</span><br><span class="line">        if test -d $tmp_path</span><br><span class="line">        then</span><br><span class="line">            update_dir $item $destination_dir $source_dir</span><br><span class="line">        elif test -f $tmp_path</span><br><span class="line">        then</span><br><span class="line">            update_file $item $destination_dir $source_dir</span><br><span class="line">        fi</span><br><span class="line">    done</span><br><span class="line"></span><br><span class="line">    echo -e &quot;\033[32mBackup done! \033[0m&quot;</span><br><span class="line">    echo &quot;Totally updated $&#123;cnt_update&#125; files.&quot;</span><br><span class="line">elif [ $mode = 2 ]</span><br><span class="line">then</span><br><span class="line">    # Synchronize</span><br><span class="line"></span><br><span class="line">    echo -e &quot;\033[31mSynchronize... \033[0m&quot;</span><br><span class="line">    source_dir=$&#123;source_dir%/&#125;</span><br><span class="line">    destination_dir=$&#123;destination_dir%/&#125;</span><br><span class="line">    </span><br><span class="line">    tmp=$source_dir</span><br><span class="line">    source_dir=$destination_dir</span><br><span class="line">    destination_dir=$tmp</span><br><span class="line">    </span><br><span class="line">    for item in $(ls $&#123;source_dir&#125;\/)</span><br><span class="line">    do</span><br><span class="line">        tmp_path=$source_dir\/$item</span><br><span class="line">        if test -d $tmp_path</span><br><span class="line">        then</span><br><span class="line">            delete_dir $item $destination_dir $source_dir</span><br><span class="line">        elif test -f $tmp_path</span><br><span class="line">        then</span><br><span class="line">            delete_file $item $destination_dir $source_dir</span><br><span class="line">        fi</span><br><span class="line">    done</span><br><span class="line">    </span><br><span class="line">    for item in $(ls $&#123;source_dir&#125;\/)</span><br><span class="line">    do</span><br><span class="line">        tmp_path=$source_dir\/$item</span><br><span class="line">        if test -d $tmp_path</span><br><span class="line">        then</span><br><span class="line">            update_dir $item $destination_dir $source_dir</span><br><span class="line">        elif test -f $tmp_path</span><br><span class="line">        then</span><br><span class="line">            update_file $item $destination_dir $source_dir</span><br><span class="line">        fi</span><br><span class="line">    done</span><br><span class="line">    </span><br><span class="line">    tmp=$source_dir</span><br><span class="line">    source_dir=$destination_dir</span><br><span class="line">    destination_dir=$tmp</span><br><span class="line"></span><br><span class="line">    for item in $(ls $&#123;source_dir&#125;\/)</span><br><span class="line">    do</span><br><span class="line">        tmp_path=$source_dir\/$item</span><br><span class="line">        if test -d $tmp_path</span><br><span class="line">        then</span><br><span class="line">            update_dir $item $destination_dir $source_dir</span><br><span class="line">        elif test -f $tmp_path</span><br><span class="line">        then</span><br><span class="line">            update_file $item $destination_dir $source_dir</span><br><span class="line">        fi</span><br><span class="line">    done</span><br><span class="line">    # echo some relavant information</span><br><span class="line">    echo -e &quot;\033[32mSynchronize done!\033[0m&quot;</span><br><span class="line">    echo &quot;Totally updated $&#123;cnt_update&#125; files.&quot;</span><br><span class="line">    echo &quot;Totally deleted $&#123;cnt_delete&#125; files.&quot;</span><br><span class="line">else</span><br><span class="line">    echo &quot;Invalid input!&quot;</span><br><span class="line">fi</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>1）备份功能</p>
+<p>  <img src="/2020/06/21/Linux-Lab3/image-20200621224325527.png" alt="image-20200621224325527"></p>
+<p>  <img src="/2020/06/21/Linux-Lab3/image-20200621230030247.png" alt="image-20200621230030247"></p>
+<p>  如图1</p>
+<p>  dir为源目录，newDir为新目录</p>
+<p>  dir中包含1 2 3 三个文件，newDir中没有文件</p>
+<p>  执行shell，选择模式1（备份模式），可以看到更新了1 2 3三个文件出现在了newDir中</p>
+<p>  然后我们在dir目录下更改文件3，并且新建文件4</p>
+<p>  再次执行shell，选择模式1（备份模式）， 根据log，我们发现只有3  4被更新了，查看发现1 2 3 4 均出现在newDir中</p>
+<p>  图2展示了子目录的情况。</p>
+</li>
+<li><p>2）同步功能</p>
+<p>  <img src="/2020/06/21/Linux-Lab3/image-20200621225539926.png" alt="image-20200621225539926"></p>
+<p>  首先对新目录进行备份，使用模式1</p>
+<p>  接着删除dir/1  更改dir/2 更改newDir/3  新建dir/4</p>
+<p>  运行shell，使用模式2</p>
+<p>  根据log，可以看到，</p>
+<p>  newDir1 被删除，说明源目录中文件被删除，目标目录下文件也被删除</p>
+<p>  newDir3 被复制到dir3 中  dir2被复制到newDir2中，说明双向可以同步文件</p>
+<p>  dir中新建的文件4  被复制到newDir中，说明双向可以更新文件</p>
+</li>
+</ul>
+<p><strong>代码2</strong></p>
+<p>代码2使用了rsync命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">!#/bin/bash</span><br><span class="line">mkdir tmp   ##使用临时文件夹</span><br><span class="line">rsync -av $2 tmp   ##使用rsync来同步</span><br><span class="line">for item in `ls tmp/$2`   ##遍历移动</span><br><span class="line">do </span><br><span class="line">    mv -f tmp/$2/$item tmp</span><br><span class="line">done</span><br><span class="line">rm -rf tmp/$2</span><br><span class="line">rm -f $2    ##删除</span><br><span class="line"></span><br><span class="line">rsync -av $1 $2   ##以下内容同上，通过一个临时文件夹来实现同步</span><br><span class="line"></span><br><span class="line">for item in `ls $2/$1`</span><br><span class="line">do</span><br><span class="line">    mv -f $2/$1/$item $2</span><br><span class="line">done</span><br><span class="line">rm -rf $2/$1</span><br><span class="line">rsync -av tmp $1</span><br><span class="line"></span><br><span class="line">for item in `ls $1/tmp`</span><br><span class="line">do</span><br><span class="line">    mv -f $1/tmp/$item $1</span><br><span class="line">done</span><br><span class="line">rm -rf $1/tmp</span><br><span class="line">rm -rf tmp</span><br></pre></td></tr></table></figure>
+
+
+
+<p>展示</p>
+<p><img src="/2020/06/21/Linux-Lab3/image-20200621230926295.png" alt="image-20200621230926295"></p>
+<p><img src="/2020/06/21/Linux-Lab3/image-20200621230937698.png" alt="image-20200621230937698"></p>
+<p>过程同代码1，不赘述</p>
+<p>##三、感想和讨论</p>
+<p>这个实验中，从简单到复杂，一共写了5个shell脚本，让我对于shell编程有了更深的理解，从简单的几个命令拼凑，到分支结构，到循环结构。在最后一个题目中更是使用了递归函数。在编程的过程中，我拿shell编程和c语言编程做类比，在逻辑上并没有遇到很大的困难，不过shell的语法十分严格，并且没有较好的编辑器来及时检查错误，或者代码补全，以致于经常写完以后没有办法运行。对于我的细心有很大的磨砺。</p>
+<p>遇到的问题：</p>
+<p>1）在windows环境下编写shell以后通过ftp保存到linux，运行会报错<code>/bin/bash^M: bad interpreter: No such file or directory</code></p>
+<p>查询后发现，原因在于windows下shell是dos格式，linux是unix格式，换行符存在差异。解决方案是用vim打开shell，输入<code>set ff=unix</code> 命令就可以解决</p>
+<p>2）在linux直接运行shell会报错 <code>Permission denied</code> 这是因为sh没有权限访问 <code>/bin/bash </code></p>
+<p>只需要通过chmod为shell增加权限即可</p>
+<p>3）在实验五中，理解题意花了挺长的时间。由于之前接触过rsync用来同步windows和远程linux服务器的文件，因此首先想到了直接使用rsync命令来完成实验。但是又觉得老师出题的目的应该是想要我们自己去写一个shell来完成这些功能。想了很久，并且与同学讨论之后，想到了使用时间来判断先后，通过直接复制文件来进行同步。当然，最后实现的功能是远远不及直接使用rsync的。并且我写的shell，只能粗暴的根据时间来进行复制，如果文件都有更新，则没办法正确的同步。最好还是使用git等源代码管理工具或者rsync等来进行多端同步。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ydreamw.github.io/2020/02/29/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E4%B8%89-%E5%AF%B9%E4%BA%8E%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%80%9D%E8%80%83/" data-id="ckslxhyci0000qkvl5mk53jxe" data-title="课否 · 回复功能开发实践(三)： 对于业务的思考" class="article-share-link">分享</a>
+      <a data-url="https://ydreamw.github.io/2020/06/21/Linux-Lab3/" data-id="cksngrqio00022kvlb6qdcpj4" data-title="Linux-Lab3" class="article-share-link">分享</a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web/" rel="tag">Web</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/" rel="tag">shell</a></li></ul>
 
     </footer>
   </div>
@@ -407,14 +476,14 @@
 
 
   
-    <article id="post-课否-回复功能开发实践二-React-Hooks" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-Linux-Lab2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2020/02/05/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E4%BA%8C-React-Hooks/" class="article-date">
-  <time class="dt-published" datetime="2020-02-05T12:17:45.000Z" itemprop="datePublished">2020-02-05</time>
+    <a href="/2020/05/31/Linux-Lab2/" class="article-date">
+  <time class="dt-published" datetime="2020-05-30T17:03:09.000Z" itemprop="datePublished">2020-05-31</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/">Web开发实践</a>►<a class="article-category-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E8%AF%BE%E5%90%A6/">课否</a>
+    <a class="article-category-link" href="/categories/20ss/">20ss</a>►<a class="article-category-link" href="/categories/20ss/Linux/">Linux</a>
   </div>
 
   </div>
@@ -425,7 +494,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/02/05/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E4%BA%8C-React-Hooks/">课否 · 回复功能开发实践(二)： React函数式组件与Hooks</a>
+      <a class="p-name article-title" href="/2020/05/31/Linux-Lab2/">Linux-Lab2</a>
     </h1>
   
 
@@ -433,74 +502,16 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>最近大概阅读了一下课否的代码，项目使用了<a target="_blank" rel="noopener" href="https://taro.aotu.io/">Taro框架</a>。这个框架主要特点是可以实现小程序跨平台多端统一开发。这里对于框架不多赘述。</p>
-<p>另外一个特点则是这次项目中组件的形态发生了较大的变化：从类组件变成了函数式组件。因此在开始开发之前，我决定先了解一下React函数式组件。</p>
-<h2 id="1、函数式组件概述"><a href="#1、函数式组件概述" class="headerlink" title="1、函数式组件概述"></a>1、函数式组件概述</h2><p>拿React官网上的函数式组件的Demo来举例</p>
-<figure class="highlight jsx"><figcaption><span>harmony</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState, useEffect &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Example</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [count, setCount] = useState(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 相当于 componentDidMount 和 componentDidUpdate:</span></span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 使用浏览器的 API 更新页面标题</span></span><br><span class="line">    <span class="built_in">document</span>.title = <span class="string">`You clicked <span class="subst">$&#123;count&#125;</span> times`</span>;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">p</span>&gt;</span>You clicked &#123;count&#125; times<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> setCount(count + 1)&#125;&gt;</span></span><br><span class="line"><span class="xml">        Click me</span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>Example</code> 是一个函数，它return一个React Dom。这种返回React Dom节点的函数就是函数式组件。这种函数式组件直观上要比类组件的代码简洁的多。</p>
-<p>函数式组件与类组件最大的区别就是，类组件有生命周期，并且state和props都作为类的属性。而函数式组件则不存在这样的生命周期。因此我们要学习的主要内容就是如何在函数式组件中使用state和进行生命周期的管理。</p>
-<p>Hooks 的作用正是如此</p>
-<h2 id="2、Hook-概览"><a href="#2、Hook-概览" class="headerlink" title="2、Hook 概览"></a>2、Hook 概览</h2><p>同样参考上面的代码， <code>count</code> 变量很像我们类组件中的state。事实上useState正是帮助我们使用state的hook。而useEffect则会在渲染的时候更新一下页面的标题。</p>
-<blockquote>
-<p>Hook 是一些可以让你在函数组件里“钩入” React state 及生命周期等特性的函数。</p>
-</blockquote>
-<p>React内置了一些Hook，我们也可以创建自己的Hook来服用不同组件之间的状态逻辑。</p>
-<p>接下来我们主要学习一下两个常用的Hook： State和Effect Hook</p>
-<h2 id="3、State-Hooks"><a href="#3、State-Hooks" class="headerlink" title="3、State Hooks"></a>3、State Hooks</h2><p>我们使用类组件来实现相同的点击功能，如下</p>
-<figure class="highlight jsx"><figcaption><span>harmony</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Example</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">props</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>(props);</span><br><span class="line">    <span class="built_in">this</span>.state = &#123;</span><br><span class="line">      <span class="attr">count</span>: <span class="number">0</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>You clicked &#123;this.state.count&#125; times<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> this.setState(&#123; count: this.state.count + 1 &#125;)&#125;&gt;</span></span><br><span class="line"><span class="xml">          Click me</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在<code>construtor</code>中初始化<code>state.count</code>为0，使用<code>this.state.count</code>来获取<code>count</code>的值，使用<code>this.setState()</code>方法来更改<code>state</code></p>
-<p>调用<code>useState</code>钩子函数来新建一个state及修改其的方法。该函数的参数是state的初始值，以数组的形式返回state和修改state的方法。在上面的例子中，我们使用数组的解构赋值来获取到了它们。</p>
-<p>等号左边的名字是由我们自己决定的。另外如果有多个state的话，我们可以依次声明并且使用它们。</p>
-<p>state也不必须是基本的变量，它可以是数组或者对象。</p>
-<h2 id="4、-Effect-Hooks"><a href="#4、-Effect-Hooks" class="headerlink" title="4、 Effect Hooks"></a>4、 Effect Hooks</h2><p>在介绍Effect Hooks之前，我们需要先了解一个新的概念： 函数副作用(side effects)</p>
-<blockquote>
-<p>在计算机科学中，函数副作用指当调用函数时，除了返回函数值之外，还对主调用函数产生附加的影响。例如修改全局变量（函数外的变量），修改参数或改变外部存储。</p>
-</blockquote>
-<p>与函数副作用的几个相关概念有：</p>
-<ul>
-<li>纯函数 输入输出的数据全是显式的，函数与外界交换数据只有唯一的渠道——参数与返回值。</li>
-<li>非纯函数 函数通过隐式的方式同外界交换数据。隐式即函数除参数与返回值之外，用其他方式同外界交换方式。比如读取全局变量、修改全局变量、IO等等</li>
-<li>参照透明性 无副作用是参照透明性的必要非充分条件。参照透明意味着一个表达式（例如一次函数调用）可以被替换为它的值。这需要该表达式是纯的，也就是说该表达式必须是完全确定的（相同的输入总是导致相同的输出）而且没有副作用。</li>
-</ul>
-<p>另外如果函数参数是个引用，而函数修改了引用内的内容，则该函数同样具有副作用。比如js中某个函数的参数是一个对象，而这个函数讲这个对象的某个属性进行了修改。</p>
-<p>而在React的函数式组件中，副作用函数需要使用Effect Hooks来进行操控。</p>
-<p>如之前提过的例子</p>
-<figure class="highlight jsx"><figcaption><span>harmony</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState, useEffect &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Example</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [count, setCount] = useState(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Similar to componentDidMount and componentDidUpdate:</span></span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// Update the document title using the browser API</span></span><br><span class="line">    <span class="built_in">document</span>.title = <span class="string">`You clicked <span class="subst">$&#123;count&#125;</span> times`</span>;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">p</span>&gt;</span>You clicked &#123;count&#125; times<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> setCount(count + 1)&#125;&gt;</span></span><br><span class="line"><span class="xml">        Click me</span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>提示: 如果你熟悉 React class 的生命周期函数，你可以把 useEffect Hook 看做 componentDidMount，componentDidUpdate 和 componentWillUnmount 这三个函数的组合。</p>
-</blockquote>
-<p>按照这个提示，可以理解为useEffect在每次render之后都会执行。</p>
-<h3 id="无需清除的副作用"><a href="#无需清除的副作用" class="headerlink" title="无需清除的副作用"></a>无需清除的副作用</h3><p>无需清除的副作用通常指那些我们<strong>只想在React更新DOM之后运行的代码</strong>。诸如网络请求，手动更改DOM（上面的例子）。这些例子的特点就是我们执行完之后就可以忽略它们了。无需清除的意思也可以理解为不需要再去考虑消除我们的副作用对于代码的影响。比如我们手动更改了DOM之后不需要把DOM恢复原状。</p>
-<h3 id="需要清除的副作用"><a href="#需要清除的副作用" class="headerlink" title="需要清除的副作用"></a>需要清除的副作用</h3><p>还有一些副作用是需要清除的，最常见的一个例子就是订阅外部数据源。假如我们在渲染之后订阅了一个频道，这个行为很明显是一个副作用。而在组件卸载之后，如果我们不进行任何操作，依旧订阅这个频道，那么就会面临着内存泄漏等糟糕的问题。</p>
-<p>而使用useEffect来清除副作用的方式很简单，那就是返回一个函数来清除</p>
-<figure class="highlight jsx"><figcaption><span>harmony</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">handleStatusChange</span>(<span class="params">status</span>) </span>&#123;</span><br><span class="line">    setIsOnline(status.isOnline);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange);</span><br><span class="line">  <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>例如这个例子，我们在页面渲染之后，将Online状态置为true，表示在线。接着订阅Chat数据，这是会产生需要消除的副作用。最后我们返回了一个函数，该函数的作用是取消订阅。这样当组件卸载的时候就会执行该函数来取消订阅，从而消除副作用。</p>
-<p><strong>注意： 每次更新的时候都要运行Effect，包括其清除阶段。</strong> 这里举一个常见的bug来帮助我们理解。</p>
-<figure class="highlight jsx"><figcaption><span>harmony</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">componentDidMount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  ChatAPI.subscribeToFriendStatus(</span><br><span class="line">    <span class="built_in">this</span>.props.friend.id,</span><br><span class="line">    <span class="built_in">this</span>.handleStatusChange</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">componentWillUnmount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  ChatAPI.unsubscribeFromFriendStatus(</span><br><span class="line">    <span class="built_in">this</span>.props.friend.id,</span><br><span class="line">    <span class="built_in">this</span>.handleStatusChange</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>但是当组件已经显示在屏幕上时，friend prop 发生变化时会发生什么？ 我们的组件将继续展示原来的好友状态。这是一个 bug。而且我们还会因为取消订阅时使用错误的好友 ID 导致内存泄露或崩溃的问题。</p>
-<p>在class组件中，我们需要添加<code>componentDidUpdate</code> 来解决这个问题。</p>
-<figure class="highlight jsx"><figcaption><span>harmony</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">componentDidMount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  ChatAPI.subscribeToFriendStatus(</span><br><span class="line">    <span class="built_in">this</span>.props.friend.id,</span><br><span class="line">    <span class="built_in">this</span>.handleStatusChange</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">componentDidUpdate</span>(<span class="params">prevProps</span>)</span> &#123;</span><br><span class="line">  <span class="comment">// 取消订阅之前的 friend.id</span></span><br><span class="line">  ChatAPI.unsubscribeFromFriendStatus(</span><br><span class="line">    prevProps.friend.id,</span><br><span class="line">    <span class="built_in">this</span>.handleStatusChange</span><br><span class="line">  );</span><br><span class="line">  <span class="comment">// 订阅新的 friend.id</span></span><br><span class="line">  ChatAPI.subscribeToFriendStatus(</span><br><span class="line">    <span class="built_in">this</span>.props.friend.id,</span><br><span class="line">    <span class="built_in">this</span>.handleStatusChange</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">componentWillUnmount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  ChatAPI.unsubscribeFromFriendStatus(</span><br><span class="line">    <span class="built_in">this</span>.props.friend.id,</span><br><span class="line">    <span class="built_in">this</span>.handleStatusChange</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>忘记正确地处理 componentDidUpdate 是 React 应用中常见的 bug 来源。</p>
-<p>那么我们的Hook在每次更新的时候都会进行effect的运行与清除，这样就可以避免上面的bug。</p>
-<p>侠名按照时间列出一个可能会产生的订阅与取消订阅操作的调用序列，来帮助我们理解。</p>
-<figure class="highlight jsx"><figcaption><span>harmony</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Mount with &#123; friend: &#123; id: 100 &#125; &#125; props</span></span><br><span class="line">ChatAPI.subscribeToFriendStatus(<span class="number">100</span>, handleStatusChange);     <span class="comment">// 运行第一个 effect</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Update with &#123; friend: &#123; id: 200 &#125; &#125; props</span></span><br><span class="line">ChatAPI.unsubscribeFromFriendStatus(<span class="number">100</span>, handleStatusChange); <span class="comment">// 清除上一个 effect</span></span><br><span class="line">ChatAPI.subscribeToFriendStatus(<span class="number">200</span>, handleStatusChange);     <span class="comment">// 运行下一个 effect</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Update with &#123; friend: &#123; id: 300 &#125; &#125; props</span></span><br><span class="line">ChatAPI.unsubscribeFromFriendStatus(<span class="number">200</span>, handleStatusChange); <span class="comment">// 清除上一个 effect</span></span><br><span class="line">ChatAPI.subscribeToFriendStatus(<span class="number">300</span>, handleStatusChange);     <span class="comment">// 运行下一个 effect</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Unmount</span></span><br><span class="line">ChatAPI.unsubscribeFromFriendStatus(<span class="number">300</span>, handleStatusChange); <span class="comment">// 清除最后一个 effect</span></span><br></pre></td></tr></table></figure>
-
-<p>useEffect的第二个参数表示只有在第二个参数发生变化的时候才执行副作用。</p>
-<figure class="highlight jsx"><figcaption><span>harmony</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">document</span>.title = <span class="string">`You clicked <span class="subst">$&#123;count&#125;</span> times`</span>;</span><br><span class="line">&#125;, [count]); <span class="comment">// 仅在 count 更改时更新</span></span><br></pre></td></tr></table></figure>
-<p>传入一个空数组表示只在挂载的时候执行一次。</p>
-<h3 id="感悟"><a href="#感悟" class="headerlink" title="感悟"></a>感悟</h3><p>useEffect 这个hooks同类组件的生命周期相比有一个很大的优势就是可以将代码按照业务逻辑分类思考。每个Hook代表一个逻辑，我们只需要关注这个逻辑在每个周期需要做什么。而类组件的生命周期管理方式强迫我们将关注点放在一个一个阶段，这让我们对于业务的管理变得很混乱。</p>
-<p>这也是为什么函数式组件的代码显得十分简洁和易于维护的一大原因。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>React 函数式组件的特性以及用法远不止这些。后面的文档我目前还不太能看懂。上面的这些部分已经足够帮助我胜任手头的业务需求了。我决定先进行实践。等未来自己有经验了，再去回看React的函数式组件。</p>
+        <p>Linux的第二次Lab，进行shell命令的实践<br>见GitHub连接：  <a target="_blank" rel="noopener" href="https://github.com/YdreamW/20ss/blob/master/Linux/shell%E5%91%BD%E4%BB%A4.pdf">https://github.com/YdreamW/20ss/blob/master/Linux/shell%E5%91%BD%E4%BB%A4.pdf</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ydreamw.github.io/2020/02/05/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E4%BA%8C-React-Hooks/" data-id="ckslr9h6400005ovlfya10so5" data-title="课否 · 回复功能开发实践(二)： React函数式组件与Hooks" class="article-share-link">分享</a>
+      <a data-url="https://ydreamw.github.io/2020/05/31/Linux-Lab2/" data-id="cksngrqil00012kvl5ad5h39a" data-title="Linux-Lab2" class="article-share-link">分享</a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hooks/" rel="tag">Hooks</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/React/" rel="tag">React</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/" rel="tag">shell</a></li></ul>
 
     </footer>
   </div>
@@ -510,14 +521,14 @@
 
 
   
-    <article id="post-课否-回复功能开发实践-一-webstorm的使用" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-DBS-Project4-数据库编程" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2020/01/31/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5-%E4%B8%80-webstorm%E7%9A%84%E4%BD%BF%E7%94%A8/" class="article-date">
-  <time class="dt-published" datetime="2020-01-31T10:52:19.000Z" itemprop="datePublished">2020-01-31</time>
+    <a href="/2020/05/03/DBS-Project4-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%96%E7%A8%8B/" class="article-date">
+  <time class="dt-published" datetime="2020-05-02T17:43:51.000Z" itemprop="datePublished">2020-05-03</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/">Web开发实践</a>►<a class="article-category-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E8%AF%BE%E5%90%A6/">课否</a>
+    <a class="article-category-link" href="/categories/20ss/">20ss</a>►<a class="article-category-link" href="/categories/20ss/DBS/">DBS</a>
   </div>
 
   </div>
@@ -528,7 +539,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/01/31/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5-%E4%B8%80-webstorm%E7%9A%84%E4%BD%BF%E7%94%A8/">课否 · 回复功能开发实践(一)： WebStorm的使用</a>
+      <a class="p-name article-title" href="/2020/05/03/DBS-Project4-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%96%E7%A8%8B/">DBS-Project4-数据库编程</a>
     </h1>
   
 
@@ -536,31 +547,75 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>寒假在家躺尸，不想学习只想玩，上学期快结束的时候忙于大作业和期末考试，博客也停滞更新了。</p>
-<p>之前的色老师说的小程序课否也上线了，现在还挺多人用的，基本上是替代掉了查老师。</p>
-<p>最近色老师让我做一个回复的功能。具体来讲就是在现在的老师评价的基础上，用户可以针对某一条评价进行回复，同时也可以针对回复进行回复。大概就是这样的需求。</p>
-<p>于是我开了这个新坑，记录一下这次的开发过程。</p>
-<p>工欲善其事，必先利其器。我之前一直在使用 vscode 作为 Web 开发的 ide，色老师向我推荐了 WebStorm，并且教我设置了一些常用的快捷键</p>
-<h3 id="快捷键的设置方式"><a href="#快捷键的设置方式" class="headerlink" title="快捷键的设置方式"></a>快捷键的设置方式</h3><p>在 File-&gt; Settings 中点击 KeyMap, 右上角如下图所示，左侧可以按照功能进行搜索，右侧可以按照快捷键搜索</p>
-<p><img src="/2020/01/31/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5-%E4%B8%80-webstorm%E7%9A%84%E4%BD%BF%E7%94%A8/keymap.png" alt="keyMap_Setting"></p>
-<h3 id="常用快捷键"><a href="#常用快捷键" class="headerlink" title="常用快捷键"></a>常用快捷键</h3><ul>
-<li>两次 shift 连按两次 shift 可以进行全局搜索</li>
-<li>ctrl+B,ctrl+click 前往声明</li>
-<li>ctrl+鼠标悬停，查看变量声明、注释等</li>
-<li>ctrl+tab 切换 tab</li>
-<li>自己添加 alt+t 使用prettier进行代码格式化</li>
-<li>ctrl+K commit</li>
-<li>ctrl+y pull</li>
+        <p>###实验目的</p>
+<ul>
+<li> 掌握MySQL数据库函数和存储过程的定义、调用方法</li>
+<li>巩固MySQL数据库触发器定义和使用方法</li>
+<li>熟悉JDBC连接访问数据库的方法</li>
+<li>了解MySQL备份和恢复方法</li>
+</ul>
+<h3 id="实验平台"><a href="#实验平台" class="headerlink" title="实验平台"></a>实验平台</h3><ul>
+<li><p>数据库管理系统（MySQL）</p>
+</li>
+<li><p>pymysql</p>
+</li>
+</ul>
+<h3 id="实验内容和要求"><a href="#实验内容和要求" class="headerlink" title="实验内容和要求"></a>实验内容和要求</h3><h4 id="1、建立数据库，并录入数据"><a href="#1、建立数据库，并录入数据" class="headerlink" title="1、建立数据库，并录入数据"></a>1、建立数据库，并录入数据</h4><p>该部分内容延用之前的代码，不赘述。</p>
+<h4 id="2、函数、存储过程的创建和调用："><a href="#2、函数、存储过程的创建和调用：" class="headerlink" title="2、函数、存储过程的创建和调用："></a>2、函数、存储过程的创建和调用：</h4><ul>
+<li><p>使用函数实现统计学生选修课程数量的功能。</p>
+<ul>
+<li><p>代码</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">delimiter $$</span><br><span class="line">CREATE FUNCTION my_count(NAME VARCHAR(20)) RETURNS INT</span><br><span class="line">DETERMINISTIC</span><br><span class="line">BEGIN</span><br><span class="line">	DECLARE str VARCHAR(5);</span><br><span class="line">	DECLARE a INT;</span><br><span class="line">	SELECT SID FROM S WHERE SNAME=NAME INTO str;</span><br><span class="line">	SELECT COUNT(CID) FROM SC WHERE SID = str INTO a;</span><br><span class="line">	RETURN a;</span><br><span class="line">END</span><br><span class="line">$$</span><br><span class="line">delimiter;</span><br><span class="line">SELECT my_count(&quot;Wang feng&quot;);</span><br></pre></td></tr></table></figure></li>
+<li><p>结果</p>
+<p>  <img src="/2020/05/03/DBS-Project4-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%96%E7%A8%8B/image-20200503225509049.png" alt="image-20200503225509049"></p>
+</li>
+</ul>
+</li>
+<li><p>使用存储过程实现查询某个学生选修的课程的总学分。</p>
+<ul>
+<li><p>代码</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">delimiter $$</span><br><span class="line">CREATE PROCEDURE my_count(IN NAME VARCHAR(20), OUT my_sum INT)</span><br><span class="line">DETERMINISTIC</span><br><span class="line">BEGIN</span><br><span class="line">	DECLARE str VARCHAR(5);</span><br><span class="line">	SELECT SID FROM S WHERE SNAME=NAME INTO str;</span><br><span class="line">	SELECT sum(credit) FROM C WHERE CID in (SELECT CID FROM SC WHERE SID = str) INTO my_sum;</span><br><span class="line">END</span><br><span class="line">$$</span><br><span class="line">delimiter;</span><br><span class="line">CALL my_count(&quot;Wang feng&quot;,@credits);</span><br><span class="line">SELECT (@credits);</span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>结果</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2020/05/03/DBS-Project4-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%96%E7%A8%8B/image-20200503230601198.png" alt="image-20200503230601198"></p>
+<p>####3、触发器的创建</p>
+<ul>
+<li><p>删除一个学生信息，确保SC中也不存在该学生的信息；</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SET foreign_key_checks = 0;</span><br><span class="line">delimiter $$</span><br><span class="line">CREATE TRIGGER s_delete AFTER DELETE ON s FOR EACH ROW</span><br><span class="line">BEGIN</span><br><span class="line">	DELETE FROM SC WHERE SID not in (SELECT SID FROM S);</span><br><span class="line">END</span><br><span class="line">$$</span><br><span class="line">delimiter;</span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>添加选课信息时，确保课程存在。</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">delimiter $$</span><br><span class="line">CREATE TRIGGER course_insert_check before insert</span><br><span class="line">ON sc FOR EACH ROW</span><br><span class="line">begin</span><br><span class="line">	 declare msg varchar(100);</span><br><span class="line">     if NEW.CID not in (select CID from C)</span><br><span class="line">     THEN</span><br><span class="line">         SET msg = CONCAT(&#x27;illegal messege&#x27;);</span><br><span class="line">		SIGNAL SQLSTATE &#x27;HY000&#x27; SET MESSAGE_TEXT = msg;</span><br><span class="line">     end if;</span><br><span class="line">end</span><br><span class="line">$$</span><br><span class="line">delimiter ;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="4、使用python实现数据库连接访问"><a href="#4、使用python实现数据库连接访问" class="headerlink" title="4、使用python实现数据库连接访问"></a>4、使用python实现数据库连接访问</h4><ul>
+<li><p>代码</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pymysql </span><br><span class="line"></span><br><span class="line"><span class="comment"># select all avaliable courses</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show_courses</span>(<span class="params">cursor</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;show all courses&#x27;</span>)</span><br><span class="line">    cursor.execute(<span class="string">&#x27;select distinct CNAME from C&#x27;</span>)</span><br><span class="line">    output = cursor.fetchall()</span><br><span class="line">    <span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment"># check a course</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_course</span>(<span class="params">cursor,sid</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;select physics course for&#x27;</span> +sid)</span><br><span class="line">    sql = <span class="string">&quot;select * from C where CID not in(select CID from SC where SID = %s);&quot;</span></span><br><span class="line">    cursor.execute(sql,sid)</span><br><span class="line">    output = cursor.fetchall()</span><br><span class="line">    <span class="built_in">print</span>(output)</span><br><span class="line">    conn.commit()</span><br><span class="line"></span><br><span class="line"><span class="comment">#select a course</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">select_course</span>(<span class="params">cursor,sid,cid</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;select %s course for %s&#x27;</span>%(cid,sid))</span><br><span class="line">    cursor.execute(<span class="string">&#x27;insert into SC (SID, CID, GRADE) values(%s, %s, %s)&#x27;</span>, [<span class="string">&#x27;S3&#x27;</span>, <span class="string">&#x27;C2&#x27;</span>, <span class="number">0</span>])</span><br><span class="line">    output = cursor.fetchall()</span><br><span class="line">    <span class="built_in">print</span>(output)</span><br><span class="line">    conn.commit()</span><br><span class="line"></span><br><span class="line"><span class="comment"># select all courses that have been selected</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show_selected_courses</span>(<span class="params">cursor</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;show all courses that have been selected&#x27;</span>)</span><br><span class="line">    cursor.execute(<span class="string">&#x27;select distinct CNAME from SC natural join C&#x27;</span>)</span><br><span class="line">    output = cursor.fetchall()</span><br><span class="line">    <span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment"># select all courses that have been selected by someone</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show_selected_courses_by_someone</span>(<span class="params">cursor,sid</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;show all courses that have been selected by %s&#x27;</span>%(sid))</span><br><span class="line">    cursor.execute(<span class="string">&#x27;select distinct CNAME from SC natural join C where SID = %s&#x27;</span>, sid)</span><br><span class="line">    output = cursor.fetchall()</span><br><span class="line">    <span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment"># drop out of a course</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">quit_course</span>(<span class="params">cursor,sid,cid</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;drop out of the %s course for %s&#x27;</span>%(cid,sid))</span><br><span class="line">    sql = <span class="string">&quot;delete from SC where SID =%s and CID = %s;&quot;</span></span><br><span class="line">    cursor.execute(sql,(sid,cid))</span><br><span class="line">    output = cursor.fetchall()</span><br><span class="line">    <span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># connect database</span></span><br><span class="line">conn = pymysql.connect(host = <span class="string">&#x27;127.0.0.1&#x27;</span>, port = <span class="number">3306</span>, user = <span class="string">&#x27;root&#x27;</span>, passwd = <span class="string">&#x27;123&#x27;</span>, db = <span class="string">&#x27;school&#x27;</span>)</span><br><span class="line">cursor = conn.cursor()</span><br><span class="line"></span><br><span class="line">show_courses(cursor)</span><br><span class="line">select_course(cursor,<span class="string">&#x27;S2&#x27;</span>,<span class="string">&#x27;C2&#x27;</span>)</span><br><span class="line">show_selected_courses(cursor)</span><br><span class="line">quit_course(cursor,<span class="string">&#x27;S2&#x27;</span>,<span class="string">&#x27;C2&#x27;</span>)</span><br><span class="line">show_selected_courses_by_someone(cursor,<span class="string">&#x27;S1&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>结果</p>
+<p>  <img src="/2020/05/03/DBS-Project4-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%96%E7%A8%8B/image-20200503235014718.png" alt="image-20200503235014718"></p>
+</li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ydreamw.github.io/2020/01/31/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5-%E4%B8%80-webstorm%E7%9A%84%E4%BD%BF%E7%94%A8/" data-id="cksitg5j000001wvl9fste0e0" data-title="课否 · 回复功能开发实践(一)： WebStorm的使用" class="article-share-link">分享</a>
+      <a data-url="https://ydreamw.github.io/2020/05/03/DBS-Project4-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%96%E7%A8%8B/" data-id="cksni4d9v0005rgvl7izo8eeh" data-title="DBS-Project4-数据库编程" class="article-share-link">分享</a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebStorm/" rel="tag">WebStorm</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/database/" rel="tag">database</a></li></ul>
 
     </footer>
   </div>
@@ -570,14 +625,14 @@
 
 
   
-    <article id="post-scrapy框架爬虫入门，与培养方案抓取实践" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-Linux-Lab1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/12/16/scrapy%E6%A1%86%E6%9E%B6%E7%88%AC%E8%99%AB%E5%85%A5%E9%97%A8%EF%BC%8C%E4%B8%8E%E5%9F%B9%E5%85%BB%E6%96%B9%E6%A1%88%E6%8A%93%E5%8F%96%E5%AE%9E%E8%B7%B5/" class="article-date">
-  <time class="dt-published" datetime="2019-12-16T13:09:55.000Z" itemprop="datePublished">2019-12-16</time>
+    <a href="/2020/04/30/Linux-Lab1/" class="article-date">
+  <time class="dt-published" datetime="2020-04-29T17:03:06.000Z" itemprop="datePublished">2020-04-30</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/INA/">INA</a>
+    <a class="article-category-link" href="/categories/20ss/">20ss</a>►<a class="article-category-link" href="/categories/20ss/Linux/">Linux</a>
   </div>
 
   </div>
@@ -588,7 +643,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/12/16/scrapy%E6%A1%86%E6%9E%B6%E7%88%AC%E8%99%AB%E5%85%A5%E9%97%A8%EF%BC%8C%E4%B8%8E%E5%9F%B9%E5%85%BB%E6%96%B9%E6%A1%88%E6%8A%93%E5%8F%96%E5%AE%9E%E8%B7%B5/">scrapy框架爬虫入门，与培养方案抓取实践</a>
+      <a class="p-name article-title" href="/2020/04/30/Linux-Lab1/">Linux-Lab1</a>
     </h1>
   
 
@@ -596,68 +651,18 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>最近色老师的项目想要其他学校的课程信息，于是让我去爬取别人的数据。<br>自己学习了一下scarpy，上手进行了简单的爬虫。</p>
-<h2 id="scrapy框架爬虫入门与培养方案抓取实践"><a href="#scrapy框架爬虫入门与培养方案抓取实践" class="headerlink" title="scrapy框架爬虫入门与培养方案抓取实践"></a>scrapy框架爬虫入门与培养方案抓取实践</h2><h3 id="现场爬一下蛤交的课程信息"><a href="#现场爬一下蛤交的课程信息" class="headerlink" title="现场爬一下蛤交的课程信息"></a>现场爬一下蛤交的课程信息</h3><p><a target="_blank" rel="noopener" href="https://github.com/YdreamW/sjtuSpider.git">https://github.com/YdreamW/sjtuSpider.git</a></p>
-<h2 id="scrapy文件结构"><a href="#scrapy文件结构" class="headerlink" title="scrapy文件结构"></a>scrapy文件结构</h2><ul>
-<li>sjtuSpider<ul>
-<li>spiders<ul>
-<li>stju.py</li>
-<li>getMajorUrl.py</li>
-</ul>
-</li>
-<li>items.py</li>
-<li>pipelines.py</li>
-</ul>
-</li>
-</ul>
-<h2 id="创建项目的过程"><a href="#创建项目的过程" class="headerlink" title="创建项目的过程"></a>创建项目的过程</h2><ul>
-<li><p>安装框架</p>
-</li>
-<li><p>创建项目</p>
-<ul>
-<li>新建项目。<br>  项目名可以用  …Spider</li>
-</ul>
-  <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy startproject &lt;项目名&gt;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>新建一个爬虫。<br>  爬虫名不能和项目名称一致</li>
-</ul>
-  <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy genspider &lt;爬虫名&gt; &lt;域名限制&gt;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="写一个爬虫"><a href="#写一个爬虫" class="headerlink" title="写一个爬虫"></a>写一个爬虫</h3><ul>
-<li><p>在此之前需要了解一下 xpath的简单语法</p>
-</li>
-<li><p>推荐一个插件  xpath helper</p>
-</li>
-<li><p>getMajorUrl.py 的例子</p>
-</li>
-<li><p>分析网站</p>
-<ul>
-<li>在chrome里找网页的逻辑</li>
-<li>network 看请求</li>
-<li>可以先用 postman 模拟请求</li>
-</ul>
-</li>
-<li><p>愉快的写代码，然后输出结果</p>
-</li>
-<li><p>运行的爬虫的指令</p>
-</li>
-</ul>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy crawl sjtu -o course1.json -s FEED_EXPORT_ENCODING=UTF-<span class="number">8</span></span><br></pre></td></tr></table></figure>
-
-
-<p>​    </p>
-<h2 id="反思"><a href="#反思" class="headerlink" title="反思"></a>反思</h2><p>了解了xpath，这个东西很简单就能入门，但是感觉要想熟练的分析页面还是需要一定的经验积累</p>
-<p>最近学业压力比较重，爬虫只局限于了实践层面。<br>对于python的generator并没有理解的很透彻，以及python的面向对象都是一知半解，以后有机会好好搞清楚generator</p>
-<p>​    我印象中 es6 也有generator</p>
+        <p>Linux 课程的第一次lab。要求自选课题进行调研。</p>
+<p>见Github连接: <a target="_blank" rel="noopener" href="https://github.com/YdreamW/20ss/blob/master/Linux/lab1-%E7%A0%94%E7%A9%B6%E6%8A%A5%E5%91%8A.pdf">https://github.com/YdreamW/20ss/blob/master/Linux/lab1-%E7%A0%94%E7%A9%B6%E6%8A%A5%E5%91%8A.pdf</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ydreamw.github.io/2019/12/16/scrapy%E6%A1%86%E6%9E%B6%E7%88%AC%E8%99%AB%E5%85%A5%E9%97%A8%EF%BC%8C%E4%B8%8E%E5%9F%B9%E5%85%BB%E6%96%B9%E6%A1%88%E6%8A%93%E5%8F%96%E5%AE%9E%E8%B7%B5/" data-id="cksd8joyd0000zcvlgrdu1e90" data-title="scrapy框架爬虫入门，与培养方案抓取实践" class="article-share-link">分享</a>
+      <a data-url="https://ydreamw.github.io/2020/04/30/Linux-Lab1/" data-id="cksngrqfq00002kvl5tpx513h" data-title="Linux-Lab1" class="article-share-link">分享</a>
       
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
+
     </footer>
   </div>
   
@@ -666,14 +671,14 @@
 
 
   
-    <article id="post-DIP-HW6" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-DBS-Project3-SQL数据完整性" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/12/07/DIP-HW6/" class="article-date">
-  <time class="dt-published" datetime="2019-12-07T13:17:49.000Z" itemprop="datePublished">2019-12-07</time>
+    <a href="/2020/04/02/DBS-Project3-SQL%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7/" class="article-date">
+  <time class="dt-published" datetime="2020-04-01T17:43:21.000Z" itemprop="datePublished">2020-04-02</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E4%B8%AA%E4%BA%BA%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/">个人课程作业</a>►<a class="article-category-link" href="/categories/%E4%B8%AA%E4%BA%BA%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/19aw/">19aw</a>
+    <a class="article-category-link" href="/categories/20ss/">20ss</a>►<a class="article-category-link" href="/categories/20ss/DBS/">DBS</a>
   </div>
 
   </div>
@@ -684,7 +689,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/12/07/DIP-HW6/">DIP-HW6</a>
+      <a class="p-name article-title" href="/2020/04/02/DBS-Project3-SQL%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7/">DBS-Project3-SQL数据完整性</a>
     </h1>
   
 
@@ -692,83 +697,74 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="实验六"><a href="#实验六" class="headerlink" title="实验六"></a>实验六</h1><h2 id="一、实验目的和要求"><a href="#一、实验目的和要求" class="headerlink" title="一、实验目的和要求"></a>一、实验目的和要求</h2><ul>
-<li>目的<ul>
-<li>了解双边滤波的方法</li>
-</ul>
-</li>
-<li>要求<ul>
-<li>自己写C语言程序，实现所有操作，不调用其他库。</li>
-</ul>
-</li>
-</ul>
-<h2 id="二、实验内容和原理"><a href="#二、实验内容和原理" class="headerlink" title="二、实验内容和原理"></a>二、实验内容和原理</h2><ul>
-<li><p>内容</p>
+        <h1 id="实验3-SQL数据完整性"><a href="#实验3-SQL数据完整性" class="headerlink" title="实验3-SQL数据完整性"></a>实验3-SQL数据完整性</h1><p>###实验目的</p>
 <ul>
-<li>读入图像</li>
-<li>给图像施加椒盐噪声</li>
-<li>对含有噪声的图像进行双边滤波</li>
-<li>输出图像</li>
+<li>掌握MySQL数据库的完整性约束的定义方法；</li>
+<li>掌握MySQL数据库的用户的创建方法。</li>
+<li>掌握MySQL数据库的权限设置方法。</li>
 </ul>
-</li>
-<li><p>原理</p>
-<ul>
-<li><p>$I_p^{bf} = \frac{1}{W_p^{bf}}\sum_{q\in S} G_{\sigma_s}(|p-q|)G_{\sigma_r}(|Ip-Iq|Iq)$</p>
-<p>  $W_P^{bf} = \sum_{q\in S} G_{\sigma_s}(|p-q|)G_{\sigma_r}(|I_p-I_q|)$</p>
-</li>
-<li><p>$w(i,j,k,l) = e^{(-\frac{(i-k)^2+(j-l)^2}{2\sigma_d^2}-\frac{|I(i,j)-I(k,l)|^2}{2\sigma_r^2})}$</p>
-<p>  $I_D(i,j) = \frac{\sum_{k,l} I(k,l)w(i,j,k,l)}{\sum_{k,l}w(i,j,k,l)}$</p>
-</li>
-<li><p>根据上述公式即可计算得到新的图像</p>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="三、源代码和分析"><a href="#三、源代码和分析" class="headerlink" title="三、源代码和分析"></a>三、源代码和分析</h2><ul>
-<li><p>源代码</p>
-  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> WORD unsigned short</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> DWORD unsigned int</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BYTE unsigned char</span></span><br><span class="line"><span class="keyword">int</span> ph,pw,psize,lsize; </span><br><span class="line"><span class="keyword">double</span> <span class="keyword">const</span> sigma_r=<span class="number">100</span>,sigma_d=<span class="number">100</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BMP_FILE_HEADER</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	WORD bfType;    </span><br><span class="line">	DWORD bfSize;    </span><br><span class="line">	WORD bfReserved1; </span><br><span class="line">	WORD bfReserved2; </span><br><span class="line">	DWORD bfOffBits;   </span><br><span class="line">&#125;BMPFILEHEADER; </span><br><span class="line"><span class="comment">/* 位图信息头 */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BMP_INFO</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	DWORD biSize;            <span class="comment">// 信息头的大小   </span></span><br><span class="line">	DWORD biWidth;               <span class="comment">// 图像的宽度     </span></span><br><span class="line">	DWORD biHeight;              <span class="comment">// 图像的高度     </span></span><br><span class="line">	WORD biPlanes;               <span class="comment">// 图像的位面数   </span></span><br><span class="line">	WORD biBitCount;             <span class="comment">// 每个像素的位数 </span></span><br><span class="line">	DWORD biCompression;         <span class="comment">// 压缩类型 </span></span><br><span class="line">	DWORD biSizeImage;         <span class="comment">// 图像的大小,以字节为单位 </span></span><br><span class="line">	DWORD biXPelsPerMeter;       <span class="comment">// 水平分辨率 </span></span><br><span class="line">	DWORD biYPelsPerMeter;       <span class="comment">// 垂直分辨率 </span></span><br><span class="line">	DWORD biClrUsed;             <span class="comment">// 使用的色彩数 </span></span><br><span class="line">	DWORD biClrImportant;        <span class="comment">// 重要的颜色数 </span></span><br><span class="line">&#125; BMPINF;            <span class="comment">// 40 字节	</span></span><br><span class="line">BMPFILEHEADER thisBmpFileHeader;  <span class="comment">// 定义一个 BMP 文件头的结构体</span></span><br><span class="line">BMPINF thisBmpInfo;               <span class="comment">// 定义一个 BMP 文件信息结构体</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">readFileHead</span><span class="params">(FILE *fp)</span></span>;    <span class="comment">//fp指向的文件的文件头读入到thisBMPFileHeader中</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">writeFileHead</span><span class="params">(FILE *fp)</span></span>;   <span class="comment">//thisBMPFileHeader写入到fp指向的文件的文件头中</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">BilateralFilter</span><span class="params">(BYTE *p,BYTE* pOUT,<span class="keyword">char</span> *name)</span></span>;<span class="comment">//均值滤波，结果存在pOUT中</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">OutPutImg</span><span class="params">(BYTE *pOUT,<span class="keyword">char</span> *name)</span></span>;<span class="comment">//输出图像</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">AddNoise_salt</span><span class="params">(BYTE* p, BYTE *pNoise)</span></span>;<span class="comment">//增加盐噪声</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">AddNoise_pepper</span><span class="params">(BYTE* p, BYTE *pNoise)</span></span>;<span class="comment">//增加椒噪声</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">getWeight</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> j,<span class="keyword">int</span> tmpi,<span class="keyword">int</span> tmpj,<span class="keyword">int</span> I0,<span class="keyword">int</span> I2)</span></span>;<span class="comment">//计算权重</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	FILE *fp;                    <span class="comment">// 定义一个文件指针</span></span><br><span class="line">  <span class="keyword">if</span>((fp=fopen(<span class="string">&quot;in.bmp&quot;</span>,<span class="string">&quot;rb&quot;</span>))==<span class="literal">NULL</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Can&#x27;t open the file\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;open the file\n&quot;</span>);</span><br><span class="line">  readFileHead(fp);</span><br><span class="line">  ph=thisBmpInfo.biHeight;<span class="comment">//高度 </span></span><br><span class="line">	pw=thisBmpInfo.biWidth;<span class="comment">//宽度 </span></span><br><span class="line">	psize=pw*ph*<span class="number">3</span>;<span class="comment">//图片信息字节总数 </span></span><br><span class="line">	lsize=pw*<span class="number">3</span>;<span class="comment">//每行信息字节总数 </span></span><br><span class="line">	BYTE* p=(BYTE*)<span class="built_in">malloc</span>(psize);</span><br><span class="line">	fread(p,psize,<span class="number">1</span>,fp);</span><br><span class="line">	fclose(fp);</span><br><span class="line">  BYTE* pOUT=(BYTE*)<span class="built_in">malloc</span>(psize);</span><br><span class="line">  BYTE* pNoise=(BYTE*)<span class="built_in">malloc</span>(psize);</span><br><span class="line">  BilateralFilter(p,pOUT,<span class="string">&quot;BilateralFiler_of_origin&quot;</span>);  </span><br><span class="line">  AddNoise_salt(p,pNoise);</span><br><span class="line">  BilateralFilter(pNoise,pOUT,<span class="string">&quot;BilateralFiler_of_salt&quot;</span>);</span><br><span class="line">  AddNoise_pepper(p,pNoise);</span><br><span class="line">  BilateralFilter(pNoise,pOUT,<span class="string">&quot;BilateralFiler_of_pepper&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">OutPutImg</span><span class="params">(BYTE *pOUT,<span class="keyword">char</span> *name)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> postfix[<span class="number">10</span>]=<span class="string">&quot;.bmp&quot;</span>,tmp[<span class="number">100</span>];</span><br><span class="line">    <span class="built_in">strcpy</span>(tmp,name);</span><br><span class="line">    <span class="built_in">strcat</span>(tmp,postfix);</span><br><span class="line">    FILE *fp=fopen(tmp,<span class="string">&quot;wb&quot;</span>);</span><br><span class="line">    writeFileHead(fp);</span><br><span class="line">    fwrite(pOUT,psize,<span class="number">1</span>,fp);</span><br><span class="line">    fclose(fp);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>,name);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot; finised!\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">readFileHead</span><span class="params">(FILE *fp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  fread(&amp;thisBmpFileHeader.bfType,<span class="keyword">sizeof</span>(thisBmpFileHeader.bfType),<span class="number">1</span>,fp);</span><br><span class="line">	fread(&amp;thisBmpFileHeader.bfSize,<span class="keyword">sizeof</span>(thisBmpFileHeader.bfSize),<span class="number">1</span>,fp);</span><br><span class="line">	fread(&amp;thisBmpFileHeader.bfReserved1,<span class="keyword">sizeof</span>(thisBmpFileHeader.bfReserved1),<span class="number">1</span>,fp);</span><br><span class="line">	fread(&amp;thisBmpFileHeader.bfReserved2,<span class="keyword">sizeof</span>(thisBmpFileHeader.bfReserved2),<span class="number">1</span>,fp);</span><br><span class="line">	fread(&amp;thisBmpFileHeader.bfOffBits,<span class="keyword">sizeof</span>(thisBmpFileHeader.bfOffBits),<span class="number">1</span>,fp);</span><br><span class="line">  fread(&amp;thisBmpInfo.biSize, <span class="keyword">sizeof</span>(thisBmpInfo.biSize), <span class="number">1</span>, fp);</span><br><span class="line">	fread(&amp;thisBmpInfo.biWidth, <span class="keyword">sizeof</span>(thisBmpInfo.biWidth), <span class="number">1</span>, fp);</span><br><span class="line">	fread(&amp;thisBmpInfo.biHeight, <span class="keyword">sizeof</span>(thisBmpInfo.biHeight), <span class="number">1</span>, fp);</span><br><span class="line">	fread(&amp;thisBmpInfo.biPlanes, <span class="keyword">sizeof</span>(thisBmpInfo.biPlanes), <span class="number">1</span>, fp);</span><br><span class="line">	fread(&amp;thisBmpInfo.biBitCount, <span class="keyword">sizeof</span>(thisBmpInfo.biBitCount), <span class="number">1</span>, fp);</span><br><span class="line">	fread(&amp;thisBmpInfo.biCompression, <span class="keyword">sizeof</span>(thisBmpInfo.biCompression), <span class="number">1</span>, fp);</span><br><span class="line">	fread(&amp;thisBmpInfo.biSizeImage, <span class="keyword">sizeof</span>(thisBmpInfo.biSizeImage), <span class="number">1</span>, fp);</span><br><span class="line">	fread(&amp;thisBmpInfo.biXPelsPerMeter, <span class="keyword">sizeof</span>(thisBmpInfo.biXPelsPerMeter), <span class="number">1</span>, fp);</span><br><span class="line">	fread(&amp;thisBmpInfo.biYPelsPerMeter, <span class="keyword">sizeof</span>(thisBmpInfo.biYPelsPerMeter), <span class="number">1</span>, fp);</span><br><span class="line">	fread(&amp;thisBmpInfo.biClrUsed, <span class="keyword">sizeof</span>(thisBmpInfo.biClrUsed), <span class="number">1</span>, fp);</span><br><span class="line">	fread(&amp;thisBmpInfo.biClrImportant, <span class="keyword">sizeof</span>(thisBmpInfo.biClrImportant), <span class="number">1</span>, fp);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">writeFileHead</span><span class="params">(FILE *fp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//  写入位图文件头 </span></span><br><span class="line">	fwrite(&amp;thisBmpFileHeader.bfType,<span class="keyword">sizeof</span>(thisBmpFileHeader.bfType),<span class="number">1</span>,fp);</span><br><span class="line">	fwrite(&amp;thisBmpFileHeader.bfSize,<span class="keyword">sizeof</span>(thisBmpFileHeader.bfSize),<span class="number">1</span>,fp);</span><br><span class="line">	fwrite(&amp;thisBmpFileHeader.bfReserved1,<span class="keyword">sizeof</span>(thisBmpFileHeader.bfReserved1),<span class="number">1</span>,fp);</span><br><span class="line">	fwrite(&amp;thisBmpFileHeader.bfReserved2,<span class="keyword">sizeof</span>(thisBmpFileHeader.bfReserved2),<span class="number">1</span>,fp);</span><br><span class="line">	fwrite(&amp;thisBmpFileHeader.bfOffBits,<span class="keyword">sizeof</span>(thisBmpFileHeader.bfOffBits),<span class="number">1</span>,fp);</span><br><span class="line"><span class="comment">//  写入位图信息头 </span></span><br><span class="line">	fwrite(&amp;thisBmpInfo.biSize, <span class="keyword">sizeof</span>(thisBmpInfo.biSize), <span class="number">1</span>, fp);</span><br><span class="line">	fwrite(&amp;thisBmpInfo.biWidth, <span class="keyword">sizeof</span>(thisBmpInfo.biWidth), <span class="number">1</span>, fp);</span><br><span class="line">	fwrite(&amp;thisBmpInfo.biHeight, <span class="keyword">sizeof</span>(thisBmpInfo.biHeight), <span class="number">1</span>, fp);</span><br><span class="line">	fwrite(&amp;thisBmpInfo.biPlanes, <span class="keyword">sizeof</span>(thisBmpInfo.biPlanes), <span class="number">1</span>, fp);</span><br><span class="line">	fwrite(&amp;thisBmpInfo.biBitCount, <span class="keyword">sizeof</span>(thisBmpInfo.biBitCount), <span class="number">1</span>, fp);</span><br><span class="line">	fwrite(&amp;thisBmpInfo.biCompression, <span class="keyword">sizeof</span>(thisBmpInfo.biCompression), <span class="number">1</span>, fp);</span><br><span class="line">	fwrite(&amp;thisBmpInfo.biSizeImage, <span class="keyword">sizeof</span>(thisBmpInfo.biSizeImage), <span class="number">1</span>, fp);</span><br><span class="line">	fwrite(&amp;thisBmpInfo.biXPelsPerMeter, <span class="keyword">sizeof</span>(thisBmpInfo.biXPelsPerMeter), <span class="number">1</span>, fp);</span><br><span class="line">	fwrite(&amp;thisBmpInfo.biYPelsPerMeter, <span class="keyword">sizeof</span>(thisBmpInfo.biYPelsPerMeter), <span class="number">1</span>, fp);</span><br><span class="line">	fwrite(&amp;thisBmpInfo.biClrUsed, <span class="keyword">sizeof</span>(thisBmpInfo.biClrUsed), <span class="number">1</span>, fp);</span><br><span class="line">	fwrite(&amp;thisBmpInfo.biClrImportant, <span class="keyword">sizeof</span>(thisBmpInfo.biClrImportant), <span class="number">1</span>, fp);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">AddNoise_salt</span><span class="params">(BYTE* p, BYTE *pNoise)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  srand(time(<span class="number">0</span>));</span><br><span class="line">  <span class="keyword">int</span> *flag=(<span class="keyword">int</span> *)<span class="built_in">malloc</span>(ph*pw*<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">  <span class="built_in">memset</span>(flag,<span class="number">0</span>,<span class="keyword">sizeof</span>(<span class="keyword">int</span>)*ph*pw);</span><br><span class="line">  <span class="keyword">int</span> num=ph*pw*<span class="number">0.01</span>;</span><br><span class="line">  <span class="keyword">int</span> i,j,tmp,_;</span><br><span class="line">  <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;ph;i++)</span><br><span class="line">    <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;pw;j++)</span><br><span class="line">    &#123;</span><br><span class="line">      tmp=i*lsize+j*<span class="number">3</span>;</span><br><span class="line">      <span class="keyword">for</span>(_=<span class="number">0</span>;_&lt;<span class="number">3</span>;_++)</span><br><span class="line">        pNoise[tmp+_]=p[tmp+_];</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;num;i++)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">int</span> tmpi=rand()%ph,</span><br><span class="line">        tmpj=rand()%pw;</span><br><span class="line">    <span class="keyword">while</span>(flag[tmpi*pw+tmpj])</span><br><span class="line">    &#123;</span><br><span class="line">      tmpi=rand()%ph;</span><br><span class="line">      tmpj=rand()%pw;</span><br><span class="line">    &#125;</span><br><span class="line">    flag[tmpi*pw+tmpj]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(_=<span class="number">0</span>;_&lt;<span class="number">3</span>;_++)</span><br><span class="line">    &#123;</span><br><span class="line">      pNoise[tmpi*lsize+tmpj*<span class="number">3</span>+_]=<span class="number">255</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  OutPutImg(pNoise,<span class="string">&quot;Salt_Noise&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">AddNoise_pepper</span><span class="params">(BYTE* p, BYTE *pNoise)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  srand(time(<span class="number">0</span>));</span><br><span class="line">  <span class="keyword">int</span> *flag=(<span class="keyword">int</span> *)<span class="built_in">malloc</span>(ph*pw*<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">  <span class="built_in">memset</span>(flag,<span class="number">0</span>,<span class="keyword">sizeof</span>(<span class="keyword">int</span>)*ph*pw);</span><br><span class="line">  <span class="keyword">int</span> num=ph*pw*<span class="number">0.01</span>;</span><br><span class="line">  <span class="keyword">int</span> i,j,tmp,_;</span><br><span class="line">  <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;ph;i++)</span><br><span class="line">    <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;pw;j++)</span><br><span class="line">    &#123;</span><br><span class="line">      tmp=i*lsize+j*<span class="number">3</span>;</span><br><span class="line">      <span class="keyword">for</span>(_=<span class="number">0</span>;_&lt;<span class="number">3</span>;_++)</span><br><span class="line">        pNoise[tmp+_]=p[tmp+_];</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;num;i++)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">int</span> tmpi=rand()%ph,</span><br><span class="line">        tmpj=rand()%pw;</span><br><span class="line">    <span class="keyword">while</span>(flag[tmpi*pw+tmpj])</span><br><span class="line">    &#123;</span><br><span class="line">      tmpi=rand()%ph;</span><br><span class="line">      tmpj=rand()%pw;</span><br><span class="line">    &#125;</span><br><span class="line">    flag[tmpi*pw+tmpj]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(_=<span class="number">0</span>;_&lt;<span class="number">3</span>;_++)</span><br><span class="line">    &#123;</span><br><span class="line">      pNoise[tmpi*lsize+tmpj*<span class="number">3</span>+_]=<span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  OutPutImg(pNoise,<span class="string">&quot;Pepper_Noise&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">BilateralFilter</span><span class="params">(BYTE *p,BYTE* pOUT,<span class="keyword">char</span> *name)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i,j,tmp,_,o;</span><br><span class="line">  <span class="keyword">int</span> fx[<span class="number">49</span>]=&#123;<span class="number">0</span>&#125;,fy[<span class="number">49</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">  <span class="keyword">for</span>(i=<span class="number">0</span>,_=<span class="number">0</span>;i&lt;<span class="number">7</span>;i++)</span><br><span class="line">    <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;<span class="number">7</span>;j++,_++)</span><br><span class="line">    &#123;</span><br><span class="line">      fx[_]=i<span class="number">-3</span>;</span><br><span class="line">      fy[_]=j<span class="number">-3</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;ph;i++)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;pw;j++)</span><br><span class="line">    &#123;</span><br><span class="line">      tmp=i*lsize+j*<span class="number">3</span>;</span><br><span class="line">      <span class="keyword">for</span>(_=<span class="number">0</span>;_&lt;<span class="number">3</span>;_++)</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="keyword">int</span> flag=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">double</span> G=<span class="number">0</span>,W=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(o=<span class="number">0</span>;o&lt;<span class="number">49</span>;o++)</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="keyword">int</span> tmpi=i+fx[o],tmpj=j+fy[o];</span><br><span class="line">          <span class="keyword">if</span>(tmpi&gt;=<span class="number">0</span>&amp;&amp;tmpi&lt;ph&amp;&amp;tmpj&gt;=<span class="number">0</span>&amp;&amp;tmpj&lt;pw)</span><br><span class="line">          &#123;</span><br><span class="line">            <span class="keyword">int</span> t=tmpi*lsize+tmpj*<span class="number">3</span>;</span><br><span class="line">            <span class="keyword">double</span> w=getWeight(i,j,tmpi,tmpj,p[tmp+_],p[t+_]);</span><br><span class="line">            G+=p[t+_]*w;</span><br><span class="line">            W+=w;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">else</span>   flag=<span class="number">1</span>;  </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(!flag)</span><br><span class="line">          pOUT[tmp+_]=(G/W &gt; <span class="number">255</span>) ? <span class="number">255</span> : G/W;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">          pOUT[tmp+_]=p[tmp+_];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  OutPutImg(pOUT,name);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">getWeight</span><span class="params">(i,j,tmpi,tmpj,I0,I2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">double</span> d=((<span class="keyword">double</span>)((i-tmpi)*(i-tmpi)+(j-tmpj)*(j-tmpj)))/(<span class="number">2</span>*sigma_d*sigma_d);</span><br><span class="line">  <span class="keyword">double</span> r=((<span class="keyword">double</span>)((I0-I2)*(I0-I2)))/(<span class="number">2</span>*sigma_r*sigma_r);</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">exp</span>(<span class="number">-1</span>*d-r);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>分析</p>
-<ul>
-<li><p>双边滤波函数</p>
-<p>  利用fx，fy两个数组作为坐标偏移函数</p>
-<p>  首先通过一个循环为坐标偏移函数赋值</p>
-<p>  然后枚举$7<em>7$方格中的像素点，利用</em><strong>getWeight</strong>* 函数计算得到相应的权重，并记录累加的值。</p>
-</li>
-</ul>
-  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">BilateralFilter</span><span class="params">(BYTE *p,BYTE* pOUT,<span class="keyword">char</span> *name)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i,j,tmp,_,o;</span><br><span class="line">  <span class="keyword">int</span> fx[<span class="number">49</span>]=&#123;<span class="number">0</span>&#125;,fy[<span class="number">49</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">  <span class="keyword">for</span>(i=<span class="number">0</span>,_=<span class="number">0</span>;i&lt;<span class="number">7</span>;i++)</span><br><span class="line">    <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;<span class="number">7</span>;j++,_++)</span><br><span class="line">    &#123;</span><br><span class="line">      fx[_]=i<span class="number">-3</span>;</span><br><span class="line">      fy[_]=j<span class="number">-3</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;ph;i++)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;pw;j++)</span><br><span class="line">    &#123;</span><br><span class="line">      tmp=i*lsize+j*<span class="number">3</span>;</span><br><span class="line">      <span class="keyword">for</span>(_=<span class="number">0</span>;_&lt;<span class="number">3</span>;_++)</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="keyword">int</span> flag=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">double</span> G=<span class="number">0</span>,W=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(o=<span class="number">0</span>;o&lt;<span class="number">49</span>;o++)</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="keyword">int</span> tmpi=i+fx[o],tmpj=j+fy[o];</span><br><span class="line">          <span class="keyword">if</span>(tmpi&gt;=<span class="number">0</span>&amp;&amp;tmpi&lt;ph&amp;&amp;tmpj&gt;=<span class="number">0</span>&amp;&amp;tmpj&lt;pw)</span><br><span class="line">          &#123;</span><br><span class="line">            <span class="keyword">int</span> t=tmpi*lsize+tmpj*<span class="number">3</span>;</span><br><span class="line">            <span class="keyword">double</span> w=getWeight(i,j,tmpi,tmpj,p[tmp+_],p[t+_]);</span><br><span class="line">            G+=p[t+_]*w;</span><br><span class="line">            W+=w;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">else</span>   flag=<span class="number">1</span>;  </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(!flag)</span><br><span class="line">          pOUT[tmp+_]=(G/W &gt; <span class="number">255</span>) ? <span class="number">255</span> : G/W;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">          pOUT[tmp+_]=p[tmp+_];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  OutPutImg(pOUT,name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="实验平台"><a href="#实验平台" class="headerlink" title="实验平台"></a>实验平台</h3><p>数据库管理系统（MySQL）</p>
+<h3 id="实验内容和要求"><a href="#实验内容和要求" class="headerlink" title="实验内容和要求"></a>实验内容和要求</h3><h5 id="1、建立数据库school"><a href="#1、建立数据库school" class="headerlink" title="1、建立数据库school"></a>1、建立数据库school</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE school;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2、数据的定义"><a href="#2、数据的定义" class="headerlink" title="2、数据的定义"></a>2、数据的定义</h5><p>利用create创建三张表,同时增加主键外键约束</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE S (</span><br><span class="line">	SID VARCHAR ( 20 ) ,</span><br><span class="line">	SNAME VARCHAR ( 20 ),</span><br><span class="line">	AGE INT,</span><br><span class="line">	SEX VARCHAR ( 1 ) ,</span><br><span class="line">	PRIMARY KEY (SID)</span><br><span class="line">);</span><br><span class="line">CREATE TABLE C(</span><br><span class="line">	CID VARCHAR ( 20 ) ,</span><br><span class="line">	CNAME VARCHAR(20),</span><br><span class="line">	TEACHER VARCHAR(20),</span><br><span class="line">	PRIMARY KEY (CID)</span><br><span class="line">);</span><br><span class="line">CREATE TABLE SC(</span><br><span class="line">	SID VARCHAR(20),</span><br><span class="line">	CID VARCHAR(20),</span><br><span class="line">	GRADE INT,</span><br><span class="line">	PRIMARY KEY (SID,CID),</span><br><span class="line">	FOREIGN KEY (SID) REFERENCES S(SID) ON UPDATE CASCADE ON DELETE CASCADE,</span><br><span class="line">	FOREIGN KEY (CID) REFERENCES C(CID) ON UPDATE CASCADE ON DELETE CASCADE</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="3、完整性约束设置及其测试"><a href="#3、完整性约束设置及其测试" class="headerlink" title="3、完整性约束设置及其测试"></a>3、完整性约束设置及其测试</h5><ul>
+<li><p>完整性约束设置</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE S ADD CHECK (sex in (&#x27;f&#x27;,&#x27;m&#x27;));</span><br><span class="line">ALTER TABLE S ADD CHECK (0 &lt;= age and age &lt;=200) ;</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li><p>权重计算</p>
-<p>  根据公式，直接计算各个像素点的权重</p>
-  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">getWeight</span><span class="params">(i,j,tmpi,tmpj,I0,I2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">double</span> d=((<span class="keyword">double</span>)((i-tmpi)*(i-tmpi)+(j-tmpj)*(j-tmpj)))/(<span class="number">2</span>*sigma_d*sigma_d);</span><br><span class="line">  <span class="keyword">double</span> r=((<span class="keyword">double</span>)((I0-I2)*(I0-I2)))/(<span class="number">2</span>*sigma_r*sigma_r);</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">exp</span>(<span class="number">-1</span>*d-r);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>测试</li>
+</ul>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO S (SID, SNAME, AGE, SEX)</span><br><span class="line">             VALUES (&#x27;S1&#x27;,&#x27;Wang feng&#x27;, 20, &#x27;f&#x27;);</span><br><span class="line">INSERT INTO S (SID, SNAME, AGE, SEX)</span><br><span class="line">             VALUES (&#x27;S2&#x27;,&#x27;Li feng&#x27;, 20, &#x27;t&#x27;);</span><br><span class="line">INSERT INTO S (SID, SNAME, AGE, SEX)</span><br><span class="line">             VALUES (&#x27;S2&#x27;,&#x27;Li feng&#x27;, -1, &#x27;m&#x27;);</span><br><span class="line">INSERT INTO S (SID, SNAME, AGE, SEX)</span><br><span class="line">             VALUES (&#x27;S2&#x27;,&#x27;Li feng&#x27;, 14, &#x27;m&#x27;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>运行结果</li>
 </ul>
 </li>
 </ul>
-<h3 id="心得体会"><a href="#心得体会" class="headerlink" title="心得体会"></a>心得体会</h3><ul>
-<li><p>实验结果</p>
-<p>  对原图的双边滤波</p>
-<p>  <img src="/.io//19aw\dip\hw6\BilateralFiler_of_origin.bmp" alt="BilateralFiler_of_origin"></p>
-<p>  对原图施加盐噪声</p>
-<p>  <img src="/.io//19aw\dip\hw6\Salt_Noise.bmp" alt="Salt_Noise"></p>
-<p>  对噪声干扰后的图像进行双边滤波</p>
-<p>  <img src="/.io//19aw\dip\hw6\BilateralFiler_of_salt.bmp" alt="BilateralFiler_of_salt"></p>
-</li>
-<li><p>心得</p>
-<p>  本次实验的代码和上次实验大体相似，区别仅在于权重的计算变得复杂一些。继续沿用上次实验坐标偏移的做法，大大简化了代码的编写难度</p>
-<p>  通过调整两个 $\sigma$ 的值，我们可以看到lena 的模糊程度会发生变化。</p>
-<p>  通过这次实验，我对于高斯滤波、双边滤波有了更深的理解。双边滤波综合距离和像素变化两者影响的思想及方法值得我们深思。 </p>
+<p><img src="/2020/04/02/DBS-Project3-SQL%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7/image-20200402212557918.png" alt="image-20200402212557918"></p>
+<p><img src="/2020/04/02/DBS-Project3-SQL%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7/image-20200402212646716.png" alt="image-20200402212646716"></p>
+<p><img src="/2020/04/02/DBS-Project3-SQL%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7/image-20200402212702535.png" alt="image-20200402212702535"></p>
+<ul>
+<li><p>触发器定义及测试</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">CREATE TRIGGER student_insert_check BEFORE INSERT</span><br><span class="line">ON s FOR EACH ROW</span><br><span class="line">BEGIN</span><br><span class="line">  DECLARE msg varchar(100);</span><br><span class="line">	IF NEW.age &lt;= 0 OR NEW.age &gt;= 200 </span><br><span class="line">	THEN</span><br><span class="line">		SET msg = CONCAT(&#x27;您输入的年龄值：&#x27;,NEW.age,&#x27; 为无效的年龄，请输入0到200以内的有效数字。&#x27;);</span><br><span class="line">		SIGNAL SQLSTATE &#x27;HY000&#x27; SET MESSAGE_TEXT = msg;</span><br><span class="line">	END IF;</span><br><span class="line">END;</span><br><span class="line"></span><br><span class="line">INSERT INTO S (SID, SNAME, AGE, SEX)</span><br><span class="line">			 VALUES (&#x27;S3&#x27;,&#x27;Cy&#x27;, 201, &#x27;f&#x27;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>结果</li>
+</ul>
 </li>
 </ul>
-<p>​    </p>
-<p>​    </p>
+<p><img src="/2020/04/02/DBS-Project3-SQL%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7/image-20200402212531207.png" alt="image-20200402212531207"></p>
+<ul>
+<li><p>外键约束测试</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO S (SID, SNAME, AGE, SEX)</span><br><span class="line">			 VALUES (&#x27;S1&#x27;,&#x27;Wang feng&#x27;, 20, &#x27;f&#x27;);</span><br><span class="line">INSERT INTO S (SID, SNAME, AGE, SEX)</span><br><span class="line">			 VALUES (&#x27;S2&#x27;,&#x27;Li feng&#x27;, 20, &#x27;t&#x27;);</span><br><span class="line">INSERT INTO S (SID, SNAME, AGE, SEX)</span><br><span class="line">			 VALUES (&#x27;S2&#x27;,&#x27;Li feng&#x27;, -1, &#x27;m&#x27;);</span><br><span class="line">INSERT INTO S (SID, SNAME, AGE, SEX)</span><br><span class="line">			 VALUES (&#x27;S2&#x27;,&#x27;Li feng&#x27;, 14, &#x27;m&#x27;);</span><br><span class="line">INSERT INTO C (CID, CNAME, TEACHER)</span><br><span class="line">       VALUES (&#x27;C1&#x27;, &#x27;DB&#x27;, &#x27;Li&#x27;);</span><br><span class="line">INSERT INTO C (CID, CNAME, TEACHER)</span><br><span class="line">       VALUES (&#x27;C2&#x27;, &#x27;maths&#x27;, &#x27;Ma&#x27;);</span><br><span class="line">INSERT INTO SC (SID, CID , GRADE)</span><br><span class="line">       VALUES (&#x27;S1&#x27;,&#x27;C1&#x27;,70);</span><br><span class="line">INSERT INTO SC (SID, CID , GRADE)</span><br><span class="line">       VALUES (&#x27;S2&#x27;,&#x27;C1&#x27;,81);</span><br><span class="line">INSERT INTO SC (SID, CID , GRADE)</span><br><span class="line">       VALUES (&#x27;S1&#x27;,&#x27;C2&#x27;,65);</span><br><span class="line">SELECT * FROM SC;</span><br><span class="line">DELETE FROM S WHERE SID = &#x27;S2&#x27; ;</span><br><span class="line">SELECT * FROM SC;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>结果</p>
+<p>  <img src="/2020/04/02/DBS-Project3-SQL%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7/image-20200402213304283.png" alt="image-20200402213304283"></p>
+<p>  <img src="/2020/04/02/DBS-Project3-SQL%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7/image-20200402213312189.png" alt="image-20200402213312189"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="3、MySQL上的用户和权限的设置"><a href="#3、MySQL上的用户和权限的设置" class="headerlink" title="3、MySQL上的用户和权限的设置"></a>3、MySQL上的用户和权限的设置</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE USER &#x27;test1&#x27;@&#x27;localhost&#x27; IDENTIFIED by &#x27;123&#x27;;</span><br><span class="line">CREATE USER &#x27;test2&#x27;@&#x27;localhost&#x27; IDENTIFIED by &#x27;123&#x27;;</span><br><span class="line">GRANT INSERT,UPDATE ON school.C TO &#x27;test1&#x27;@&#x27;localhost&#x27; WITH GRANT OPTION;</span><br><span class="line"></span><br><span class="line">revoke update on school.C from &#x27;test1&#x27;@&#x27;localhost&#x27;;</span><br><span class="line">show grants for &#x27;test2&#x27;@&#x27;localhost&#x27;;</span><br><span class="line">Drop user &#x27;test2&#x27;@&#x27;localhost&#x27;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2020/04/02/DBS-Project3-SQL%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7/image-20200402214727360.png" alt="image-20200402214727360"></p>
+<p><img src="/2020/04/02/DBS-Project3-SQL%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7/image-20200402215318454.png" alt="image-20200402215318454"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ydreamw.github.io/2019/12/07/DIP-HW6/" data-id="ckse5ht5400006kvl3pk8ese3" data-title="DIP-HW6" class="article-share-link">分享</a>
+      <a data-url="https://ydreamw.github.io/2020/04/02/DBS-Project3-SQL%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7/" data-id="cksni4d9w0006rgvl4qhw4wep" data-title="DBS-Project3-SQL数据完整性" class="article-share-link">分享</a>
       
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/database/" rel="tag">database</a></li></ul>
+
     </footer>
   </div>
   
@@ -777,14 +773,14 @@
 
 
   
-    <article id="post-多译更新日志页面开发-五-eggjs和MongoDB" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-ADS-project1-斐波那契堆优化的最短路径算法" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2019/12/02/%E5%A4%9A%E8%AF%91%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97%E9%A1%B5%E9%9D%A2%E5%BC%80%E5%8F%91-%E4%BA%94-eggjs%E5%92%8CMongoDB/" class="article-date">
-  <time class="dt-published" datetime="2019-12-02T04:53:29.000Z" itemprop="datePublished">2019-12-02</time>
+    <a href="/2020/03/29/ADS-project1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%A0%86%E4%BC%98%E5%8C%96%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95/" class="article-date">
+  <time class="dt-published" datetime="2020-03-28T17:28:29.000Z" itemprop="datePublished">2020-03-29</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/">Web开发实践</a>►<a class="article-category-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E5%A4%9A%E8%AF%91/">多译</a>
+    <a class="article-category-link" href="/categories/20ss/">20ss</a>►<a class="article-category-link" href="/categories/20ss/ADS/">ADS</a>
   </div>
 
   </div>
@@ -795,7 +791,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/12/02/%E5%A4%9A%E8%AF%91%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97%E9%A1%B5%E9%9D%A2%E5%BC%80%E5%8F%91-%E4%BA%94-eggjs%E5%92%8CMongoDB/">多译 · 更新日志页面开发(五)  简单使用 eggjs和MongoDB</a>
+      <a class="p-name article-title" href="/2020/03/29/ADS-project1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%A0%86%E4%BC%98%E5%8C%96%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95/">ADS-project1-斐波那契堆优化的最短路径算法</a>
     </h1>
   
 
@@ -803,34 +799,69 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>前些天在前端用Mock数据来进行开发，最近把后端给写了一下。</p>
-<p>同样在别人的项目基础上开发确实是很容易的。</p>
-<h2 id="1、路由"><a href="#1、路由" class="headerlink" title="1、路由"></a>1、路由</h2><p>在router中增加两个router接口</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取更新日志内容</span></span><br><span class="line">router.get(<span class="string">&#x27;/software/changelog&#x27;</span>, controller.software.getChangelog);</span><br><span class="line"><span class="comment">// 提交更新日志</span></span><br><span class="line">router.post(</span><br><span class="line">  <span class="string">&#x27;/admin/uploadchangelog&#x27;</span>,</span><br><span class="line">  app.middleware.jwtAuth(),</span><br><span class="line">  app.middleware.checkAdmin(),</span><br><span class="line">  controller.software.uploadChangelog</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-
-<h2 id="2、controller"><a href="#2、controller" class="headerlink" title="2、controller"></a>2、controller</h2><p>controller负责针对不同的URL请求进行数据处理</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">async</span> <span class="function"><span class="title">getChangelog</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="built_in">this</span>.ctx.model.Software.find().sort(&#123; [<span class="string">&#x27;version&#x27;</span>]: -<span class="number">1</span> &#125;);</span><br><span class="line">  <span class="built_in">this</span>.ctx.body = &#123;</span><br><span class="line">    <span class="attr">success</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">data</span>: res,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>controller中的函数应当是async函数，而其中对于数据库的操作应当用await，因为数据库的query是异步的。</p>
-<h2 id="3、Mongoose"><a href="#3、Mongoose" class="headerlink" title="3、Mongoose"></a>3、Mongoose</h2><p>Mongoose是js对于MongoDB操作的库。它通过在js中定义schema来定义数据库的结构。并且它和数据库是同步的。</p>
-<p>不用像MySQL那样create table了，这就是新世纪的数据库哈哈哈哈</p>
-<p>另外Mongoose的query好像也很复杂，这些东西等以后学了数据库再来慢慢学吧</p>
-<h2 id="4、中间件"><a href="#4、中间件" class="headerlink" title="4、中间件"></a>4、中间件</h2><p>关注router中的第二个接口，我们在path和controller方法中间增加了两个函数，其作用主要是进行鉴权。这里用到了Eggjs的中间件。</p>
-<p>我们只需要在middleware中定义一个中间件，即可在router中使用</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> () =&gt; <span class="keyword">async</span> (ctx: Context, next) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> user = <span class="keyword">await</span> ctx.helper.verifyAdmin();</span><br><span class="line">  <span class="keyword">const</span> &#123;uid&#125;=<span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(user));</span><br><span class="line">  <span class="keyword">const</span> id = <span class="keyword">await</span> ctx.model.User.findOne( &#123;<span class="attr">_id</span>:uid&#125; );</span><br><span class="line">  <span class="keyword">if</span>(id&amp;&amp;id.admin)&#123;</span><br><span class="line">    ctx.state.user = user;</span><br><span class="line">    <span class="keyword">await</span> next();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    ctx.throw(<span class="number">401</span>, <span class="string">&quot;not admin&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<p>miniproject也就此结束了。这个项目实现的效果虽然很简单，但我还是很有成就感的，毕竟我也算是学会了React哈哈哈哈</p>
-<p>最近这段时间有点忙。这个学期简直致命，数逻、oop各种大作业接踵而至。我要开始写大作业和复习了。</p>
+        <p>源代码地址： <a target="_blank" rel="noopener" href="https://github.com/YdreamW/20ss/tree/master/ads/project1_Fibheap%26ShortestPath">https://github.com/YdreamW/20ss/tree/master/ads/project1_Fibheap%26ShortestPath</a></p>
+<h2 id="题目要求"><a href="#题目要求" class="headerlink" title="题目要求"></a>题目要求</h2><p>Shortest path problems are ones of the most fundamental combinatorial optimization problems with many applications, both direct and as subroutines in other combinatorial optimization algorithms.  Algorithms for these problems have been studied since 1950’s and still remain an active area of research.</p>
+<p>In this project you are supposed to compute the shortest paths using Dijkstra’s algorithm.  The implementation shall be based on a min-priority queue, such as a Fibonacci heap.  The goal of the project is to find the best data structure for the Dijkstra’s algorithm.</p>
+<p>Your tasks are:</p>
+<ul>
+<li>(1)    Implement the algorithm with at least two different heap structures, while Fibonacci heap must be one of them.</li>
+<li>(2)    Use the USA road networks for evaluation.  The data sets can be downloaded from <a target="_blank" rel="noopener" href="http://www.dis.uniroma1.it/challenge9/download.shtml">http://www.dis.uniroma1.it/challenge9/download.shtml</a> which provides the benchmarks for the <strong>9th DIMACS Implementation Challenge</strong>.  (<strong>Note:</strong> you must <strong>only list the download links</strong> of these test data sets instead of uploading them with your reports.)</li>
+<li>(3)    At least 1000 pairs of query are required in evaluating the run times of the algorithm with various of implementations.</li>
+</ul>
+<p>###Grading Policy:</p>
+<p><strong>Programming:</strong> Implement Dijkstra’s algorithm with Fibonacci heap and other heaps (6 pts.).  Write a test of performance program (3 pts.).  <strong>All the codes must be sufficiently commented.</strong></p>
+<p><strong>Testing:</strong> Provide the necessary inputs for testing and give the run time table (2 pts.).  Plot the run times vs. input sizes for illustration (2 pts.).  Write analysis and comments (3 pts.).</p>
+<p><strong>Documentation:</strong> Chapter 1 (1 pt.), Chapter 2 (2 pts.), and finally a complete report (1 point for overall style of documentation).</p>
+<h2 id="斐波那契堆-参考-斐波那契堆"><a href="#斐波那契堆-参考-斐波那契堆" class="headerlink" title="斐波那契堆: (参考:斐波那契堆)"></a>斐波那契堆: (参考:<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40061421/article/details/81571132">斐波那契堆</a>)</h2><p>斐波那契堆(Fibonacci heap)是堆中一种，它和二项堆一样，也是一种可合并堆；可用于实现合并优先队列。斐波那契堆比二项堆具有更好的平摊分析性能，它的合并操作的时间复杂度是O(1)。<br>与二项堆一样，它也是由一组堆最小有序树组成，并且是一种可合并堆。<br>与二项堆不同的是，斐波那契堆中的树不一定是二项树；而且二项堆中的树是有序排列的，但是斐波那契堆中的树都是有根而无序的。</p>
+<p><img src="/2020/03/29/ADS-project1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%A0%86%E4%BC%98%E5%8C%96%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95/111642221538159.jpg" alt="1"></p>
+<ol>
+<li>基本定义</li>
+</ol>
+<p>FibNode是斐波那契堆的节点类，它包含的信息较多。key是用于比较节点大小的，degree是记录节点的度，left和right分别是指向节点的左右兄弟，child是节点的第一个孩子，parent是节点的父节点，marked是记录该节点是否被删除第1个孩子(marked在删除节点时有用)。</p>
+<p>FibHeap是斐波那契堆对应的类。min是保存当前堆的最小节点，keyNum用于记录堆中节点的总数，maxDegree用于记录堆中最大度，而cons在删除节点时来暂时保存堆数据的临时空间。</p>
+<p>下面看看斐波那契堆的内存结构图。</p>
+<p><img src="/2020/03/29/ADS-project1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%A0%86%E4%BC%98%E5%8C%96%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95/111643182933476.jpg" alt="2"></p>
+<p>从图中可以看出，斐波那契堆是由一组最小堆组成，这些最小堆的根节点组成了双向链表(后文称为”根链表”)；斐波那契堆中的最小节点就是”根链表中的最小节点”！</p>
+<ol start="2">
+<li>插入操作</li>
+</ol>
+<p>插入操作非常简单：插入一个节点到堆中，直接将该节点插入到”根链表的min节点”之前即可；若被插入节点比”min节点”小，则更新”min节点”为被插入节点。</p>
+<p><img src="/2020/03/29/ADS-project1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%A0%86%E4%BC%98%E5%8C%96%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95/3.jpg" alt="3"></p>
+<p>上面是插入操作的示意图。</p>
+<p>斐波那契堆的根链表是”双向链表”，这里将min节点看作双向联表的表头(后文也是如此)。在插入节点时，每次都是”将节点插入到min节点之前(即插入到双链表末尾)”。此外，对于根链表中最小堆都只有一个节点的情况，插入操作就很演化成双向链表的插入操作。</p>
+<ol start="3">
+<li>合并操作</li>
+</ol>
+<p>合并操作和插入操作的原理非常类似：将一个堆的根链表插入到另一个堆的根链表上即可。简单来说，就是将两个双链表拼接成一个双向链表。</p>
+<p><img src="/2020/03/29/ADS-project1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%A0%86%E4%BC%98%E5%8C%96%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95/4.jpg" alt="4"></p>
+<ol start="4">
+<li>取出最小节点</li>
+</ol>
+<p>抽取最小结点的操作是斐波那契堆中较复杂的操作。<br>(1）将要抽取最小结点的子树都直接串联在根表中；<br>(2）合并所有degree相等的树，直到没有相等的degree的树。</p>
+<p><img src="/2020/03/29/ADS-project1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%A0%86%E4%BC%98%E5%8C%96%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95/5.jpg" alt="5"></p>
+<p>上面是取出最小节点的示意图。图中应该写的非常明白了，若有疑问，看代码。</p>
+<ol start="5">
+<li>减小节点值</li>
+</ol>
+<p>减少斐波那契堆中的节点的键值，这个操作的难点是：如果减少节点后破坏了”最小堆”性质，如何去维护呢？下面对一般性情况进行分析。<br>(1) 首先，将”被减小节点”从”它所在的最小堆”剥离出来；然后将”该节点”关联到”根链表”中。 倘若被减小的节点不是单独一个节点，而是包含子树的树根。则是将以”被减小节点”为根的子树从”最小堆”中剥离出来，然后将该树关联到根链表中。<br>(2) 接着，对”被减少节点”的原父节点进行”级联剪切”。所谓”级联剪切”，就是在被减小节点破坏了最小堆性质，并被切下来之后；再从”它的父节点”进行递归级联剪切操作。<br>      而级联操作的具体动作则是：若父节点(被减小节点的父节点)的marked标记为false，则将其设为true，然后退出。<br>                                                          否则，将父节点从最小堆中切下来(方式和”切被减小节点的方式”一样)；然后递归对祖父节点进行”级联剪切”。<br>      marked标记的作用就是用来标记”该节点的子节点是否有被删除过”，它的作用是来实现级联剪切。而级联剪切的真正目的是为了防止”最小堆”由二叉树演化成链表。<br>(3) 最后，别忘了对根链表的最小节点进行更新。</p>
+<p><img src="/2020/03/29/ADS-project1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%A0%86%E4%BC%98%E5%8C%96%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95/6.jpg" alt="6"></p>
+<ol start="6">
+<li>增加节点值</li>
+</ol>
+<p>增加节点值和减少节点值类似，这个操作的难点也是如何维护”最小堆”性质。思路如下：<br>(1) 将”被增加节点”的”左孩子和左孩子的所有兄弟”都链接到根链表中。<br>(2) 接下来，把”被增加节点”添加到根链表；但是别忘了对其进行级联剪切。</p>
+<p><img src="/2020/03/29/ADS-project1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%A0%86%E4%BC%98%E5%8C%96%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95/7.jpg" alt="7"></p>
+<ol start="7">
+<li>删除节点</li>
+</ol>
+<p>删除节点，本文采用了操作是：”取出最小节点”和”减小节点值”的组合。<br>(1) 先将被删除节点的键值减少。减少后的值要比”原最小节点的值”即可。<br>(2) 接着，取出最小节点即可。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ydreamw.github.io/2019/12/02/%E5%A4%9A%E8%AF%91%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97%E9%A1%B5%E9%9D%A2%E5%BC%80%E5%8F%91-%E4%BA%94-eggjs%E5%92%8CMongoDB/" data-id="cksg739nd0002s0vldojp3klt" data-title="多译 · 更新日志页面开发(五)  简单使用 eggjs和MongoDB" class="article-share-link">分享</a>
+      <a data-url="https://ydreamw.github.io/2020/03/29/ADS-project1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%A0%86%E4%BC%98%E5%8C%96%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95/" data-id="cksnhkjz80000f8vlgasd67dg" data-title="ADS-project1-斐波那契堆优化的最短路径算法" class="article-share-link">分享</a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Egg-js/" rel="tag">Egg.js</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB/" rel="tag">MongoDB</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TODO/" rel="tag">TODO</a></li></ul>
-
     </footer>
   </div>
   
@@ -843,7 +874,7 @@
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
   </nav>
 
 </section>
@@ -854,7 +885,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/INA/">INA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/">Web开发实践</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E5%A4%9A%E8%AF%91/">多译</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E8%AF%BE%E5%90%A6/">课否</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/">个人课程作业</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/19aw/">19aw</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E9%9A%8F%E7%AC%94/">个人随笔</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/">20ss</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/ADS/">ADS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/DBS/">DBS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/Linux/">Linux</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/INA/">INA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/">Web开发实践</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E5%A4%9A%E8%AF%91/">多译</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E8%AF%BE%E5%90%A6/">课否</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/">个人课程作业</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/19aw/">19aw</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E9%9A%8F%E7%AC%94/">个人随笔</a></li></ul>
     </div>
   </div>
 
@@ -864,7 +895,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ant-Design/" rel="tag">Ant Design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dva/" rel="tag">Dva</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Egg-js/" rel="tag">Egg.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hooks/" rel="tag">Hooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/" rel="tag">MongoDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redux/" rel="tag">Redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TODO/" rel="tag">TODO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Umi/" rel="tag">Umi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebStorm/" rel="tag">WebStorm</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ant-Design/" rel="tag">Ant Design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dva/" rel="tag">Dva</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Egg-js/" rel="tag">Egg.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hooks/" rel="tag">Hooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/" rel="tag">MongoDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redux/" rel="tag">Redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TODO/" rel="tag">TODO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Umi/" rel="tag">Umi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebStorm/" rel="tag">WebStorm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/" rel="tag">database</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a></li></ul>
     </div>
   </div>
 
@@ -874,7 +905,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Ant-Design/" style="font-size: 10px;">Ant Design</a> <a href="/tags/Dva/" style="font-size: 10px;">Dva</a> <a href="/tags/Egg-js/" style="font-size: 10px;">Egg.js</a> <a href="/tags/Hooks/" style="font-size: 10px;">Hooks</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/React/" style="font-size: 20px;">React</a> <a href="/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/tags/TODO/" style="font-size: 15px;">TODO</a> <a href="/tags/TypeScript/" style="font-size: 10px;">TypeScript</a> <a href="/tags/Umi/" style="font-size: 10px;">Umi</a> <a href="/tags/Web/" style="font-size: 20px;">Web</a> <a href="/tags/WebStorm/" style="font-size: 10px;">WebStorm</a>
+      <a href="/tags/Ant-Design/" style="font-size: 10px;">Ant Design</a> <a href="/tags/Dva/" style="font-size: 10px;">Dva</a> <a href="/tags/Egg-js/" style="font-size: 10px;">Egg.js</a> <a href="/tags/Hooks/" style="font-size: 10px;">Hooks</a> <a href="/tags/Linux/" style="font-size: 16.67px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/React/" style="font-size: 16.67px;">React</a> <a href="/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/tags/TODO/" style="font-size: 13.33px;">TODO</a> <a href="/tags/TypeScript/" style="font-size: 10px;">TypeScript</a> <a href="/tags/Umi/" style="font-size: 10px;">Umi</a> <a href="/tags/Web/" style="font-size: 16.67px;">Web</a> <a href="/tags/WebStorm/" style="font-size: 10px;">WebStorm</a> <a href="/tags/database/" style="font-size: 20px;">database</a> <a href="/tags/shell/" style="font-size: 13.33px;">shell</a>
     </div>
   </div>
 
@@ -883,7 +914,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
     </div>
   </div>
 
@@ -912,7 +943,7 @@
           </li>
         
           <li>
-            <a href="/2020/02/29/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E4%B8%89-%E5%AF%B9%E4%BA%8E%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%80%9D%E8%80%83/">课否 · 回复功能开发实践(三)： 对于业务的思考</a>
+            <a href="/2020/06/21/Linux-Lab3/">Linux-Lab3</a>
           </li>
         
       </ul>

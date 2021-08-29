@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Linux-Lab3 | Ydream&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="shell程序设计课程名称：  Linux应用技术基础 实验类型：综合型 实验项目名称： shell程序设计 一、实验环境操作系统：Windows 10 家庭中文版 64位操作系统，基于x64的处理器 处理器： Intel(R) Core(TM)i7-8750H CPU 2.20GHz 2.21 GHz 内存(RAM ) ： 16.0GB Linux版本： Ubuntu-1904 二、实验内容和结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux-Lab3">
+<meta property="og:url" content="https://ydreamw.github.io/2020/06/21/Linux-Lab3/index.html">
+<meta property="og:site_name" content="Ydream&#39;s Blog">
+<meta property="og:description" content="shell程序设计课程名称：  Linux应用技术基础 实验类型：综合型 实验项目名称： shell程序设计 一、实验环境操作系统：Windows 10 家庭中文版 64位操作系统，基于x64的处理器 处理器： Intel(R) Core(TM)i7-8750H CPU 2.20GHz 2.21 GHz 内存(RAM ) ： 16.0GB Linux版本： Ubuntu-1904 二、实验内容和结">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ydreamw.github.io/2020/06/21/Linux-Lab3/image-20200617210417017.png">
+<meta property="og:image" content="https://ydreamw.github.io/2020/06/21/Linux-Lab3/image-20200617211223892.png">
+<meta property="og:image" content="https://ydreamw.github.io/2020/06/21/Linux-Lab3/image-20200617213350746.png">
+<meta property="og:image" content="https://ydreamw.github.io/2020/06/21/Linux-Lab3/image-20200617214722800.png">
+<meta property="og:image" content="https://ydreamw.github.io/2020/06/21/Linux-Lab3/image-20200617215559497.png">
+<meta property="og:image" content="https://ydreamw.github.io/2020/06/21/Linux-Lab3/image-20200621224325527.png">
+<meta property="og:image" content="https://ydreamw.github.io/2020/06/21/Linux-Lab3/image-20200621230030247.png">
+<meta property="og:image" content="https://ydreamw.github.io/2020/06/21/Linux-Lab3/image-20200621225539926.png">
+<meta property="og:image" content="https://ydreamw.github.io/2020/06/21/Linux-Lab3/image-20200621230926295.png">
+<meta property="og:image" content="https://ydreamw.github.io/2020/06/21/Linux-Lab3/image-20200621230937698.png">
+<meta property="article:published_time" content="2020-06-20T17:03:12.000Z">
+<meta property="article:modified_time" content="2021-08-22T17:29:38.889Z">
+<meta property="article:author" content="Ydream">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="shell">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ydreamw.github.io/2020/06/21/Linux-Lab3/image-20200617210417017.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Ydream's Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Ydream&#39;s Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">个人向博客，记录一下个人的碎碎念和一些成长</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://YdreamW.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Linux-Lab3" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/06/21/Linux-Lab3/" class="article-date">
+  <time class="dt-published" datetime="2020-06-20T17:03:12.000Z" itemprop="datePublished">2020-06-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/20ss/">20ss</a>►<a class="article-category-link" href="/categories/20ss/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Linux-Lab3
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="shell程序设计"><a href="#shell程序设计" class="headerlink" title="shell程序设计"></a>shell程序设计</h1><p><code>课程名称：  Linux应用技术基础</code></p>
+<p><code>实验类型：综合型</code></p>
+<p><code>实验项目名称： shell程序设计</code></p>
+<h2 id="一、实验环境"><a href="#一、实验环境" class="headerlink" title="一、实验环境"></a>一、实验环境</h2><p>操作系统：Windows 10 家庭中文版 64位操作系统，基于x64的处理器</p>
+<p>处理器： Intel(R) Core(TM)i7-8750H CPU 2.20GHz 2.21 GHz</p>
+<p>内存(RAM ) ： 16.0GB</p>
+<p>Linux版本： Ubuntu-1904</p>
+<h2 id="二、实验内容和结果及分析"><a href="#二、实验内容和结果及分析" class="headerlink" title="二、实验内容和结果及分析"></a>二、实验内容和结果及分析</h2><h4 id="1、编写一个shell脚本程序，它带一个命令行参数，这个参数是一个文件名。如果这个文件是一个普通文件，则打印文件所有者的名字和最后的修改日期。如果程序带有多个参数，则输出出错信息。"><a href="#1、编写一个shell脚本程序，它带一个命令行参数，这个参数是一个文件名。如果这个文件是一个普通文件，则打印文件所有者的名字和最后的修改日期。如果程序带有多个参数，则输出出错信息。" class="headerlink" title="1、编写一个shell脚本程序，它带一个命令行参数，这个参数是一个文件名。如果这个文件是一个普通文件，则打印文件所有者的名字和最后的修改日期。如果程序带有多个参数，则输出出错信息。"></a>1、编写一个shell脚本程序，它带一个命令行参数，这个参数是一个文件名。如果这个文件是一个普通文件，则打印文件所有者的名字和最后的修改日期。如果程序带有多个参数，则输出出错信息。</h4><p>code</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">if [ $2 ];then  #more than one parameter</span><br><span class="line">    echo &quot;Too many parmeters, please input exactly one parameter!&quot;</span><br><span class="line">elif [ $1 ];then</span><br><span class="line">    if test -f &quot;$1&quot;;then #get input</span><br><span class="line">        ownername=$(ls -l $1 | awk &#x27;&#123;print $3&#125;&#x27;) #get name</span><br><span class="line">        month=$(ls -l $1 | awk &#x27;&#123;print $6&#125;&#x27;) #get month</span><br><span class="line">        day=$(ls -l $1 | awk &#x27;&#123;print $7&#125;&#x27;) #get day</span><br><span class="line">        time=$(ls -l $1 | awk &#x27;&#123;print $8&#125;&#x27;) #get time</span><br><span class="line">        #output</span><br><span class="line">        echo &quot;Filename:$1&quot;</span><br><span class="line">        echo &quot;Owner&#x27;s name:$ownername&quot;</span><br><span class="line">        echo &quot;Modify time:$month $day $time&quot;</span><br><span class="line">    else 	#not a file</span><br><span class="line">        echo &quot;$1 is not a ordinary file&quot;</span><br><span class="line">    fi</span><br><span class="line">else</span><br><span class="line">    echo &quot;You should input one parameter!&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<p>test:</p>
+<p>创建test文件和dir文件夹</p>
+<p><img src="/2020/06/21/Linux-Lab3/image-20200617210417017.png" alt="image-20200617210417017"></p>
+<p>以依次通过没有参数、一个文件参数、一个目录参数、两个参数来测试sh</p>
+<p><img src="/2020/06/21/Linux-Lab3/image-20200617211223892.png" alt="image-20200617211223892"></p>
+<p>如图  获得了预期的结果。</p>
+<h4 id="2、-编写shell程序，统计指定目录下的普通文件、子目录及可执行文件的数目，统计该目录下所有普通文件字节数总和，目录的路径名字由参数传入。"><a href="#2、-编写shell程序，统计指定目录下的普通文件、子目录及可执行文件的数目，统计该目录下所有普通文件字节数总和，目录的路径名字由参数传入。" class="headerlink" title="2、 编写shell程序，统计指定目录下的普通文件、子目录及可执行文件的数目，统计该目录下所有普通文件字节数总和，目录的路径名字由参数传入。"></a>2、 编写shell程序，统计指定目录下的普通文件、子目录及可执行文件的数目，统计该目录下所有普通文件字节数总和，目录的路径名字由参数传入。</h4><p>code</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">echo &quot;normal files:&quot; `find $1 -type f | wc -l` #normal files</span><br><span class="line">echo &quot;subdirectory:&quot;`find $1 -type d | wc -l` #subdirectory</span><br><span class="line">echo &quot;executable files:&quot; `find $1 -type f -executable | wc -l` #executable files</span><br><span class="line">num=0 </span><br><span class="line">for file_name in `ls $1` #for each file</span><br><span class="line">do</span><br><span class="line">    file=$1&quot;/&quot;$file_name #get the path</span><br><span class="line">    if [ -f $file ] #if it is an ordinary file</span><br><span class="line">	    then</span><br><span class="line">		    ch=$(cat $file | wc -c) #get the number of  chars</span><br><span class="line">		    num=$(($num+$ch)) </span><br><span class="line">    fi</span><br><span class="line">done</span><br><span class="line">echo &quot;total char num: $num&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2020/06/21/Linux-Lab3/image-20200617213350746.png" alt="image-20200617213350746"></p>
+<p>在lab3中实验，可以看到结果正确。</p>
+<h4 id="3、编写一个shell-脚本，输入一个字符串，忽略（删除）非字母后，检测该字符串是否为回文-palindrome-。对于一个字符串，如果从前向后读和从后向前读都是同一个字符串，则称之为回文串。例如，单词“mom”，“dad”和“noon”都是回文串。"><a href="#3、编写一个shell-脚本，输入一个字符串，忽略（删除）非字母后，检测该字符串是否为回文-palindrome-。对于一个字符串，如果从前向后读和从后向前读都是同一个字符串，则称之为回文串。例如，单词“mom”，“dad”和“noon”都是回文串。" class="headerlink" title="3、编写一个shell 脚本，输入一个字符串，忽略（删除）非字母后，检测该字符串是否为回文(palindrome)。对于一个字符串，如果从前向后读和从后向前读都是同一个字符串，则称之为回文串。例如，单词“mom”，“dad”和“noon”都是回文串。"></a>3、编写一个shell 脚本，输入一个字符串，忽略（删除）非字母后，检测该字符串是否为回文(palindrome)。对于一个字符串，如果从前向后读和从后向前读都是同一个字符串，则称之为回文串。例如，单词“mom”，“dad”和“noon”都是回文串。</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">echo -n &quot;Please input the string:&quot;</span><br><span class="line">read line     ##get input</span><br><span class="line">str=`echo $line | tr -c -d [:alpha:] `   ##delete other chars</span><br><span class="line">reverse=`echo $str | rev`</span><br><span class="line">if [ $str = $reverse ];     ##check if int the same</span><br><span class="line">then</span><br><span class="line">    echo &quot;$str is palindorme.&quot;</span><br><span class="line">else</span><br><span class="line">    echo &quot;$str isn&#x27;t palindorme&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2020/06/21/Linux-Lab3/image-20200617214722800.png" alt="image-20200617214722800"></p>
+<p>尝试了几组测试结果，成功忽略了非字母，并且判断回文结果正确。</p>
+<h4 id="4、编写一个shell脚本，把当前目录下文件大小大于100K的文件全部移动到-tmp-目录下。"><a href="#4、编写一个shell脚本，把当前目录下文件大小大于100K的文件全部移动到-tmp-目录下。" class="headerlink" title="4、编写一个shell脚本，把当前目录下文件大小大于100K的文件全部移动到~/tmp/ 目录下。"></a>4、编写一个shell脚本，把当前目录下文件大小大于100K的文件全部移动到~/tmp/ 目录下。</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/sh</span></span><br><span class="line">find ./ -type f -size +100k -exec mv &#123;&#125; ~/tmp/ \;  ##find语句来实现</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2020/06/21/Linux-Lab3/image-20200617215559497.png" alt="image-20200617215559497"></p>
+<p>创建好tmp后，我们执行shell后发现两个大于100k的文件被移动到了/home/ydream/tmp下</p>
+<p>####5、编写一个实现文件备份和同步的shell脚本程序dirsync。程序的参数是两个需要备份同步的目录，如:</p>
+<p>$dirsync <del>/dir1 ~/dir2$  # $</del>/dir1$为源目录，$~/dir2$为目标目录​</p>
+<p><strong>dirsync程序实现两个目录内的所有文件和子目录（递归所有的子目录）内容保持一致。程序基本功能如下。</strong></p>
+<p><strong>1)     备份功能：目标目录将使用来自源目录的最新文件，新文件和新子目录进行升级，源目录将保持不变。dirsync程序能够实现增量备份。</strong></p>
+<p><strong>2)     同步功能：两个方向上的旧文件都将被最新文件替换，新文件都将被双向复制。源目录被删除的文件和子目录，目标目录也要对应删除。</strong></p>
+<p><strong>代码1</strong></p>
+<p>代码1通过比较文件更改时间来进行，子目录使用递归进行更新备份</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> dirsync.sh</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Two modes:</span> </span><br><span class="line"><span class="meta">#</span><span class="bash"> 1. back-up</span> </span><br><span class="line"><span class="meta">#</span><span class="bash"> 2. synchronize</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Judge the input parameter</span></span><br><span class="line">if [ $# -ne 2 ] #judge the number of parameter</span><br><span class="line">then</span><br><span class="line">        echo &quot;program: $0 needs one prameter.&quot;</span><br><span class="line">        exit 1</span><br><span class="line">fi</span><br><span class="line">if [[ ! -d $1 || ! -d $2 ]] #check if they are dictionary</span><br><span class="line">then</span><br><span class="line">	echo &quot;parameters must be dirctory&quot;</span><br><span class="line">	exit 1</span><br><span class="line">fi</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> The definitions of <span class="built_in">functions</span> used</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> To update file.</span> </span><br><span class="line"><span class="meta">#</span><span class="bash"> @parameters : <span class="built_in">source</span> file, destination path and <span class="built_in">source</span> path</span></span><br><span class="line"></span><br><span class="line">function update_file &#123;</span><br><span class="line">    new_file=$2\/$1</span><br><span class="line">    source_file=$3\/$1   </span><br><span class="line">    if [`! -f $new_file`] &amp;&amp; [ `stat -c %Y $new_file` -gt `stat -c %Y $source_file` ] </span><br><span class="line">    then </span><br><span class="line">        cp -fp $source_file $new_file </span><br><span class="line">        echo &quot;File &quot;$source_file&quot; has been copied&quot;</span><br><span class="line">        cnt_update=$cnt_update+1    # cnt the number</span><br><span class="line">        return 1</span><br><span class="line">    fi</span><br><span class="line">    return 0</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> To delete the file that doesn<span class="string">&#x27;t exist in the given source file.</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="string"> @Parameters : source file, destination path and source path</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="string"> Use a dictionary /tmp to replace rm</span></span></span><br><span class="line">function delete_file &#123;</span><br><span class="line">    if test -f $2\/$1</span><br><span class="line">    then</span><br><span class="line">        :</span><br><span class="line">    else</span><br><span class="line">        mv $3\/$1 \/tmp </span><br><span class="line">        echo &quot;File &quot;$3\/$1&quot; has been deleted&quot;</span><br><span class="line">        cnt_delete=$cnt_delete+1 # cnt the number</span><br><span class="line">        return 1</span><br><span class="line">    fi</span><br><span class="line">    return 0</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="string"> To update a directory.</span></span> </span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="string"> @Parameters : source dir, destination path and source path</span></span></span><br><span class="line"></span><br><span class="line">function update_dir &#123;</span><br><span class="line">    cnt=0</span><br><span class="line">    if test -d $2\/$1    </span><br><span class="line">    then</span><br><span class="line">        for item in $(ls $3\/$1)</span><br><span class="line">        do</span><br><span class="line">            if test -d $3\/$1\/$item</span><br><span class="line">            then</span><br><span class="line">                update_dir $item $2\/$item $3\/$1 # recursively update</span><br><span class="line">            elif test -f $3\/$1\/$item</span><br><span class="line">            then </span><br><span class="line">                update_file $item $2\/$1 $3\/$1 # check the file</span><br><span class="line">                if (( $? == 1 )) </span><br><span class="line">                then </span><br><span class="line">                    cnt=$cnt+1</span><br><span class="line">                fi</span><br><span class="line">            fi</span><br><span class="line">        done</span><br><span class="line">    else </span><br><span class="line">        cp -fpr $3\/$1 $2\/$1</span><br><span class="line">        echo &quot;Directory &quot;$3\/$1&quot; has been copied&quot;</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="string"> To delete the directory that doesn&#x27;</span>t exist <span class="keyword">in</span> the given <span class="built_in">source</span> file.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> @Parameters : <span class="built_in">source</span> dir(<span class="variable">$1</span>), destination path(<span class="variable">$2</span>) and <span class="built_in">source</span> path(<span class="variable">$3</span>)</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Use a dictionary /tmp to replace rm</span></span><br><span class="line">function delete_dir &#123;</span><br><span class="line">    cnt=0</span><br><span class="line">    if test -d $2\/$1  </span><br><span class="line">    then</span><br><span class="line">        for item in $(ls $3\/$1) </span><br><span class="line">        do</span><br><span class="line">            if test -d $3\/$1\/$item # check if it is a dir</span><br><span class="line">            then</span><br><span class="line">                delete_dir $item $2\/$item $3\/$1 # recursively delete</span><br><span class="line">                continue</span><br><span class="line">            fi</span><br><span class="line">            if test -f $3\/$1\/$item # check if it is a file</span><br><span class="line">            then </span><br><span class="line">                delete_file $item $2\/$1 $3\/$1 # delete a file</span><br><span class="line">                if (( $? == 1 ))</span><br><span class="line">                then </span><br><span class="line">                    cnt=$cnt+1</span><br><span class="line">                fi</span><br><span class="line">                continue</span><br><span class="line">            fi</span><br><span class="line">        done</span><br><span class="line">    else</span><br><span class="line">        mv $3\/$1 \/tmp # safely remove</span><br><span class="line">        echo &quot;Directory &quot;$3\/$1&quot; has been deleted&quot;</span><br><span class="line">    fi </span><br><span class="line">&#125;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Main</span></span><br><span class="line"></span><br><span class="line">source_dir=$&#123;1:-./&#125;       </span><br><span class="line">destination_dir=$&#123;2:-./&#125;  </span><br><span class="line">declare -i cnt_update=0 # counter of update</span><br><span class="line">declare -i cnt_delete=0 # counter of deletion</span><br><span class="line">echo &quot;---------------------------------Welcome To Dirsync---------------------------------&quot;</span><br><span class="line">echo -e &quot;Source directory       : \033[33m $&#123;source_dir&#125; \033[0m&quot;</span><br><span class="line">echo -e &quot;Destination directory  : \033[33m $&#123;destination_dir&#125; \033[0m&quot;</span><br><span class="line">echo &quot;mode1 Backup : $&#123;destination_dir&#125; will be updated with the file from $&#123;source_dir&#125;&quot; </span><br><span class="line">echo &quot;mode2 Synchronize: all the old files will be updated.&quot;</span><br><span class="line">read -p &quot;Please input mode and press Enter (1/2) : &quot; mode</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if [ $mode = 1 ]</span><br><span class="line">then</span><br><span class="line">    # back-up </span><br><span class="line">    echo -e &quot;\033[31mbackup... \033[0m&quot;</span><br><span class="line">    # Note that the &#x27;/&#x27; is removed</span><br><span class="line">    source_dir=$&#123;source_dir%/&#125;</span><br><span class="line">    destination_dir=$&#123;destination_dir%/&#125;</span><br><span class="line">    for item in $(ls $&#123;source_dir&#125;\/)</span><br><span class="line">    do</span><br><span class="line">        tmp_path=$source_dir\/$item</span><br><span class="line">        if test -d $tmp_path</span><br><span class="line">        then</span><br><span class="line">            update_dir $item $destination_dir $source_dir</span><br><span class="line">        elif test -f $tmp_path</span><br><span class="line">        then</span><br><span class="line">            update_file $item $destination_dir $source_dir</span><br><span class="line">        fi</span><br><span class="line">    done</span><br><span class="line"></span><br><span class="line">    echo -e &quot;\033[32mBackup done! \033[0m&quot;</span><br><span class="line">    echo &quot;Totally updated $&#123;cnt_update&#125; files.&quot;</span><br><span class="line">elif [ $mode = 2 ]</span><br><span class="line">then</span><br><span class="line">    # Synchronize</span><br><span class="line"></span><br><span class="line">    echo -e &quot;\033[31mSynchronize... \033[0m&quot;</span><br><span class="line">    source_dir=$&#123;source_dir%/&#125;</span><br><span class="line">    destination_dir=$&#123;destination_dir%/&#125;</span><br><span class="line">    </span><br><span class="line">    tmp=$source_dir</span><br><span class="line">    source_dir=$destination_dir</span><br><span class="line">    destination_dir=$tmp</span><br><span class="line">    </span><br><span class="line">    for item in $(ls $&#123;source_dir&#125;\/)</span><br><span class="line">    do</span><br><span class="line">        tmp_path=$source_dir\/$item</span><br><span class="line">        if test -d $tmp_path</span><br><span class="line">        then</span><br><span class="line">            delete_dir $item $destination_dir $source_dir</span><br><span class="line">        elif test -f $tmp_path</span><br><span class="line">        then</span><br><span class="line">            delete_file $item $destination_dir $source_dir</span><br><span class="line">        fi</span><br><span class="line">    done</span><br><span class="line">    </span><br><span class="line">    for item in $(ls $&#123;source_dir&#125;\/)</span><br><span class="line">    do</span><br><span class="line">        tmp_path=$source_dir\/$item</span><br><span class="line">        if test -d $tmp_path</span><br><span class="line">        then</span><br><span class="line">            update_dir $item $destination_dir $source_dir</span><br><span class="line">        elif test -f $tmp_path</span><br><span class="line">        then</span><br><span class="line">            update_file $item $destination_dir $source_dir</span><br><span class="line">        fi</span><br><span class="line">    done</span><br><span class="line">    </span><br><span class="line">    tmp=$source_dir</span><br><span class="line">    source_dir=$destination_dir</span><br><span class="line">    destination_dir=$tmp</span><br><span class="line"></span><br><span class="line">    for item in $(ls $&#123;source_dir&#125;\/)</span><br><span class="line">    do</span><br><span class="line">        tmp_path=$source_dir\/$item</span><br><span class="line">        if test -d $tmp_path</span><br><span class="line">        then</span><br><span class="line">            update_dir $item $destination_dir $source_dir</span><br><span class="line">        elif test -f $tmp_path</span><br><span class="line">        then</span><br><span class="line">            update_file $item $destination_dir $source_dir</span><br><span class="line">        fi</span><br><span class="line">    done</span><br><span class="line">    # echo some relavant information</span><br><span class="line">    echo -e &quot;\033[32mSynchronize done!\033[0m&quot;</span><br><span class="line">    echo &quot;Totally updated $&#123;cnt_update&#125; files.&quot;</span><br><span class="line">    echo &quot;Totally deleted $&#123;cnt_delete&#125; files.&quot;</span><br><span class="line">else</span><br><span class="line">    echo &quot;Invalid input!&quot;</span><br><span class="line">fi</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>1）备份功能</p>
+<p>  <img src="/2020/06/21/Linux-Lab3/image-20200621224325527.png" alt="image-20200621224325527"></p>
+<p>  <img src="/2020/06/21/Linux-Lab3/image-20200621230030247.png" alt="image-20200621230030247"></p>
+<p>  如图1</p>
+<p>  dir为源目录，newDir为新目录</p>
+<p>  dir中包含1 2 3 三个文件，newDir中没有文件</p>
+<p>  执行shell，选择模式1（备份模式），可以看到更新了1 2 3三个文件出现在了newDir中</p>
+<p>  然后我们在dir目录下更改文件3，并且新建文件4</p>
+<p>  再次执行shell，选择模式1（备份模式）， 根据log，我们发现只有3  4被更新了，查看发现1 2 3 4 均出现在newDir中</p>
+<p>  图2展示了子目录的情况。</p>
+</li>
+<li><p>2）同步功能</p>
+<p>  <img src="/2020/06/21/Linux-Lab3/image-20200621225539926.png" alt="image-20200621225539926"></p>
+<p>  首先对新目录进行备份，使用模式1</p>
+<p>  接着删除dir/1  更改dir/2 更改newDir/3  新建dir/4</p>
+<p>  运行shell，使用模式2</p>
+<p>  根据log，可以看到，</p>
+<p>  newDir1 被删除，说明源目录中文件被删除，目标目录下文件也被删除</p>
+<p>  newDir3 被复制到dir3 中  dir2被复制到newDir2中，说明双向可以同步文件</p>
+<p>  dir中新建的文件4  被复制到newDir中，说明双向可以更新文件</p>
+</li>
+</ul>
+<p><strong>代码2</strong></p>
+<p>代码2使用了rsync命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">!#/bin/bash</span><br><span class="line">mkdir tmp   ##使用临时文件夹</span><br><span class="line">rsync -av $2 tmp   ##使用rsync来同步</span><br><span class="line">for item in `ls tmp/$2`   ##遍历移动</span><br><span class="line">do </span><br><span class="line">    mv -f tmp/$2/$item tmp</span><br><span class="line">done</span><br><span class="line">rm -rf tmp/$2</span><br><span class="line">rm -f $2    ##删除</span><br><span class="line"></span><br><span class="line">rsync -av $1 $2   ##以下内容同上，通过一个临时文件夹来实现同步</span><br><span class="line"></span><br><span class="line">for item in `ls $2/$1`</span><br><span class="line">do</span><br><span class="line">    mv -f $2/$1/$item $2</span><br><span class="line">done</span><br><span class="line">rm -rf $2/$1</span><br><span class="line">rsync -av tmp $1</span><br><span class="line"></span><br><span class="line">for item in `ls $1/tmp`</span><br><span class="line">do</span><br><span class="line">    mv -f $1/tmp/$item $1</span><br><span class="line">done</span><br><span class="line">rm -rf $1/tmp</span><br><span class="line">rm -rf tmp</span><br></pre></td></tr></table></figure>
+
+
+
+<p>展示</p>
+<p><img src="/2020/06/21/Linux-Lab3/image-20200621230926295.png" alt="image-20200621230926295"></p>
+<p><img src="/2020/06/21/Linux-Lab3/image-20200621230937698.png" alt="image-20200621230937698"></p>
+<p>过程同代码1，不赘述</p>
+<p>##三、感想和讨论</p>
+<p>这个实验中，从简单到复杂，一共写了5个shell脚本，让我对于shell编程有了更深的理解，从简单的几个命令拼凑，到分支结构，到循环结构。在最后一个题目中更是使用了递归函数。在编程的过程中，我拿shell编程和c语言编程做类比，在逻辑上并没有遇到很大的困难，不过shell的语法十分严格，并且没有较好的编辑器来及时检查错误，或者代码补全，以致于经常写完以后没有办法运行。对于我的细心有很大的磨砺。</p>
+<p>遇到的问题：</p>
+<p>1）在windows环境下编写shell以后通过ftp保存到linux，运行会报错<code>/bin/bash^M: bad interpreter: No such file or directory</code></p>
+<p>查询后发现，原因在于windows下shell是dos格式，linux是unix格式，换行符存在差异。解决方案是用vim打开shell，输入<code>set ff=unix</code> 命令就可以解决</p>
+<p>2）在linux直接运行shell会报错 <code>Permission denied</code> 这是因为sh没有权限访问 <code>/bin/bash </code></p>
+<p>只需要通过chmod为shell增加权限即可</p>
+<p>3）在实验五中，理解题意花了挺长的时间。由于之前接触过rsync用来同步windows和远程linux服务器的文件，因此首先想到了直接使用rsync命令来完成实验。但是又觉得老师出题的目的应该是想要我们自己去写一个shell来完成这些功能。想了很久，并且与同学讨论之后，想到了使用时间来判断先后，通过直接复制文件来进行同步。当然，最后实现的功能是远远不及直接使用rsync的。并且我写的shell，只能粗暴的根据时间来进行复制，如果文件都有更新，则没办法正确的同步。最好还是使用git等源代码管理工具或者rsync等来进行多端同步。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ydreamw.github.io/2020/06/21/Linux-Lab3/" data-id="cksngrqio00022kvlb6qdcpj4" data-title="Linux-Lab3" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/" rel="tag">shell</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/07/14/hello-hexo/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          hello hexo
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/05/31/Linux-Lab2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">Linux-Lab2</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/">20ss</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/ADS/">ADS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/DBS/">DBS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/Linux/">Linux</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/INA/">INA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/">Web开发实践</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E5%A4%9A%E8%AF%91/">多译</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E8%AF%BE%E5%90%A6/">课否</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/">个人课程作业</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/19aw/">19aw</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E9%9A%8F%E7%AC%94/">个人随笔</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ant-Design/" rel="tag">Ant Design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dva/" rel="tag">Dva</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Egg-js/" rel="tag">Egg.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hooks/" rel="tag">Hooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/" rel="tag">MongoDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redux/" rel="tag">Redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TODO/" rel="tag">TODO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Umi/" rel="tag">Umi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebStorm/" rel="tag">WebStorm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/" rel="tag">database</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Ant-Design/" style="font-size: 10px;">Ant Design</a> <a href="/tags/Dva/" style="font-size: 10px;">Dva</a> <a href="/tags/Egg-js/" style="font-size: 10px;">Egg.js</a> <a href="/tags/Hooks/" style="font-size: 10px;">Hooks</a> <a href="/tags/Linux/" style="font-size: 16.67px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/React/" style="font-size: 16.67px;">React</a> <a href="/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/tags/TODO/" style="font-size: 13.33px;">TODO</a> <a href="/tags/TypeScript/" style="font-size: 10px;">TypeScript</a> <a href="/tags/Umi/" style="font-size: 10px;">Umi</a> <a href="/tags/Web/" style="font-size: 16.67px;">Web</a> <a href="/tags/WebStorm/" style="font-size: 10px;">WebStorm</a> <a href="/tags/database/" style="font-size: 20px;">database</a> <a href="/tags/shell/" style="font-size: 13.33px;">shell</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/08/19/%E3%80%8A%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BAnodejs%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/">《深入浅出nodejs》阅读笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2021/08/17/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JS%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/">你不知道的JS上阅读笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2021/08/15/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/14/hello-hexo/">hello hexo</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/21/Linux-Lab3/">Linux-Lab3</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 Ydream<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

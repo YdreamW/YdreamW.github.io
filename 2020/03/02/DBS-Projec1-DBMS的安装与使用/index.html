@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>DBS-Project1-DBMS的安装与使用 | Ydream&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="#实验1  DBMS的安装和使用 实验目的 通过安装某数据库管理系统(MySQL)，初步了解DBMS的运行环境 了解DBMS交互界面、图形界面和系统管理工具的使用 搭建实验平台  实验平台 操作系统 数据库管理系统：MySQL DBMS图形界面：Navicat （说明：由于之前使用过该可视化软件，故没有再下载MySQL Workbench）  实验内容和要求 根据官方文档，安装DBMS   由于在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DBS-Project1-DBMS的安装与使用">
+<meta property="og:url" content="https://ydreamw.github.io/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="Ydream&#39;s Blog">
+<meta property="og:description" content="#实验1  DBMS的安装和使用 实验目的 通过安装某数据库管理系统(MySQL)，初步了解DBMS的运行环境 了解DBMS交互界面、图形界面和系统管理工具的使用 搭建实验平台  实验平台 操作系统 数据库管理系统：MySQL DBMS图形界面：Navicat （说明：由于之前使用过该可视化软件，故没有再下载MySQL Workbench）  实验内容和要求 根据官方文档，安装DBMS   由于在">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ydreamw.github.io/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302203933789.png">
+<meta property="og:image" content="https://ydreamw.github.io/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302204737621.png">
+<meta property="og:image" content="https://ydreamw.github.io/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302204908598.png">
+<meta property="og:image" content="https://ydreamw.github.io/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/PNFT8L$3RDY~I14%7B%25JTJGX1.jpg">
+<meta property="og:image" content="https://ydreamw.github.io/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302205743063.png">
+<meta property="og:image" content="https://ydreamw.github.io/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302205946083.png">
+<meta property="og:image" content="https://ydreamw.github.io/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302210048833.png">
+<meta property="og:image" content="https://ydreamw.github.io/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302210224822.png">
+<meta property="og:image" content="https://ydreamw.github.io/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302210602056.png">
+<meta property="og:image" content="https://ydreamw.github.io/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302210309166.png">
+<meta property="og:image" content="https://ydreamw.github.io/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302210407568.png">
+<meta property="og:image" content="https://ydreamw.github.io/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302211353808.png">
+<meta property="og:image" content="https://ydreamw.github.io/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302211436190.png">
+<meta property="og:image" content="https://ydreamw.github.io/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302211514950.png">
+<meta property="og:image" content="https://ydreamw.github.io/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302211559723.png">
+<meta property="og:image" content="https://ydreamw.github.io/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302211624422.png">
+<meta property="og:image" content="https://ydreamw.github.io/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302211644631.png">
+<meta property="article:published_time" content="2020-03-01T17:42:00.000Z">
+<meta property="article:modified_time" content="2021-08-29T16:38:50.161Z">
+<meta property="article:author" content="Ydream">
+<meta property="article:tag" content="database">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ydreamw.github.io/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302203933789.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Ydream's Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Ydream&#39;s Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">个人向博客，记录一下个人的碎碎念和一些成长</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://YdreamW.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-DBS-Projec1-DBMS的安装与使用" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/" class="article-date">
+  <time class="dt-published" datetime="2020-03-01T17:42:00.000Z" itemprop="datePublished">2020-03-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/20ss/">20ss</a>►<a class="article-category-link" href="/categories/20ss/DBS/">DBS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      DBS-Project1-DBMS的安装与使用
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>#实验1  DBMS的安装和使用</p>
+<h4 id="实验目的"><a href="#实验目的" class="headerlink" title="实验目的"></a>实验目的</h4><ul>
+<li>通过安装某数据库管理系统(MySQL)，初步了解DBMS的运行环境</li>
+<li>了解DBMS交互界面、图形界面和系统管理工具的使用</li>
+<li>搭建实验平台</li>
+</ul>
+<h4 id="实验平台"><a href="#实验平台" class="headerlink" title="实验平台"></a>实验平台</h4><ul>
+<li>操作系统</li>
+<li>数据库管理系统：MySQL</li>
+<li>DBMS图形界面：Navicat （说明：由于之前使用过该可视化软件，故没有再下载MySQL Workbench）</li>
+</ul>
+<h4 id="实验内容和要求"><a href="#实验内容和要求" class="headerlink" title="实验内容和要求"></a>实验内容和要求</h4><ul>
+<li><p>根据官方文档，安装DBMS</p>
+<p>  由于在上此课程之前的开发过程中已经安装使用过MySQL，因此DBMS的安装过程不作展示</p>
+<p>  如图，MySQL登录成功。</p>
+<p>  <img src="/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302203933789.png" alt="image-20200302203933789"></p>
+</li>
+<li><p>了解DBMS的用户管理</p>
+<p>上图中使用了root用户进行登录数据库，root用户的操作权限最高，可以对数据库进行任意的操作。如果所有想要登录数据库的用户都使用root进行登录，无疑是存在安全隐患的。所以MySQL具有用户的管理系统。</p>
+<p>MySQL的用户信息保存在 数据库mysql的数据表user中。</p>
+<ul>
+<li><p>查看数据表user</p>
+<p>输入以下命令，我们可以得到mysql&gt;user 的表结构</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">use mysql</span><br><span class="line">describe user</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302204737621.png" alt="image-20200302204737621"></p>
+<p>输入以下命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select host,user,password from user</span><br></pre></td></tr></table></figure>
+
+<p>可以得到目前mysql 的用户信息</p>
+<p><img src="/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302204908598.png" alt="image-20200302204908598"></p>
+<p>可以看到第一条信息就是 root@localhost 也就是我们刚刚登录所使用的用户。密码字段的内容是加密后的密文。</p>
+</li>
+<li><p>创建新用户</p>
+<p>  输入命令</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create user  create user &#x27;Ydream&#x27;@&#x27;localhost&#x27; identified by &#x27;password&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>  <img src="/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/PNFT8L$3RDY~I14%7B%25JTJGX1.jpg" alt="img"></p>
+<p>  这样就创建了一个新的用户</p>
+<p>  再次输入</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select host,user,password from user</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>  可以看到user表中新增一条信息，就是刚刚创建的新用户。</p>
+<p>  <img src="/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302205743063.png"></p>
+<p>  退出MySQL后尝试使用新用户登录</p>
+<p>  <img src="/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302205946083.png" alt="image-20200302205946083"></p>
+<p>  登录成功！</p>
+<p>  尝试查看数据库</p>
+<p>  <img src="/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302210048833.png" alt="image-20200302210048833"></p>
+<p>  发现没有权限。</p>
+<p>  需要root为Ydream用户设置各种权限，本次实验没有深入研究。</p>
+</li>
+</ul>
+</li>
+<li><p>熟悉基本的交互命令</p>
+<ul>
+<li><p>查看已有的数据库：</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show databases;</span><br></pre></td></tr></table></figure>
+
+<p>  <img src="/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302210224822.png" alt="image-20200302210224822"></p>
+</li>
+<li><p>创建数据库</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create database name</span><br></pre></td></tr></table></figure>
+
+<p>  <img src="/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302210602056.png" alt="image-20200302210602056"></p>
+</li>
+<li><p>选择某个数据库</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use mysql;</span><br></pre></td></tr></table></figure>
+
+<p>  <img src="/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302210309166.png" alt="image-20200302210309166"></p>
+</li>
+<li><p>查看数据库有哪些表</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show tables;</span><br></pre></td></tr></table></figure>
+
+<p>  <img src="/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302210407568.png" alt="image-20200302210407568"></p>
+</li>
+</ul>
+</li>
+<li><p>熟悉图形界面的功能和操作</p>
+<p>  <img src="/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302211353808.png" alt="image-20200302211353808"></p>
+<p>  连接&gt; 新建连接</p>
+<p>  <img src="/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302211436190.png" alt="image-20200302211436190"></p>
+<p>  数据库展示如下图</p>
+<p>  <img src="/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302211514950.png" alt="image-20200302211514950"></p>
+<p>  数据库mysql下的表</p>
+<p>  <img src="/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302211559723.png" alt="image-20200302211559723"></p>
+<p>  表user下的数据</p>
+<p>  <img src="/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302211624422.png" alt="image-20200302211624422"></p>
+<p>  更改表中的值</p>
+<p>  <img src="/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/image-20200302211644631.png" alt="image-20200302211644631"></p>
+</li>
+</ul>
+<p>​    </p>
+<p>​    </p>
+<p>​    </p>
+<p>​    </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ydreamw.github.io/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/" data-id="cksni4d9h0000rgvl0glze0nw" data-title="DBS-Project1-DBMS的安装与使用" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/database/" rel="tag">database</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/03/21/DBS-Project2-SQL%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89%E5%92%8C%E6%93%8D%E4%BD%9C/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          DBS-Project2-SQL数据定义和操作
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/02/29/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E4%B8%89-%E5%AF%B9%E4%BA%8E%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%80%9D%E8%80%83/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">课否 · 回复功能开发实践(三)： 对于业务的思考</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/">20ss</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/ADS/">ADS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/DBS/">DBS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/Linux/">Linux</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/INA/">INA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/">Web开发实践</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E5%A4%9A%E8%AF%91/">多译</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E8%AF%BE%E5%90%A6/">课否</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/">个人课程作业</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/19aw/">19aw</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E9%9A%8F%E7%AC%94/">个人随笔</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ant-Design/" rel="tag">Ant Design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dva/" rel="tag">Dva</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Egg-js/" rel="tag">Egg.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hooks/" rel="tag">Hooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/" rel="tag">MongoDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redux/" rel="tag">Redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TODO/" rel="tag">TODO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Umi/" rel="tag">Umi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebStorm/" rel="tag">WebStorm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/" rel="tag">database</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Ant-Design/" style="font-size: 10px;">Ant Design</a> <a href="/tags/Dva/" style="font-size: 10px;">Dva</a> <a href="/tags/Egg-js/" style="font-size: 10px;">Egg.js</a> <a href="/tags/Hooks/" style="font-size: 10px;">Hooks</a> <a href="/tags/Linux/" style="font-size: 16.67px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/React/" style="font-size: 16.67px;">React</a> <a href="/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/tags/TODO/" style="font-size: 13.33px;">TODO</a> <a href="/tags/TypeScript/" style="font-size: 10px;">TypeScript</a> <a href="/tags/Umi/" style="font-size: 10px;">Umi</a> <a href="/tags/Web/" style="font-size: 16.67px;">Web</a> <a href="/tags/WebStorm/" style="font-size: 10px;">WebStorm</a> <a href="/tags/database/" style="font-size: 20px;">database</a> <a href="/tags/shell/" style="font-size: 13.33px;">shell</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/08/19/%E3%80%8A%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BAnodejs%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/">《深入浅出nodejs》阅读笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2021/08/17/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JS%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/">你不知道的JS上阅读笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2021/08/15/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/14/hello-hexo/">hello hexo</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/21/Linux-Lab3/">Linux-Lab3</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 Ydream<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

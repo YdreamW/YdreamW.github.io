@@ -156,7 +156,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/08/17/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JS%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/">你不知道的JS上阅读笔记</a>
+      <a class="p-name article-title" href="/2021/08/17/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JS%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/">《你不知道的JavaScript（上）》阅读笔记</a>
     </h1>
   
 
@@ -246,7 +246,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ydreamw.github.io/2021/08/17/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JS%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" data-id="cksg739na0000s0vl266mbyty" data-title="你不知道的JS上阅读笔记" class="article-share-link">分享</a>
+      <a data-url="https://ydreamw.github.io/2021/08/17/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JS%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" data-id="cksg739na0000s0vl266mbyty" data-title="《你不知道的JavaScript（上）》阅读笔记" class="article-share-link">分享</a>
       
       
       
@@ -476,6 +476,296 @@
 
 
   
+    <article id="post-安全编程原理-LAB3-Format-String-Vulnerability" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/06/17/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB3-Format-String-Vulnerability/" class="article-date">
+  <time class="dt-published" datetime="2020-06-16T17:12:41.000Z" itemprop="datePublished">2020-06-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/06/17/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB3-Format-String-Vulnerability/">安全编程原理-LAB4-Format-String-Vulnerability</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>#<strong>Lab 2.4 Format String Vulnerability</strong></p>
+<h3 id="1、Crash-the-program-named-“vul-prog-c”"><a href="#1、Crash-the-program-named-“vul-prog-c”" class="headerlink" title="1、Crash the program named “vul_prog.c”."></a>1、Crash the program named “vul_prog.c”.</h3><p>连续输入 <code>%s</code> 即可，经过实验 最少3个就可以完成crash</p>
+<p><img src="/2020/06/17/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB3-Format-String-Vulnerability/image-20200617160839651.png" alt="image-20200617160839651"></p>
+<p>如图，出现段错误</p>
+<h3 id="2、Print-out-the-secret-1-value"><a href="#2、Print-out-the-secret-1-value" class="headerlink" title="2、Print out the secret[1] value."></a>2、Print out the secret[1] value.</h3><p><img src="/2020/06/17/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB3-Format-String-Vulnerability/image-20200617170452971.png" alt="image-20200617170452971"></p>
+<p>调试代码，在printf设置断点，运行到printf(user_input)</p>
+<p>查看堆栈如上，可以看到user_input的参数地址为 <code>0xffffd668</code>   而看1的位置，可以知道user_input和int_input地址差了16.</p>
+<p>因此我们可以将secret1的值输入到int_input. 然后通过8个 .%08x 来控制字符串。 输入 “.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x|%s”</p>
+<p><img src="/2020/06/17/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB3-Format-String-Vulnerability/image-20200617174550605.png" alt="image-20200617174550605"></p>
+<p>|后面输出了 U 即为secret   并且前面的地址和debug的结果一致</p>
+<h3 id="3、-Modify-the-secret-1-value"><a href="#3、-Modify-the-secret-1-value" class="headerlink" title="3、 Modify the secret[1] value."></a>3、 Modify the secret[1] value.</h3><p>只需使用%hn即可</p>
+<p><img src="/2020/06/17/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB3-Format-String-Vulnerability/image-20200617175026933.png" alt="image-20200617175026933"></p>
+<p>如图   新的密码变成了0x48</p>
+<p>###4、 Modify the secret[1] value to a pre-determined value.</p>
+<p>我们把secret1 改为 0x1111</p>
+<p>同理，但是我们前面控制长度的字符需要进行改变</p>
+<p>0x1111 十进制为 4369</p>
+<p>8个.08x 输出长度 8*9=72，远远小于4369</p>
+<p>改为7个 .08x    7*9=63</p>
+<p>4369-63+1=4307</p>
+<p>故输入</p>
+<p>%.08x.%08x.%08x.%08x.%08x.%08x.%08x%.4307d%hn</p>
+<p><img src="/2020/06/17/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB3-Format-String-Vulnerability/image-20200617180620725.png" alt="image-20200617180620725"></p>
+<p>如图 得到了0x1111的正确结果</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ydreamw.github.io/2020/06/17/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB3-Format-String-Vulnerability/" data-id="cksxh585e00000ovldlo29iq5" data-title="安全编程原理-LAB4-Format-String-Vulnerability" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-安全编程原理-LAB3-overflow" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/06/17/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB3-overflow/" class="article-date">
+  <time class="dt-published" datetime="2020-06-16T17:08:10.000Z" itemprop="datePublished">2020-06-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/20ss/">20ss</a>►<a class="article-category-link" href="/categories/20ss/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86/">安全编程原理</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/06/17/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB3-overflow/">安全编程原理-LAB3-overflow</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Lab2-3-Buffer-Overflow-Vulnerability"><a href="#Lab2-3-Buffer-Overflow-Vulnerability" class="headerlink" title="Lab2.3 Buffer Overflow Vulnerability"></a>Lab2.3 Buffer Overflow Vulnerability</h1><h3 id="1、Disable-Address-Space-Randomization"><a href="#1、Disable-Address-Space-Randomization" class="headerlink" title="1、Disable Address Space Randomization."></a>1、Disable Address Space Randomization.</h3><p><img src="/2020/06/17/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB3-overflow/image-20200615104901938.png" alt="image-20200615104901938"></p>
+<h3 id="2、Create-Vulnerable-Program"><a href="#2、Create-Vulnerable-Program" class="headerlink" title="2、Create Vulnerable Program"></a>2、Create Vulnerable Program</h3><p>为了方便，使用ftp直接将stack.c上传到虚拟机上。使用cat命令检查文件。</p>
+<p><img src="/2020/06/17/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB3-overflow/image-20200615153013635.png" alt="image-20200615153013635"></p>
+<h3 id="3、-Compile-the-Vulnerable-Program-and-make-it-set-root-uid"><a href="#3、-Compile-the-Vulnerable-Program-and-make-it-set-root-uid" class="headerlink" title="3、 Compile the Vulnerable Program and make it set-root-uid."></a>3、 Compile the Vulnerable Program and make it set-root-uid.</h3><p>由于ubuntu没有root账户，首先创建root账户</p>
+<p>接着按照要求进行编译（使用编译选项允许栈运行并且关闭Stack Guard的安全机制）</p>
+<p>为了方便，我们加上-m32的编译选项，编译出32位的可执行文件。</p>
+<p><img src="/2020/06/17/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB3-overflow/image-20200617153532545.png" alt="image-20200617153532545"></p>
+<h3 id="4、Complete-the-vulnerability-code"><a href="#4、Complete-the-vulnerability-code" class="headerlink" title="4、Complete the vulnerability code."></a>4、Complete the vulnerability code.</h3><p><strong>4-1 使用gdb对stack进行反汇编调试：</strong></p>
+<ul>
+<li><p><code>disass bof</code></p>
+<p>  得到 <code>bof</code> 函数的反汇编结果。根据c语言的堆栈传递参数模式，我们知道 <code>0x8048485</code> 处可以得到函数的返回地址。故在 <code>0x8048485</code> 处设置断点1。调用<code>strcpy</code>函数前面有两个赋值语句，根据c语言函数调用过程可知，第二个赋值是 <code>buffer</code> 的地址。故在 <code>0x08048494</code> 设置断点二。</p>
+</li>
+<li><p>获取返回的地址</p>
+<p>  程序运行到断点1</p>
+<p>  此时 <code>esp</code> 寄存器内的值 = 返回地址 - 4 .   这个4是 <code>push</code> 进来的 <code>ebp</code></p>
+<p>  使用<code>i r</code>指令查看，可以知道结果为 <code>0xffffd4a8 + 4 = 0xffffd4ab</code></p>
+<p>  即返回地址为 <code>0xffffd4ab</code></p>
+</li>
+<li><p>获取 <code>buffer</code> 的地址</p>
+<p>  程序运行到断点2</p>
+<p>  此时 <code>eax</code> 寄存器内的值即为 <code>buffer</code> 的地址</p>
+<p>  可以看到结果为 <code>0xffffd494</code></p>
+</li>
+<li><p>计算偏移地址数目</p>
+<p>  <code>0xffffd4ab</code>  -  <code>0xffffd494</code> = <code>0x18</code>  =24</p>
+<p>  因此我们应当将需要跳转的地址放在 <code>buffer+24</code> 处</p>
+</li>
+</ul>
+<p><img src="/2020/06/17/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB3-overflow/image-20200617153713379.png" alt="image-20200617153713379"></p>
+<p><strong>4-2 完善 <code>exploit.c</code></strong>  </p>
+<ul>
+<li><p>将 <code>shellcode</code> 放到 <code>badfile</code> 文件后 <code>0x100</code> 处。则所需跳转的地址为  <code>&amp;buffer + 0x100</code> </p>
+</li>
+<li><pre><code class="c">  char addr[4] = &#123; 0x94 , 0xd5 , 0xff , 0xff &#125;; //小端规则 实际地址 0xffffd494 + 0x100
+                                                //               0xffffd594
+  memcpy(buffer+24,addr,4);        
+  memcpy(buffer+0x100,code,50);
+</code></pre>
+</li>
+</ul>
+<h3 id="5、Results"><a href="#5、Results" class="headerlink" title="5、Results"></a>5、Results</h3><p>编译运行 exploit  和  stack. 成功进入shell。如下图</p>
+<img src="/2020/06/17/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB3-overflow/image-20200617155230184.png" alt style="zoom:150%;">
+
+
+<h3 id="6、感悟"><a href="#6、感悟" class="headerlink" title="6、感悟"></a>6、感悟</h3><ul>
+<li><p>本次实验最开始使用64位，但是不太清楚64位的汇编语法，故后使用32位完成了实验</p>
+</li>
+<li><p>gcc反汇编的mov语句和vc不太相同，需要注意</p>
+</li>
+<li><p>禁止动态分配内存每次重启都需要设置。</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ydreamw.github.io/2020/06/17/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB3-overflow/" data-id="cksxgypok000140vl1a568r79" data-title="安全编程原理-LAB3-overflow" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-安全编程原理-LAB2-GCC" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/06/10/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB2-GCC/" class="article-date">
+  <time class="dt-published" datetime="2020-06-09T17:05:57.000Z" itemprop="datePublished">2020-06-10</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/20ss/">20ss</a>►<a class="article-category-link" href="/categories/20ss/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86/">安全编程原理</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/06/10/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB2-GCC/">安全编程原理-LAB2-GCC</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Running-a-Hello-World-Program-in-C-using-GCC"><a href="#Running-a-Hello-World-Program-in-C-using-GCC" class="headerlink" title="Running a Hello World Program in C using GCC"></a>Running a Hello World Program in C using GCC</h1><h3 id="一、打开终端"><a href="#一、打开终端" class="headerlink" title="一、打开终端"></a>一、打开终端</h3><p>由于直接使用虚拟机的终端界面过小且不清晰，故本实验在windows下使用ssh协议连接到了虚拟机</p>
+<p>如图</p>
+<p><img src="/2020/06/10/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB2-GCC/image-20200610120551601.png" alt="image-20200610120551601"></p>
+<h3 id="二、创建debug-me-c"><a href="#二、创建debug-me-c" class="headerlink" title="二、创建debug_me.c"></a>二、创建<code>debug_me.c</code></h3><p><img src="/2020/06/10/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB2-GCC/image-20200610121248605.png" alt="image-20200610121248605"></p>
+<p>保存后检查结果</p>
+<p><img src="/2020/06/10/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB2-GCC/image-20200610121317429.png" alt="image-20200610121317429"></p>
+<h3 id="三、编译运行"><a href="#三、编译运行" class="headerlink" title="三、编译运行"></a>三、编译运行</h3><p><img src="/2020/06/10/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB2-GCC/image-20200610122004477.png" alt="image-20200610122004477"></p>
+<p>输入</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gcc -g debug_me.c -o debug_me</span><br><span class="line">gdb debug_me</span><br><span class="line">run &quot;hello, world&quot; &quot;goodbye, world&quot;</span><br></pre></td></tr></table></figure>
+
+<p>出现运行结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String &#x27;1&#x27; - &#x27;hello,world&#x27;</span><br><span class="line">String &#x27;2&#x27; - &#x27;goodbye world&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>符合预期结果</p>
+<h3 id="调试尝试"><a href="#调试尝试" class="headerlink" title="调试尝试"></a>调试尝试</h3><ul>
+<li><p>设置断点</p>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">break main</span><br></pre></td></tr></table></figure>
+
+<p>  <img src="/2020/06/10/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB2-GCC/image-20200610162324985.png" alt="image-20200610162324985"></p>
+</li>
+<li><p>输入<code>run debug_me &quot;hello, world&quot; &quot;goodbye, world&quot;</code></p>
+<p>  程序运行到main函数之中</p>
+</li>
+<li><p>连续几次 n(next的缩写)，运行到 print_string 函数时，输入n 程序直接运行出第一次输出的结果 ： String ‘1’ - ‘debug_me’</p>
+</li>
+<li><p>继续调试，程序再次运行到 print_string 函数时，输入 s （step）,我们发现程序进入到了 print_string 函数内部。</p>
+</li>
+<li><p>step 和 next的区别</p>
+<p>  step表示单步进入，当当前语句是一个函数时，程序将进入该函数内部</p>
+<p>  next表示单步运行，当当前语句是一个函数时，程序不会进入到函数内部，而是直接运行出结果。</p>
+</li>
+<li><p>继续调试，输入where，得到结果</p>
+<p>  <code>#0 print_string ......</code> </p>
+<p>  <code>#1 .... in main</code></p>
+</li>
+<li><pre><code class="shell">  (gdb) frame 0
+  (gdb) print i
+  ...
+  (gdb) frame 1
+  (gdb) print i
+</code></pre>
+<p>  得到结果</p>
+<p>  前者  No symbol “i” in current context</p>
+<p>  后者 $$1 = 2$</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ydreamw.github.io/2020/06/10/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB2-GCC/" data-id="cksxgypoj000040vl27a10194" data-title="安全编程原理-LAB2-GCC" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-安全编程原理-LAB1-MVC" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/06/07/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB1-MVC/" class="article-date">
+  <time class="dt-published" datetime="2020-06-06T16:57:48.000Z" itemprop="datePublished">2020-06-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/20ss/">20ss</a>►<a class="article-category-link" href="/categories/20ss/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86/">安全编程原理</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/06/07/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB1-MVC/">安全编程原理-LAB1-MVC</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>大家都说鸟叔这个课很好，事情干完就可以满，而且能学到一些有意思的东西。</p>
+<p>Lab1主要是实践MVC设计模式。这个设计模式在我看来已经过时了，毕竟现在MVVM的框架已经有了诸如React和Vue这种成熟的框架。而且MVVM解耦程度更高。</p>
+<p>不过基础还是要夯实，我用MVC的设计方式写了个聊天室。用express框架做后端渲染。写下来感觉还是前后端分离才是新世纪的开放理念。</p>
+<p>项目地址：   <a target="_blank" rel="noopener" href="https://github.com/YdreamW/20ss/tree/master/Secure%20Programming/LAB1.1%EF%BC%861.2">https://github.com/YdreamW/20ss/tree/master/Secure%20Programming/LAB1.1%EF%BC%861.2</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ydreamw.github.io/2020/06/07/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB1-MVC/" data-id="cksxgo3fo00006cvlglys4tl3" data-title="安全编程原理-LAB1-MVC" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Linux-Lab2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2020/05/31/Linux-Lab2/" class="article-date">
@@ -521,360 +811,11 @@
 
 
   
-    <article id="post-DBS-Project4-数据库编程" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2020/05/03/DBS-Project4-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%96%E7%A8%8B/" class="article-date">
-  <time class="dt-published" datetime="2020-05-02T17:43:51.000Z" itemprop="datePublished">2020-05-03</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/20ss/">20ss</a>►<a class="article-category-link" href="/categories/20ss/DBS/">DBS</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/05/03/DBS-Project4-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%96%E7%A8%8B/">DBS-Project4-数据库编程</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>###实验目的</p>
-<ul>
-<li> 掌握MySQL数据库函数和存储过程的定义、调用方法</li>
-<li>巩固MySQL数据库触发器定义和使用方法</li>
-<li>熟悉JDBC连接访问数据库的方法</li>
-<li>了解MySQL备份和恢复方法</li>
-</ul>
-<h3 id="实验平台"><a href="#实验平台" class="headerlink" title="实验平台"></a>实验平台</h3><ul>
-<li><p>数据库管理系统（MySQL）</p>
-</li>
-<li><p>pymysql</p>
-</li>
-</ul>
-<h3 id="实验内容和要求"><a href="#实验内容和要求" class="headerlink" title="实验内容和要求"></a>实验内容和要求</h3><h4 id="1、建立数据库，并录入数据"><a href="#1、建立数据库，并录入数据" class="headerlink" title="1、建立数据库，并录入数据"></a>1、建立数据库，并录入数据</h4><p>该部分内容延用之前的代码，不赘述。</p>
-<h4 id="2、函数、存储过程的创建和调用："><a href="#2、函数、存储过程的创建和调用：" class="headerlink" title="2、函数、存储过程的创建和调用："></a>2、函数、存储过程的创建和调用：</h4><ul>
-<li><p>使用函数实现统计学生选修课程数量的功能。</p>
-<ul>
-<li><p>代码</p>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">delimiter $$</span><br><span class="line">CREATE FUNCTION my_count(NAME VARCHAR(20)) RETURNS INT</span><br><span class="line">DETERMINISTIC</span><br><span class="line">BEGIN</span><br><span class="line">	DECLARE str VARCHAR(5);</span><br><span class="line">	DECLARE a INT;</span><br><span class="line">	SELECT SID FROM S WHERE SNAME=NAME INTO str;</span><br><span class="line">	SELECT COUNT(CID) FROM SC WHERE SID = str INTO a;</span><br><span class="line">	RETURN a;</span><br><span class="line">END</span><br><span class="line">$$</span><br><span class="line">delimiter;</span><br><span class="line">SELECT my_count(&quot;Wang feng&quot;);</span><br></pre></td></tr></table></figure></li>
-<li><p>结果</p>
-<p>  <img src="/2020/05/03/DBS-Project4-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%96%E7%A8%8B/image-20200503225509049.png" alt="image-20200503225509049"></p>
-</li>
-</ul>
-</li>
-<li><p>使用存储过程实现查询某个学生选修的课程的总学分。</p>
-<ul>
-<li><p>代码</p>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">delimiter $$</span><br><span class="line">CREATE PROCEDURE my_count(IN NAME VARCHAR(20), OUT my_sum INT)</span><br><span class="line">DETERMINISTIC</span><br><span class="line">BEGIN</span><br><span class="line">	DECLARE str VARCHAR(5);</span><br><span class="line">	SELECT SID FROM S WHERE SNAME=NAME INTO str;</span><br><span class="line">	SELECT sum(credit) FROM C WHERE CID in (SELECT CID FROM SC WHERE SID = str) INTO my_sum;</span><br><span class="line">END</span><br><span class="line">$$</span><br><span class="line">delimiter;</span><br><span class="line">CALL my_count(&quot;Wang feng&quot;,@credits);</span><br><span class="line">SELECT (@credits);</span><br></pre></td></tr></table></figure>
-
-</li>
-<li><p>结果</p>
-</li>
-</ul>
-</li>
-</ul>
-<p><img src="/2020/05/03/DBS-Project4-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%96%E7%A8%8B/image-20200503230601198.png" alt="image-20200503230601198"></p>
-<p>####3、触发器的创建</p>
-<ul>
-<li><p>删除一个学生信息，确保SC中也不存在该学生的信息；</p>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SET foreign_key_checks = 0;</span><br><span class="line">delimiter $$</span><br><span class="line">CREATE TRIGGER s_delete AFTER DELETE ON s FOR EACH ROW</span><br><span class="line">BEGIN</span><br><span class="line">	DELETE FROM SC WHERE SID not in (SELECT SID FROM S);</span><br><span class="line">END</span><br><span class="line">$$</span><br><span class="line">delimiter;</span><br></pre></td></tr></table></figure>
-
-</li>
-<li><p>添加选课信息时，确保课程存在。</p>
-</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">delimiter $$</span><br><span class="line">CREATE TRIGGER course_insert_check before insert</span><br><span class="line">ON sc FOR EACH ROW</span><br><span class="line">begin</span><br><span class="line">	 declare msg varchar(100);</span><br><span class="line">     if NEW.CID not in (select CID from C)</span><br><span class="line">     THEN</span><br><span class="line">         SET msg = CONCAT(&#x27;illegal messege&#x27;);</span><br><span class="line">		SIGNAL SQLSTATE &#x27;HY000&#x27; SET MESSAGE_TEXT = msg;</span><br><span class="line">     end if;</span><br><span class="line">end</span><br><span class="line">$$</span><br><span class="line">delimiter ;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h4 id="4、使用python实现数据库连接访问"><a href="#4、使用python实现数据库连接访问" class="headerlink" title="4、使用python实现数据库连接访问"></a>4、使用python实现数据库连接访问</h4><ul>
-<li><p>代码</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pymysql </span><br><span class="line"></span><br><span class="line"><span class="comment"># select all avaliable courses</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show_courses</span>(<span class="params">cursor</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;show all courses&#x27;</span>)</span><br><span class="line">    cursor.execute(<span class="string">&#x27;select distinct CNAME from C&#x27;</span>)</span><br><span class="line">    output = cursor.fetchall()</span><br><span class="line">    <span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment"># check a course</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_course</span>(<span class="params">cursor,sid</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;select physics course for&#x27;</span> +sid)</span><br><span class="line">    sql = <span class="string">&quot;select * from C where CID not in(select CID from SC where SID = %s);&quot;</span></span><br><span class="line">    cursor.execute(sql,sid)</span><br><span class="line">    output = cursor.fetchall()</span><br><span class="line">    <span class="built_in">print</span>(output)</span><br><span class="line">    conn.commit()</span><br><span class="line"></span><br><span class="line"><span class="comment">#select a course</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">select_course</span>(<span class="params">cursor,sid,cid</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;select %s course for %s&#x27;</span>%(cid,sid))</span><br><span class="line">    cursor.execute(<span class="string">&#x27;insert into SC (SID, CID, GRADE) values(%s, %s, %s)&#x27;</span>, [<span class="string">&#x27;S3&#x27;</span>, <span class="string">&#x27;C2&#x27;</span>, <span class="number">0</span>])</span><br><span class="line">    output = cursor.fetchall()</span><br><span class="line">    <span class="built_in">print</span>(output)</span><br><span class="line">    conn.commit()</span><br><span class="line"></span><br><span class="line"><span class="comment"># select all courses that have been selected</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show_selected_courses</span>(<span class="params">cursor</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;show all courses that have been selected&#x27;</span>)</span><br><span class="line">    cursor.execute(<span class="string">&#x27;select distinct CNAME from SC natural join C&#x27;</span>)</span><br><span class="line">    output = cursor.fetchall()</span><br><span class="line">    <span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment"># select all courses that have been selected by someone</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show_selected_courses_by_someone</span>(<span class="params">cursor,sid</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;show all courses that have been selected by %s&#x27;</span>%(sid))</span><br><span class="line">    cursor.execute(<span class="string">&#x27;select distinct CNAME from SC natural join C where SID = %s&#x27;</span>, sid)</span><br><span class="line">    output = cursor.fetchall()</span><br><span class="line">    <span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"><span class="comment"># drop out of a course</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">quit_course</span>(<span class="params">cursor,sid,cid</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;drop out of the %s course for %s&#x27;</span>%(cid,sid))</span><br><span class="line">    sql = <span class="string">&quot;delete from SC where SID =%s and CID = %s;&quot;</span></span><br><span class="line">    cursor.execute(sql,(sid,cid))</span><br><span class="line">    output = cursor.fetchall()</span><br><span class="line">    <span class="built_in">print</span>(output)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># connect database</span></span><br><span class="line">conn = pymysql.connect(host = <span class="string">&#x27;127.0.0.1&#x27;</span>, port = <span class="number">3306</span>, user = <span class="string">&#x27;root&#x27;</span>, passwd = <span class="string">&#x27;123&#x27;</span>, db = <span class="string">&#x27;school&#x27;</span>)</span><br><span class="line">cursor = conn.cursor()</span><br><span class="line"></span><br><span class="line">show_courses(cursor)</span><br><span class="line">select_course(cursor,<span class="string">&#x27;S2&#x27;</span>,<span class="string">&#x27;C2&#x27;</span>)</span><br><span class="line">show_selected_courses(cursor)</span><br><span class="line">quit_course(cursor,<span class="string">&#x27;S2&#x27;</span>,<span class="string">&#x27;C2&#x27;</span>)</span><br><span class="line">show_selected_courses_by_someone(cursor,<span class="string">&#x27;S1&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-</li>
-<li><p>结果</p>
-<p>  <img src="/2020/05/03/DBS-Project4-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%96%E7%A8%8B/image-20200503235014718.png" alt="image-20200503235014718"></p>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ydreamw.github.io/2020/05/03/DBS-Project4-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%96%E7%A8%8B/" data-id="cksni4d9v0005rgvl7izo8eeh" data-title="DBS-Project4-数据库编程" class="article-share-link">分享</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/database/" rel="tag">database</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-Linux-Lab1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2020/04/30/Linux-Lab1/" class="article-date">
-  <time class="dt-published" datetime="2020-04-29T17:03:06.000Z" itemprop="datePublished">2020-04-30</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/20ss/">20ss</a>►<a class="article-category-link" href="/categories/20ss/Linux/">Linux</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/04/30/Linux-Lab1/">Linux-Lab1</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>Linux 课程的第一次lab。要求自选课题进行调研。</p>
-<p>见Github连接: <a target="_blank" rel="noopener" href="https://github.com/YdreamW/20ss/blob/master/Linux/lab1-%E7%A0%94%E7%A9%B6%E6%8A%A5%E5%91%8A.pdf">https://github.com/YdreamW/20ss/blob/master/Linux/lab1-%E7%A0%94%E7%A9%B6%E6%8A%A5%E5%91%8A.pdf</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ydreamw.github.io/2020/04/30/Linux-Lab1/" data-id="cksngrqfq00002kvl5tpx513h" data-title="Linux-Lab1" class="article-share-link">分享</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-DBS-Project3-SQL数据完整性" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2020/04/02/DBS-Project3-SQL%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7/" class="article-date">
-  <time class="dt-published" datetime="2020-04-01T17:43:21.000Z" itemprop="datePublished">2020-04-02</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/20ss/">20ss</a>►<a class="article-category-link" href="/categories/20ss/DBS/">DBS</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/04/02/DBS-Project3-SQL%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7/">DBS-Project3-SQL数据完整性</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="实验3-SQL数据完整性"><a href="#实验3-SQL数据完整性" class="headerlink" title="实验3-SQL数据完整性"></a>实验3-SQL数据完整性</h1><p>###实验目的</p>
-<ul>
-<li>掌握MySQL数据库的完整性约束的定义方法；</li>
-<li>掌握MySQL数据库的用户的创建方法。</li>
-<li>掌握MySQL数据库的权限设置方法。</li>
-</ul>
-<h3 id="实验平台"><a href="#实验平台" class="headerlink" title="实验平台"></a>实验平台</h3><p>数据库管理系统（MySQL）</p>
-<h3 id="实验内容和要求"><a href="#实验内容和要求" class="headerlink" title="实验内容和要求"></a>实验内容和要求</h3><h5 id="1、建立数据库school"><a href="#1、建立数据库school" class="headerlink" title="1、建立数据库school"></a>1、建立数据库school</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE school;</span><br></pre></td></tr></table></figure>
-
-<h5 id="2、数据的定义"><a href="#2、数据的定义" class="headerlink" title="2、数据的定义"></a>2、数据的定义</h5><p>利用create创建三张表,同时增加主键外键约束</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE S (</span><br><span class="line">	SID VARCHAR ( 20 ) ,</span><br><span class="line">	SNAME VARCHAR ( 20 ),</span><br><span class="line">	AGE INT,</span><br><span class="line">	SEX VARCHAR ( 1 ) ,</span><br><span class="line">	PRIMARY KEY (SID)</span><br><span class="line">);</span><br><span class="line">CREATE TABLE C(</span><br><span class="line">	CID VARCHAR ( 20 ) ,</span><br><span class="line">	CNAME VARCHAR(20),</span><br><span class="line">	TEACHER VARCHAR(20),</span><br><span class="line">	PRIMARY KEY (CID)</span><br><span class="line">);</span><br><span class="line">CREATE TABLE SC(</span><br><span class="line">	SID VARCHAR(20),</span><br><span class="line">	CID VARCHAR(20),</span><br><span class="line">	GRADE INT,</span><br><span class="line">	PRIMARY KEY (SID,CID),</span><br><span class="line">	FOREIGN KEY (SID) REFERENCES S(SID) ON UPDATE CASCADE ON DELETE CASCADE,</span><br><span class="line">	FOREIGN KEY (CID) REFERENCES C(CID) ON UPDATE CASCADE ON DELETE CASCADE</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-
-
-
-<h5 id="3、完整性约束设置及其测试"><a href="#3、完整性约束设置及其测试" class="headerlink" title="3、完整性约束设置及其测试"></a>3、完整性约束设置及其测试</h5><ul>
-<li><p>完整性约束设置</p>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE S ADD CHECK (sex in (&#x27;f&#x27;,&#x27;m&#x27;));</span><br><span class="line">ALTER TABLE S ADD CHECK (0 &lt;= age and age &lt;=200) ;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>测试</li>
-</ul>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO S (SID, SNAME, AGE, SEX)</span><br><span class="line">             VALUES (&#x27;S1&#x27;,&#x27;Wang feng&#x27;, 20, &#x27;f&#x27;);</span><br><span class="line">INSERT INTO S (SID, SNAME, AGE, SEX)</span><br><span class="line">             VALUES (&#x27;S2&#x27;,&#x27;Li feng&#x27;, 20, &#x27;t&#x27;);</span><br><span class="line">INSERT INTO S (SID, SNAME, AGE, SEX)</span><br><span class="line">             VALUES (&#x27;S2&#x27;,&#x27;Li feng&#x27;, -1, &#x27;m&#x27;);</span><br><span class="line">INSERT INTO S (SID, SNAME, AGE, SEX)</span><br><span class="line">             VALUES (&#x27;S2&#x27;,&#x27;Li feng&#x27;, 14, &#x27;m&#x27;);</span><br></pre></td></tr></table></figure>
-<ul>
-<li>运行结果</li>
-</ul>
-</li>
-</ul>
-<p><img src="/2020/04/02/DBS-Project3-SQL%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7/image-20200402212557918.png" alt="image-20200402212557918"></p>
-<p><img src="/2020/04/02/DBS-Project3-SQL%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7/image-20200402212646716.png" alt="image-20200402212646716"></p>
-<p><img src="/2020/04/02/DBS-Project3-SQL%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7/image-20200402212702535.png" alt="image-20200402212702535"></p>
-<ul>
-<li><p>触发器定义及测试</p>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">CREATE TRIGGER student_insert_check BEFORE INSERT</span><br><span class="line">ON s FOR EACH ROW</span><br><span class="line">BEGIN</span><br><span class="line">  DECLARE msg varchar(100);</span><br><span class="line">	IF NEW.age &lt;= 0 OR NEW.age &gt;= 200 </span><br><span class="line">	THEN</span><br><span class="line">		SET msg = CONCAT(&#x27;您输入的年龄值：&#x27;,NEW.age,&#x27; 为无效的年龄，请输入0到200以内的有效数字。&#x27;);</span><br><span class="line">		SIGNAL SQLSTATE &#x27;HY000&#x27; SET MESSAGE_TEXT = msg;</span><br><span class="line">	END IF;</span><br><span class="line">END;</span><br><span class="line"></span><br><span class="line">INSERT INTO S (SID, SNAME, AGE, SEX)</span><br><span class="line">			 VALUES (&#x27;S3&#x27;,&#x27;Cy&#x27;, 201, &#x27;f&#x27;);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>结果</li>
-</ul>
-</li>
-</ul>
-<p><img src="/2020/04/02/DBS-Project3-SQL%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7/image-20200402212531207.png" alt="image-20200402212531207"></p>
-<ul>
-<li><p>外键约束测试</p>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO S (SID, SNAME, AGE, SEX)</span><br><span class="line">			 VALUES (&#x27;S1&#x27;,&#x27;Wang feng&#x27;, 20, &#x27;f&#x27;);</span><br><span class="line">INSERT INTO S (SID, SNAME, AGE, SEX)</span><br><span class="line">			 VALUES (&#x27;S2&#x27;,&#x27;Li feng&#x27;, 20, &#x27;t&#x27;);</span><br><span class="line">INSERT INTO S (SID, SNAME, AGE, SEX)</span><br><span class="line">			 VALUES (&#x27;S2&#x27;,&#x27;Li feng&#x27;, -1, &#x27;m&#x27;);</span><br><span class="line">INSERT INTO S (SID, SNAME, AGE, SEX)</span><br><span class="line">			 VALUES (&#x27;S2&#x27;,&#x27;Li feng&#x27;, 14, &#x27;m&#x27;);</span><br><span class="line">INSERT INTO C (CID, CNAME, TEACHER)</span><br><span class="line">       VALUES (&#x27;C1&#x27;, &#x27;DB&#x27;, &#x27;Li&#x27;);</span><br><span class="line">INSERT INTO C (CID, CNAME, TEACHER)</span><br><span class="line">       VALUES (&#x27;C2&#x27;, &#x27;maths&#x27;, &#x27;Ma&#x27;);</span><br><span class="line">INSERT INTO SC (SID, CID , GRADE)</span><br><span class="line">       VALUES (&#x27;S1&#x27;,&#x27;C1&#x27;,70);</span><br><span class="line">INSERT INTO SC (SID, CID , GRADE)</span><br><span class="line">       VALUES (&#x27;S2&#x27;,&#x27;C1&#x27;,81);</span><br><span class="line">INSERT INTO SC (SID, CID , GRADE)</span><br><span class="line">       VALUES (&#x27;S1&#x27;,&#x27;C2&#x27;,65);</span><br><span class="line">SELECT * FROM SC;</span><br><span class="line">DELETE FROM S WHERE SID = &#x27;S2&#x27; ;</span><br><span class="line">SELECT * FROM SC;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>结果</p>
-<p>  <img src="/2020/04/02/DBS-Project3-SQL%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7/image-20200402213304283.png" alt="image-20200402213304283"></p>
-<p>  <img src="/2020/04/02/DBS-Project3-SQL%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7/image-20200402213312189.png" alt="image-20200402213312189"></p>
-</li>
-</ul>
-</li>
-</ul>
-<h5 id="3、MySQL上的用户和权限的设置"><a href="#3、MySQL上的用户和权限的设置" class="headerlink" title="3、MySQL上的用户和权限的设置"></a>3、MySQL上的用户和权限的设置</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE USER &#x27;test1&#x27;@&#x27;localhost&#x27; IDENTIFIED by &#x27;123&#x27;;</span><br><span class="line">CREATE USER &#x27;test2&#x27;@&#x27;localhost&#x27; IDENTIFIED by &#x27;123&#x27;;</span><br><span class="line">GRANT INSERT,UPDATE ON school.C TO &#x27;test1&#x27;@&#x27;localhost&#x27; WITH GRANT OPTION;</span><br><span class="line"></span><br><span class="line">revoke update on school.C from &#x27;test1&#x27;@&#x27;localhost&#x27;;</span><br><span class="line">show grants for &#x27;test2&#x27;@&#x27;localhost&#x27;;</span><br><span class="line">Drop user &#x27;test2&#x27;@&#x27;localhost&#x27;;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="/2020/04/02/DBS-Project3-SQL%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7/image-20200402214727360.png" alt="image-20200402214727360"></p>
-<p><img src="/2020/04/02/DBS-Project3-SQL%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7/image-20200402215318454.png" alt="image-20200402215318454"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ydreamw.github.io/2020/04/02/DBS-Project3-SQL%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7/" data-id="cksni4d9w0006rgvl4qhw4wep" data-title="DBS-Project3-SQL数据完整性" class="article-share-link">分享</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/database/" rel="tag">database</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-ADS-project1-斐波那契堆优化的最短路径算法" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2020/03/29/ADS-project1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%A0%86%E4%BC%98%E5%8C%96%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95/" class="article-date">
-  <time class="dt-published" datetime="2020-03-28T17:28:29.000Z" itemprop="datePublished">2020-03-29</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/20ss/">20ss</a>►<a class="article-category-link" href="/categories/20ss/ADS/">ADS</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/03/29/ADS-project1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%A0%86%E4%BC%98%E5%8C%96%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95/">ADS-project1-斐波那契堆优化的最短路径算法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>源代码地址： <a target="_blank" rel="noopener" href="https://github.com/YdreamW/20ss/tree/master/ads/project1_Fibheap%26ShortestPath">https://github.com/YdreamW/20ss/tree/master/ads/project1_Fibheap%26ShortestPath</a></p>
-<h2 id="题目要求"><a href="#题目要求" class="headerlink" title="题目要求"></a>题目要求</h2><p>Shortest path problems are ones of the most fundamental combinatorial optimization problems with many applications, both direct and as subroutines in other combinatorial optimization algorithms.  Algorithms for these problems have been studied since 1950’s and still remain an active area of research.</p>
-<p>In this project you are supposed to compute the shortest paths using Dijkstra’s algorithm.  The implementation shall be based on a min-priority queue, such as a Fibonacci heap.  The goal of the project is to find the best data structure for the Dijkstra’s algorithm.</p>
-<p>Your tasks are:</p>
-<ul>
-<li>(1)    Implement the algorithm with at least two different heap structures, while Fibonacci heap must be one of them.</li>
-<li>(2)    Use the USA road networks for evaluation.  The data sets can be downloaded from <a target="_blank" rel="noopener" href="http://www.dis.uniroma1.it/challenge9/download.shtml">http://www.dis.uniroma1.it/challenge9/download.shtml</a> which provides the benchmarks for the <strong>9th DIMACS Implementation Challenge</strong>.  (<strong>Note:</strong> you must <strong>only list the download links</strong> of these test data sets instead of uploading them with your reports.)</li>
-<li>(3)    At least 1000 pairs of query are required in evaluating the run times of the algorithm with various of implementations.</li>
-</ul>
-<p>###Grading Policy:</p>
-<p><strong>Programming:</strong> Implement Dijkstra’s algorithm with Fibonacci heap and other heaps (6 pts.).  Write a test of performance program (3 pts.).  <strong>All the codes must be sufficiently commented.</strong></p>
-<p><strong>Testing:</strong> Provide the necessary inputs for testing and give the run time table (2 pts.).  Plot the run times vs. input sizes for illustration (2 pts.).  Write analysis and comments (3 pts.).</p>
-<p><strong>Documentation:</strong> Chapter 1 (1 pt.), Chapter 2 (2 pts.), and finally a complete report (1 point for overall style of documentation).</p>
-<h2 id="斐波那契堆-参考-斐波那契堆"><a href="#斐波那契堆-参考-斐波那契堆" class="headerlink" title="斐波那契堆: (参考:斐波那契堆)"></a>斐波那契堆: (参考:<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40061421/article/details/81571132">斐波那契堆</a>)</h2><p>斐波那契堆(Fibonacci heap)是堆中一种，它和二项堆一样，也是一种可合并堆；可用于实现合并优先队列。斐波那契堆比二项堆具有更好的平摊分析性能，它的合并操作的时间复杂度是O(1)。<br>与二项堆一样，它也是由一组堆最小有序树组成，并且是一种可合并堆。<br>与二项堆不同的是，斐波那契堆中的树不一定是二项树；而且二项堆中的树是有序排列的，但是斐波那契堆中的树都是有根而无序的。</p>
-<p><img src="/2020/03/29/ADS-project1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%A0%86%E4%BC%98%E5%8C%96%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95/111642221538159.jpg" alt="1"></p>
-<ol>
-<li>基本定义</li>
-</ol>
-<p>FibNode是斐波那契堆的节点类，它包含的信息较多。key是用于比较节点大小的，degree是记录节点的度，left和right分别是指向节点的左右兄弟，child是节点的第一个孩子，parent是节点的父节点，marked是记录该节点是否被删除第1个孩子(marked在删除节点时有用)。</p>
-<p>FibHeap是斐波那契堆对应的类。min是保存当前堆的最小节点，keyNum用于记录堆中节点的总数，maxDegree用于记录堆中最大度，而cons在删除节点时来暂时保存堆数据的临时空间。</p>
-<p>下面看看斐波那契堆的内存结构图。</p>
-<p><img src="/2020/03/29/ADS-project1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%A0%86%E4%BC%98%E5%8C%96%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95/111643182933476.jpg" alt="2"></p>
-<p>从图中可以看出，斐波那契堆是由一组最小堆组成，这些最小堆的根节点组成了双向链表(后文称为”根链表”)；斐波那契堆中的最小节点就是”根链表中的最小节点”！</p>
-<ol start="2">
-<li>插入操作</li>
-</ol>
-<p>插入操作非常简单：插入一个节点到堆中，直接将该节点插入到”根链表的min节点”之前即可；若被插入节点比”min节点”小，则更新”min节点”为被插入节点。</p>
-<p><img src="/2020/03/29/ADS-project1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%A0%86%E4%BC%98%E5%8C%96%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95/3.jpg" alt="3"></p>
-<p>上面是插入操作的示意图。</p>
-<p>斐波那契堆的根链表是”双向链表”，这里将min节点看作双向联表的表头(后文也是如此)。在插入节点时，每次都是”将节点插入到min节点之前(即插入到双链表末尾)”。此外，对于根链表中最小堆都只有一个节点的情况，插入操作就很演化成双向链表的插入操作。</p>
-<ol start="3">
-<li>合并操作</li>
-</ol>
-<p>合并操作和插入操作的原理非常类似：将一个堆的根链表插入到另一个堆的根链表上即可。简单来说，就是将两个双链表拼接成一个双向链表。</p>
-<p><img src="/2020/03/29/ADS-project1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%A0%86%E4%BC%98%E5%8C%96%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95/4.jpg" alt="4"></p>
-<ol start="4">
-<li>取出最小节点</li>
-</ol>
-<p>抽取最小结点的操作是斐波那契堆中较复杂的操作。<br>(1）将要抽取最小结点的子树都直接串联在根表中；<br>(2）合并所有degree相等的树，直到没有相等的degree的树。</p>
-<p><img src="/2020/03/29/ADS-project1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%A0%86%E4%BC%98%E5%8C%96%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95/5.jpg" alt="5"></p>
-<p>上面是取出最小节点的示意图。图中应该写的非常明白了，若有疑问，看代码。</p>
-<ol start="5">
-<li>减小节点值</li>
-</ol>
-<p>减少斐波那契堆中的节点的键值，这个操作的难点是：如果减少节点后破坏了”最小堆”性质，如何去维护呢？下面对一般性情况进行分析。<br>(1) 首先，将”被减小节点”从”它所在的最小堆”剥离出来；然后将”该节点”关联到”根链表”中。 倘若被减小的节点不是单独一个节点，而是包含子树的树根。则是将以”被减小节点”为根的子树从”最小堆”中剥离出来，然后将该树关联到根链表中。<br>(2) 接着，对”被减少节点”的原父节点进行”级联剪切”。所谓”级联剪切”，就是在被减小节点破坏了最小堆性质，并被切下来之后；再从”它的父节点”进行递归级联剪切操作。<br>      而级联操作的具体动作则是：若父节点(被减小节点的父节点)的marked标记为false，则将其设为true，然后退出。<br>                                                          否则，将父节点从最小堆中切下来(方式和”切被减小节点的方式”一样)；然后递归对祖父节点进行”级联剪切”。<br>      marked标记的作用就是用来标记”该节点的子节点是否有被删除过”，它的作用是来实现级联剪切。而级联剪切的真正目的是为了防止”最小堆”由二叉树演化成链表。<br>(3) 最后，别忘了对根链表的最小节点进行更新。</p>
-<p><img src="/2020/03/29/ADS-project1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%A0%86%E4%BC%98%E5%8C%96%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95/6.jpg" alt="6"></p>
-<ol start="6">
-<li>增加节点值</li>
-</ol>
-<p>增加节点值和减少节点值类似，这个操作的难点也是如何维护”最小堆”性质。思路如下：<br>(1) 将”被增加节点”的”左孩子和左孩子的所有兄弟”都链接到根链表中。<br>(2) 接下来，把”被增加节点”添加到根链表；但是别忘了对其进行级联剪切。</p>
-<p><img src="/2020/03/29/ADS-project1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%A0%86%E4%BC%98%E5%8C%96%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95/7.jpg" alt="7"></p>
-<ol start="7">
-<li>删除节点</li>
-</ol>
-<p>删除节点，本文采用了操作是：”取出最小节点”和”减小节点值”的组合。<br>(1) 先将被删除节点的键值减少。减少后的值要比”原最小节点的值”即可。<br>(2) 接着，取出最小节点即可。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ydreamw.github.io/2020/03/29/ADS-project1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%A0%86%E4%BC%98%E5%8C%96%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95/" data-id="cksnhkjz80000f8vlgasd67dg" data-title="ADS-project1-斐波那契堆优化的最短路径算法" class="article-share-link">分享</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
   </nav>
 
 </section>
@@ -885,7 +826,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/">20ss</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/ADS/">ADS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/DBS/">DBS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/Linux/">Linux</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/INA/">INA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/">Web开发实践</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E5%A4%9A%E8%AF%91/">多译</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E8%AF%BE%E5%90%A6/">课否</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/">个人课程作业</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/19aw/">19aw</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E9%9A%8F%E7%AC%94/">个人随笔</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/">20ss</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/ADS/">ADS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/DBS/">DBS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86/">安全编程原理</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/INA/">INA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/">Web开发实践</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E5%A4%9A%E8%AF%91/">多译</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E8%AF%BE%E5%90%A6/">课否</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/">个人课程作业</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/19aw/">19aw</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E9%9A%8F%E7%AC%94/">个人随笔</a></li></ul>
     </div>
   </div>
 
@@ -931,7 +872,7 @@
           </li>
         
           <li>
-            <a href="/2021/08/17/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JS%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/">你不知道的JS上阅读笔记</a>
+            <a href="/2021/08/17/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JS%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/">《你不知道的JavaScript（上）》阅读笔记</a>
           </li>
         
           <li>

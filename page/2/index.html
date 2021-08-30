@@ -75,97 +75,9 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-安全编程原理-LAB2-GCC" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2020/06/10/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB2-GCC/" class="article-date">
-  <time class="dt-published" datetime="2020-06-09T17:05:57.000Z" itemprop="datePublished">2020-06-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/20ss/">20ss</a>►<a class="article-category-link" href="/categories/20ss/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86/">安全编程原理</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/06/10/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB2-GCC/">安全编程原理-LAB2-GCC</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="Running-a-Hello-World-Program-in-C-using-GCC"><a href="#Running-a-Hello-World-Program-in-C-using-GCC" class="headerlink" title="Running a Hello World Program in C using GCC"></a>Running a Hello World Program in C using GCC</h1><h3 id="一、打开终端"><a href="#一、打开终端" class="headerlink" title="一、打开终端"></a>一、打开终端</h3><p>由于直接使用虚拟机的终端界面过小且不清晰，故本实验在windows下使用ssh协议连接到了虚拟机</p>
-<p>如图</p>
-<p><img src="/2020/06/10/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB2-GCC/image-20200610120551601.png" alt="image-20200610120551601"></p>
-<h3 id="二、创建debug-me-c"><a href="#二、创建debug-me-c" class="headerlink" title="二、创建debug_me.c"></a>二、创建<code>debug_me.c</code></h3><p><img src="/2020/06/10/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB2-GCC/image-20200610121248605.png" alt="image-20200610121248605"></p>
-<p>保存后检查结果</p>
-<p><img src="/2020/06/10/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB2-GCC/image-20200610121317429.png" alt="image-20200610121317429"></p>
-<h3 id="三、编译运行"><a href="#三、编译运行" class="headerlink" title="三、编译运行"></a>三、编译运行</h3><p><img src="/2020/06/10/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB2-GCC/image-20200610122004477.png" alt="image-20200610122004477"></p>
-<p>输入</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gcc -g debug_me.c -o debug_me</span><br><span class="line">gdb debug_me</span><br><span class="line">run &quot;hello, world&quot; &quot;goodbye, world&quot;</span><br></pre></td></tr></table></figure>
-
-<p>出现运行结果：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String &#x27;1&#x27; - &#x27;hello,world&#x27;</span><br><span class="line">String &#x27;2&#x27; - &#x27;goodbye world&#x27;</span><br></pre></td></tr></table></figure>
-
-<p>符合预期结果</p>
-<h3 id="调试尝试"><a href="#调试尝试" class="headerlink" title="调试尝试"></a>调试尝试</h3><ul>
-<li><p>设置断点</p>
-  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">break main</span><br></pre></td></tr></table></figure>
-
-<p>  <img src="/2020/06/10/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB2-GCC/image-20200610162324985.png" alt="image-20200610162324985"></p>
-</li>
-<li><p>输入<code>run debug_me &quot;hello, world&quot; &quot;goodbye, world&quot;</code></p>
-<p>  程序运行到main函数之中</p>
-</li>
-<li><p>连续几次 n(next的缩写)，运行到 print_string 函数时，输入n 程序直接运行出第一次输出的结果 ： String ‘1’ - ‘debug_me’</p>
-</li>
-<li><p>继续调试，程序再次运行到 print_string 函数时，输入 s （step）,我们发现程序进入到了 print_string 函数内部。</p>
-</li>
-<li><p>step 和 next的区别</p>
-<p>  step表示单步进入，当当前语句是一个函数时，程序将进入该函数内部</p>
-<p>  next表示单步运行，当当前语句是一个函数时，程序不会进入到函数内部，而是直接运行出结果。</p>
-</li>
-<li><p>继续调试，输入where，得到结果</p>
-<p>  <code>#0 print_string ......</code> </p>
-<p>  <code>#1 .... in main</code></p>
-</li>
-<li><pre><code class="shell">  (gdb) frame 0
-  (gdb) print i
-  ...
-  (gdb) frame 1
-  (gdb) print i
-</code></pre>
-<p>  得到结果</p>
-<p>  前者  No symbol “i” in current context</p>
-<p>  后者 $$1 = 2$</p>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ydreamw.github.io/2020/06/10/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB2-GCC/" data-id="cksxgypoj000040vl27a10194" data-title="安全编程原理-LAB2-GCC" class="article-share-link">分享</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
     <article id="post-安全编程原理-LAB1-MVC" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2020/06/07/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB1-MVC/" class="article-date">
+    <a href="/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB1-MVC/" class="article-date">
   <time class="dt-published" datetime="2020-06-06T16:57:48.000Z" itemprop="datePublished">2020-06-07</time>
 </a>
     
@@ -181,7 +93,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/06/07/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB1-MVC/">安全编程原理-LAB1-MVC</a>
+      <a class="p-name article-title" href="/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB1-MVC/">安全编程原理-LAB1-MVC</a>
     </h1>
   
 
@@ -197,7 +109,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ydreamw.github.io/2020/06/07/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB1-MVC/" data-id="cksxgo3fo00006cvlglys4tl3" data-title="安全编程原理-LAB1-MVC" class="article-share-link">分享</a>
+      <a data-url="https://ydreamw.github.io/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB1-MVC/" data-id="cksxgo3fo00006cvlglys4tl3" data-title="安全编程原理-LAB1-MVC" class="article-share-link">分享</a>
       
       
       
@@ -211,7 +123,7 @@
   
     <article id="post-Linux-Lab2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2020/05/31/Linux-Lab2/" class="article-date">
+    <a href="/Linux-Lab2/" class="article-date">
   <time class="dt-published" datetime="2020-05-30T17:03:09.000Z" itemprop="datePublished">2020-05-31</time>
 </a>
     
@@ -227,7 +139,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/05/31/Linux-Lab2/">Linux-Lab2</a>
+      <a class="p-name article-title" href="/Linux-Lab2/">Linux-Lab2</a>
     </h1>
   
 
@@ -240,7 +152,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ydreamw.github.io/2020/05/31/Linux-Lab2/" data-id="cksngrqil00012kvl5ad5h39a" data-title="Linux-Lab2" class="article-share-link">分享</a>
+      <a data-url="https://ydreamw.github.io/Linux-Lab2/" data-id="cksngrqil00012kvl5ad5h39a" data-title="Linux-Lab2" class="article-share-link">分享</a>
       
       
       
@@ -256,7 +168,7 @@
   
     <article id="post-DBS-Project4-数据库编程" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2020/05/03/DBS-Project4-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%96%E7%A8%8B/" class="article-date">
+    <a href="/DBS-Project4-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%96%E7%A8%8B/" class="article-date">
   <time class="dt-published" datetime="2020-05-02T17:43:51.000Z" itemprop="datePublished">2020-05-03</time>
 </a>
     
@@ -272,7 +184,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/05/03/DBS-Project4-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%96%E7%A8%8B/">DBS-Project4-数据库编程</a>
+      <a class="p-name article-title" href="/DBS-Project4-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%96%E7%A8%8B/">DBS-Project4-数据库编程</a>
     </h1>
   
 
@@ -344,7 +256,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ydreamw.github.io/2020/05/03/DBS-Project4-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%96%E7%A8%8B/" data-id="cksni4d9v0005rgvl7izo8eeh" data-title="DBS-Project4-数据库编程" class="article-share-link">分享</a>
+      <a data-url="https://ydreamw.github.io/DBS-Project4-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%96%E7%A8%8B/" data-id="cksni4d9v0005rgvl7izo8eeh" data-title="DBS-Project4-数据库编程" class="article-share-link">分享</a>
       
       
       
@@ -360,7 +272,7 @@
   
     <article id="post-Linux-Lab1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2020/04/30/Linux-Lab1/" class="article-date">
+    <a href="/Linux-Lab1/" class="article-date">
   <time class="dt-published" datetime="2020-04-29T17:03:06.000Z" itemprop="datePublished">2020-04-30</time>
 </a>
     
@@ -376,7 +288,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/04/30/Linux-Lab1/">Linux-Lab1</a>
+      <a class="p-name article-title" href="/Linux-Lab1/">Linux-Lab1</a>
     </h1>
   
 
@@ -390,7 +302,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ydreamw.github.io/2020/04/30/Linux-Lab1/" data-id="cksngrqfq00002kvl5tpx513h" data-title="Linux-Lab1" class="article-share-link">分享</a>
+      <a data-url="https://ydreamw.github.io/Linux-Lab1/" data-id="cksngrqfq00002kvl5tpx513h" data-title="Linux-Lab1" class="article-share-link">分享</a>
       
       
       
@@ -406,7 +318,7 @@
   
     <article id="post-DBS-Project3-SQL数据完整性" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2020/04/02/DBS-Project3-SQL%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7/" class="article-date">
+    <a href="/DBS-Project3-SQL%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7/" class="article-date">
   <time class="dt-published" datetime="2020-04-01T17:43:21.000Z" itemprop="datePublished">2020-04-02</time>
 </a>
     
@@ -422,7 +334,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/04/02/DBS-Project3-SQL%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7/">DBS-Project3-SQL数据完整性</a>
+      <a class="p-name article-title" href="/DBS-Project3-SQL%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7/">DBS-Project3-SQL数据完整性</a>
     </h1>
   
 
@@ -492,7 +404,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ydreamw.github.io/2020/04/02/DBS-Project3-SQL%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7/" data-id="cksni4d9w0006rgvl4qhw4wep" data-title="DBS-Project3-SQL数据完整性" class="article-share-link">分享</a>
+      <a data-url="https://ydreamw.github.io/DBS-Project3-SQL%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7/" data-id="cksni4d9w0006rgvl4qhw4wep" data-title="DBS-Project3-SQL数据完整性" class="article-share-link">分享</a>
       
       
       
@@ -508,7 +420,7 @@
   
     <article id="post-ADS-project1-斐波那契堆优化的最短路径算法" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2020/03/29/ADS-project1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%A0%86%E4%BC%98%E5%8C%96%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95/" class="article-date">
+    <a href="/ADS-project1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%A0%86%E4%BC%98%E5%8C%96%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95/" class="article-date">
   <time class="dt-published" datetime="2020-03-28T17:28:29.000Z" itemprop="datePublished">2020-03-29</time>
 </a>
     
@@ -524,7 +436,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/03/29/ADS-project1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%A0%86%E4%BC%98%E5%8C%96%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95/">ADS-project1-斐波那契堆优化的最短路径算法</a>
+      <a class="p-name article-title" href="/ADS-project1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%A0%86%E4%BC%98%E5%8C%96%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95/">ADS-project1-斐波那契堆优化的最短路径算法</a>
     </h1>
   
 
@@ -591,7 +503,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ydreamw.github.io/2020/03/29/ADS-project1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%A0%86%E4%BC%98%E5%8C%96%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95/" data-id="cksnhkjz80000f8vlgasd67dg" data-title="ADS-project1-斐波那契堆优化的最短路径算法" class="article-share-link">分享</a>
+      <a data-url="https://ydreamw.github.io/ADS-project1-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E5%A0%86%E4%BC%98%E5%8C%96%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95/" data-id="cksnhkjz80000f8vlgasd67dg" data-title="ADS-project1-斐波那契堆优化的最短路径算法" class="article-share-link">分享</a>
       
       
       
@@ -605,7 +517,7 @@
   
     <article id="post-DBS-Project2-SQL数据定义和操作" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2020/03/21/DBS-Project2-SQL%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89%E5%92%8C%E6%93%8D%E4%BD%9C/" class="article-date">
+    <a href="/DBS-Project2-SQL%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89%E5%92%8C%E6%93%8D%E4%BD%9C/" class="article-date">
   <time class="dt-published" datetime="2020-03-20T17:42:51.000Z" itemprop="datePublished">2020-03-21</time>
 </a>
     
@@ -621,7 +533,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/03/21/DBS-Project2-SQL%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89%E5%92%8C%E6%93%8D%E4%BD%9C/">DBS-Project2-SQL数据定义和操作</a>
+      <a class="p-name article-title" href="/DBS-Project2-SQL%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89%E5%92%8C%E6%93%8D%E4%BD%9C/">DBS-Project2-SQL数据定义和操作</a>
     </h1>
   
 
@@ -700,7 +612,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ydreamw.github.io/2020/03/21/DBS-Project2-SQL%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89%E5%92%8C%E6%93%8D%E4%BD%9C/" data-id="cksni4d9u0004rgvl3f3zac1y" data-title="DBS-Project2-SQL数据定义和操作" class="article-share-link">分享</a>
+      <a data-url="https://ydreamw.github.io/DBS-Project2-SQL%E6%95%B0%E6%8D%AE%E5%AE%9A%E4%B9%89%E5%92%8C%E6%93%8D%E4%BD%9C/" data-id="cksni4d9u0004rgvl3f3zac1y" data-title="DBS-Project2-SQL数据定义和操作" class="article-share-link">分享</a>
       
       
       
@@ -716,7 +628,7 @@
   
     <article id="post-DBS-Projec1-DBMS的安装与使用" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/" class="article-date">
+    <a href="/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/" class="article-date">
   <time class="dt-published" datetime="2020-03-01T17:42:00.000Z" itemprop="datePublished">2020-03-02</time>
 </a>
     
@@ -732,7 +644,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/">DBS-Project1-DBMS的安装与使用</a>
+      <a class="p-name article-title" href="/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/">DBS-Project1-DBMS的安装与使用</a>
     </h1>
   
 
@@ -840,7 +752,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ydreamw.github.io/2020/03/02/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/" data-id="cksni4d9h0000rgvl0glze0nw" data-title="DBS-Project1-DBMS的安装与使用" class="article-share-link">分享</a>
+      <a data-url="https://ydreamw.github.io/DBS-Projec1-DBMS%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/" data-id="cksni4d9h0000rgvl0glze0nw" data-title="DBS-Project1-DBMS的安装与使用" class="article-share-link">分享</a>
       
       
       
@@ -856,7 +768,7 @@
   
     <article id="post-课否-回复功能开发实践三-对于业务的思考" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2020/02/29/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E4%B8%89-%E5%AF%B9%E4%BA%8E%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%80%9D%E8%80%83/" class="article-date">
+    <a href="/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E4%B8%89-%E5%AF%B9%E4%BA%8E%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%80%9D%E8%80%83/" class="article-date">
   <time class="dt-published" datetime="2020-02-29T15:17:48.000Z" itemprop="datePublished">2020-02-29</time>
 </a>
     
@@ -872,7 +784,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/02/29/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E4%B8%89-%E5%AF%B9%E4%BA%8E%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%80%9D%E8%80%83/">课否 · 回复功能开发实践(三)： 对于业务的思考</a>
+      <a class="p-name article-title" href="/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E4%B8%89-%E5%AF%B9%E4%BA%8E%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%80%9D%E8%80%83/">课否 · 回复功能开发实践(三)： 对于业务的思考</a>
     </h1>
   
 
@@ -900,11 +812,114 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ydreamw.github.io/2020/02/29/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E4%B8%89-%E5%AF%B9%E4%BA%8E%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%80%9D%E8%80%83/" data-id="ckslxhyci0000qkvl5mk53jxe" data-title="课否 · 回复功能开发实践(三)： 对于业务的思考" class="article-share-link">分享</a>
+      <a data-url="https://ydreamw.github.io/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E4%B8%89-%E5%AF%B9%E4%BA%8E%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%80%9D%E8%80%83/" data-id="ckslxhyci0000qkvl5mk53jxe" data-title="课否 · 回复功能开发实践(三)： 对于业务的思考" class="article-share-link">分享</a>
       
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web/" rel="tag">Web</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-课否-回复功能开发实践二-React-Hooks" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E4%BA%8C-React-Hooks/" class="article-date">
+  <time class="dt-published" datetime="2020-02-05T12:17:45.000Z" itemprop="datePublished">2020-02-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/">Web开发实践</a>►<a class="article-category-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E8%AF%BE%E5%90%A6/">课否</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E4%BA%8C-React-Hooks/">课否 · 回复功能开发实践(二)： React函数式组件与Hooks</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>最近大概阅读了一下课否的代码，项目使用了<a target="_blank" rel="noopener" href="https://taro.aotu.io/">Taro框架</a>。这个框架主要特点是可以实现小程序跨平台多端统一开发。这里对于框架不多赘述。</p>
+<p>另外一个特点则是这次项目中组件的形态发生了较大的变化：从类组件变成了函数式组件。因此在开始开发之前，我决定先了解一下React函数式组件。</p>
+<h2 id="1、函数式组件概述"><a href="#1、函数式组件概述" class="headerlink" title="1、函数式组件概述"></a>1、函数式组件概述</h2><p>拿React官网上的函数式组件的Demo来举例</p>
+<figure class="highlight jsx"><figcaption><span>harmony</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState, useEffect &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Example</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [count, setCount] = useState(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 相当于 componentDidMount 和 componentDidUpdate:</span></span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 使用浏览器的 API 更新页面标题</span></span><br><span class="line">    <span class="built_in">document</span>.title = <span class="string">`You clicked <span class="subst">$&#123;count&#125;</span> times`</span>;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">p</span>&gt;</span>You clicked &#123;count&#125; times<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> setCount(count + 1)&#125;&gt;</span></span><br><span class="line"><span class="xml">        Click me</span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Example</code> 是一个函数，它return一个React Dom。这种返回React Dom节点的函数就是函数式组件。这种函数式组件直观上要比类组件的代码简洁的多。</p>
+<p>函数式组件与类组件最大的区别就是，类组件有生命周期，并且state和props都作为类的属性。而函数式组件则不存在这样的生命周期。因此我们要学习的主要内容就是如何在函数式组件中使用state和进行生命周期的管理。</p>
+<p>Hooks 的作用正是如此</p>
+<h2 id="2、Hook-概览"><a href="#2、Hook-概览" class="headerlink" title="2、Hook 概览"></a>2、Hook 概览</h2><p>同样参考上面的代码， <code>count</code> 变量很像我们类组件中的state。事实上useState正是帮助我们使用state的hook。而useEffect则会在渲染的时候更新一下页面的标题。</p>
+<blockquote>
+<p>Hook 是一些可以让你在函数组件里“钩入” React state 及生命周期等特性的函数。</p>
+</blockquote>
+<p>React内置了一些Hook，我们也可以创建自己的Hook来服用不同组件之间的状态逻辑。</p>
+<p>接下来我们主要学习一下两个常用的Hook： State和Effect Hook</p>
+<h2 id="3、State-Hooks"><a href="#3、State-Hooks" class="headerlink" title="3、State Hooks"></a>3、State Hooks</h2><p>我们使用类组件来实现相同的点击功能，如下</p>
+<figure class="highlight jsx"><figcaption><span>harmony</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Example</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">props</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>(props);</span><br><span class="line">    <span class="built_in">this</span>.state = &#123;</span><br><span class="line">      <span class="attr">count</span>: <span class="number">0</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>You clicked &#123;this.state.count&#125; times<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> this.setState(&#123; count: this.state.count + 1 &#125;)&#125;&gt;</span></span><br><span class="line"><span class="xml">          Click me</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在<code>construtor</code>中初始化<code>state.count</code>为0，使用<code>this.state.count</code>来获取<code>count</code>的值，使用<code>this.setState()</code>方法来更改<code>state</code></p>
+<p>调用<code>useState</code>钩子函数来新建一个state及修改其的方法。该函数的参数是state的初始值，以数组的形式返回state和修改state的方法。在上面的例子中，我们使用数组的解构赋值来获取到了它们。</p>
+<p>等号左边的名字是由我们自己决定的。另外如果有多个state的话，我们可以依次声明并且使用它们。</p>
+<p>state也不必须是基本的变量，它可以是数组或者对象。</p>
+<h2 id="4、-Effect-Hooks"><a href="#4、-Effect-Hooks" class="headerlink" title="4、 Effect Hooks"></a>4、 Effect Hooks</h2><p>在介绍Effect Hooks之前，我们需要先了解一个新的概念： 函数副作用(side effects)</p>
+<blockquote>
+<p>在计算机科学中，函数副作用指当调用函数时，除了返回函数值之外，还对主调用函数产生附加的影响。例如修改全局变量（函数外的变量），修改参数或改变外部存储。</p>
+</blockquote>
+<p>与函数副作用的几个相关概念有：</p>
+<ul>
+<li>纯函数 输入输出的数据全是显式的，函数与外界交换数据只有唯一的渠道——参数与返回值。</li>
+<li>非纯函数 函数通过隐式的方式同外界交换数据。隐式即函数除参数与返回值之外，用其他方式同外界交换方式。比如读取全局变量、修改全局变量、IO等等</li>
+<li>参照透明性 无副作用是参照透明性的必要非充分条件。参照透明意味着一个表达式（例如一次函数调用）可以被替换为它的值。这需要该表达式是纯的，也就是说该表达式必须是完全确定的（相同的输入总是导致相同的输出）而且没有副作用。</li>
+</ul>
+<p>另外如果函数参数是个引用，而函数修改了引用内的内容，则该函数同样具有副作用。比如js中某个函数的参数是一个对象，而这个函数讲这个对象的某个属性进行了修改。</p>
+<p>而在React的函数式组件中，副作用函数需要使用Effect Hooks来进行操控。</p>
+<p>如之前提过的例子</p>
+<figure class="highlight jsx"><figcaption><span>harmony</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState, useEffect &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Example</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [count, setCount] = useState(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Similar to componentDidMount and componentDidUpdate:</span></span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// Update the document title using the browser API</span></span><br><span class="line">    <span class="built_in">document</span>.title = <span class="string">`You clicked <span class="subst">$&#123;count&#125;</span> times`</span>;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">p</span>&gt;</span>You clicked &#123;count&#125; times<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> setCount(count + 1)&#125;&gt;</span></span><br><span class="line"><span class="xml">        Click me</span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>提示: 如果你熟悉 React class 的生命周期函数，你可以把 useEffect Hook 看做 componentDidMount，componentDidUpdate 和 componentWillUnmount 这三个函数的组合。</p>
+</blockquote>
+<p>按照这个提示，可以理解为useEffect在每次render之后都会执行。</p>
+<h3 id="无需清除的副作用"><a href="#无需清除的副作用" class="headerlink" title="无需清除的副作用"></a>无需清除的副作用</h3><p>无需清除的副作用通常指那些我们<strong>只想在React更新DOM之后运行的代码</strong>。诸如网络请求，手动更改DOM（上面的例子）。这些例子的特点就是我们执行完之后就可以忽略它们了。无需清除的意思也可以理解为不需要再去考虑消除我们的副作用对于代码的影响。比如我们手动更改了DOM之后不需要把DOM恢复原状。</p>
+<h3 id="需要清除的副作用"><a href="#需要清除的副作用" class="headerlink" title="需要清除的副作用"></a>需要清除的副作用</h3><p>还有一些副作用是需要清除的，最常见的一个例子就是订阅外部数据源。假如我们在渲染之后订阅了一个频道，这个行为很明显是一个副作用。而在组件卸载之后，如果我们不进行任何操作，依旧订阅这个频道，那么就会面临着内存泄漏等糟糕的问题。</p>
+<p>而使用useEffect来清除副作用的方式很简单，那就是返回一个函数来清除</p>
+<figure class="highlight jsx"><figcaption><span>harmony</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">handleStatusChange</span>(<span class="params">status</span>) </span>&#123;</span><br><span class="line">    setIsOnline(status.isOnline);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange);</span><br><span class="line">  <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>例如这个例子，我们在页面渲染之后，将Online状态置为true，表示在线。接着订阅Chat数据，这是会产生需要消除的副作用。最后我们返回了一个函数，该函数的作用是取消订阅。这样当组件卸载的时候就会执行该函数来取消订阅，从而消除副作用。</p>
+<p><strong>注意： 每次更新的时候都要运行Effect，包括其清除阶段。</strong> 这里举一个常见的bug来帮助我们理解。</p>
+<figure class="highlight jsx"><figcaption><span>harmony</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">componentDidMount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  ChatAPI.subscribeToFriendStatus(</span><br><span class="line">    <span class="built_in">this</span>.props.friend.id,</span><br><span class="line">    <span class="built_in">this</span>.handleStatusChange</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">componentWillUnmount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  ChatAPI.unsubscribeFromFriendStatus(</span><br><span class="line">    <span class="built_in">this</span>.props.friend.id,</span><br><span class="line">    <span class="built_in">this</span>.handleStatusChange</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是当组件已经显示在屏幕上时，friend prop 发生变化时会发生什么？ 我们的组件将继续展示原来的好友状态。这是一个 bug。而且我们还会因为取消订阅时使用错误的好友 ID 导致内存泄露或崩溃的问题。</p>
+<p>在class组件中，我们需要添加<code>componentDidUpdate</code> 来解决这个问题。</p>
+<figure class="highlight jsx"><figcaption><span>harmony</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">componentDidMount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  ChatAPI.subscribeToFriendStatus(</span><br><span class="line">    <span class="built_in">this</span>.props.friend.id,</span><br><span class="line">    <span class="built_in">this</span>.handleStatusChange</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">componentDidUpdate</span>(<span class="params">prevProps</span>)</span> &#123;</span><br><span class="line">  <span class="comment">// 取消订阅之前的 friend.id</span></span><br><span class="line">  ChatAPI.unsubscribeFromFriendStatus(</span><br><span class="line">    prevProps.friend.id,</span><br><span class="line">    <span class="built_in">this</span>.handleStatusChange</span><br><span class="line">  );</span><br><span class="line">  <span class="comment">// 订阅新的 friend.id</span></span><br><span class="line">  ChatAPI.subscribeToFriendStatus(</span><br><span class="line">    <span class="built_in">this</span>.props.friend.id,</span><br><span class="line">    <span class="built_in">this</span>.handleStatusChange</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">componentWillUnmount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  ChatAPI.unsubscribeFromFriendStatus(</span><br><span class="line">    <span class="built_in">this</span>.props.friend.id,</span><br><span class="line">    <span class="built_in">this</span>.handleStatusChange</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>忘记正确地处理 componentDidUpdate 是 React 应用中常见的 bug 来源。</p>
+<p>那么我们的Hook在每次更新的时候都会进行effect的运行与清除，这样就可以避免上面的bug。</p>
+<p>侠名按照时间列出一个可能会产生的订阅与取消订阅操作的调用序列，来帮助我们理解。</p>
+<figure class="highlight jsx"><figcaption><span>harmony</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Mount with &#123; friend: &#123; id: 100 &#125; &#125; props</span></span><br><span class="line">ChatAPI.subscribeToFriendStatus(<span class="number">100</span>, handleStatusChange);     <span class="comment">// 运行第一个 effect</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Update with &#123; friend: &#123; id: 200 &#125; &#125; props</span></span><br><span class="line">ChatAPI.unsubscribeFromFriendStatus(<span class="number">100</span>, handleStatusChange); <span class="comment">// 清除上一个 effect</span></span><br><span class="line">ChatAPI.subscribeToFriendStatus(<span class="number">200</span>, handleStatusChange);     <span class="comment">// 运行下一个 effect</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Update with &#123; friend: &#123; id: 300 &#125; &#125; props</span></span><br><span class="line">ChatAPI.unsubscribeFromFriendStatus(<span class="number">200</span>, handleStatusChange); <span class="comment">// 清除上一个 effect</span></span><br><span class="line">ChatAPI.subscribeToFriendStatus(<span class="number">300</span>, handleStatusChange);     <span class="comment">// 运行下一个 effect</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Unmount</span></span><br><span class="line">ChatAPI.unsubscribeFromFriendStatus(<span class="number">300</span>, handleStatusChange); <span class="comment">// 清除最后一个 effect</span></span><br></pre></td></tr></table></figure>
+
+<p>useEffect的第二个参数表示只有在第二个参数发生变化的时候才执行副作用。</p>
+<figure class="highlight jsx"><figcaption><span>harmony</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">document</span>.title = <span class="string">`You clicked <span class="subst">$&#123;count&#125;</span> times`</span>;</span><br><span class="line">&#125;, [count]); <span class="comment">// 仅在 count 更改时更新</span></span><br></pre></td></tr></table></figure>
+<p>传入一个空数组表示只在挂载的时候执行一次。</p>
+<h3 id="感悟"><a href="#感悟" class="headerlink" title="感悟"></a>感悟</h3><p>useEffect 这个hooks同类组件的生命周期相比有一个很大的优势就是可以将代码按照业务逻辑分类思考。每个Hook代表一个逻辑，我们只需要关注这个逻辑在每个周期需要做什么。而类组件的生命周期管理方式强迫我们将关注点放在一个一个阶段，这让我们对于业务的管理变得很混乱。</p>
+<p>这也是为什么函数式组件的代码显得十分简洁和易于维护的一大原因。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>React 函数式组件的特性以及用法远不止这些。后面的文档我目前还不太能看懂。上面的这些部分已经足够帮助我胜任手头的业务需求了。我决定先进行实践。等未来自己有经验了，再去回看React的函数式组件。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ydreamw.github.io/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E4%BA%8C-React-Hooks/" data-id="ckslr9h6400005ovlfya10so5" data-title="课否 · 回复功能开发实践(二)： React函数式组件与Hooks" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hooks/" rel="tag">Hooks</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/React/" rel="tag">React</a></li></ul>
 
     </footer>
   </div>
@@ -958,7 +973,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
     </div>
   </div>
 
@@ -971,23 +986,23 @@
       <ul>
         
           <li>
-            <a href="/2021/08/15/hello-world/">Hello World</a>
+            <a href="/%E8%AF%BB%E5%8D%9Aor%E5%B0%B1%E4%B8%9A/">读博还是就业？</a>
           </li>
         
           <li>
-            <a href="/2021/07/14/hello-hexo/">hello hexo</a>
+            <a href="/%E3%80%8A%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BAnodejs%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/">《深入浅出nodejs》阅读笔记</a>
           </li>
         
           <li>
-            <a href="/2020/11/19/%E3%80%8A%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BAnodejs%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/">《深入浅出nodejs》阅读笔记</a>
+            <a href="/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E4%B8%89-prototype/">你不知道的JavaScript上阅读笔记三-prototype</a>
           </li>
         
           <li>
-            <a href="/2020/09/13/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E4%B8%89-prototype/">你不知道的JavaScript上阅读笔记三-prototype</a>
+            <a href="/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E4%BA%8C-this%E4%B8%8E%E5%87%BD%E6%95%B0%E6%9F%AF%E9%87%8C%E5%8C%96/">你不知道的JavaScript上阅读笔记二-this与函数柯里化</a>
           </li>
         
           <li>
-            <a href="/2020/08/28/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E4%BA%8C-this%E4%B8%8E%E5%87%BD%E6%95%B0%E6%9F%AF%E9%87%8C%E5%8C%96/">你不知道的JavaScript上阅读笔记二-this与函数柯里化</a>
+            <a href="/%E9%97%AD%E5%8C%85%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">闭包到底是什么？</a>
           </li>
         
       </ul>

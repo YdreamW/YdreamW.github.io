@@ -75,6 +75,265 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-课否-回复功能开发实践二-React-Hooks" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/02/05/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E4%BA%8C-React-Hooks/" class="article-date">
+  <time class="dt-published" datetime="2020-02-05T12:17:45.000Z" itemprop="datePublished">2020-02-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/">Web开发实践</a>►<a class="article-category-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E8%AF%BE%E5%90%A6/">课否</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/02/05/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E4%BA%8C-React-Hooks/">课否 · 回复功能开发实践(二)： React函数式组件与Hooks</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>最近大概阅读了一下课否的代码，项目使用了<a target="_blank" rel="noopener" href="https://taro.aotu.io/">Taro框架</a>。这个框架主要特点是可以实现小程序跨平台多端统一开发。这里对于框架不多赘述。</p>
+<p>另外一个特点则是这次项目中组件的形态发生了较大的变化：从类组件变成了函数式组件。因此在开始开发之前，我决定先了解一下React函数式组件。</p>
+<h2 id="1、函数式组件概述"><a href="#1、函数式组件概述" class="headerlink" title="1、函数式组件概述"></a>1、函数式组件概述</h2><p>拿React官网上的函数式组件的Demo来举例</p>
+<figure class="highlight jsx"><figcaption><span>harmony</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState, useEffect &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Example</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [count, setCount] = useState(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 相当于 componentDidMount 和 componentDidUpdate:</span></span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 使用浏览器的 API 更新页面标题</span></span><br><span class="line">    <span class="built_in">document</span>.title = <span class="string">`You clicked <span class="subst">$&#123;count&#125;</span> times`</span>;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">p</span>&gt;</span>You clicked &#123;count&#125; times<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> setCount(count + 1)&#125;&gt;</span></span><br><span class="line"><span class="xml">        Click me</span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Example</code> 是一个函数，它return一个React Dom。这种返回React Dom节点的函数就是函数式组件。这种函数式组件直观上要比类组件的代码简洁的多。</p>
+<p>函数式组件与类组件最大的区别就是，类组件有生命周期，并且state和props都作为类的属性。而函数式组件则不存在这样的生命周期。因此我们要学习的主要内容就是如何在函数式组件中使用state和进行生命周期的管理。</p>
+<p>Hooks 的作用正是如此</p>
+<h2 id="2、Hook-概览"><a href="#2、Hook-概览" class="headerlink" title="2、Hook 概览"></a>2、Hook 概览</h2><p>同样参考上面的代码， <code>count</code> 变量很像我们类组件中的state。事实上useState正是帮助我们使用state的hook。而useEffect则会在渲染的时候更新一下页面的标题。</p>
+<blockquote>
+<p>Hook 是一些可以让你在函数组件里“钩入” React state 及生命周期等特性的函数。</p>
+</blockquote>
+<p>React内置了一些Hook，我们也可以创建自己的Hook来服用不同组件之间的状态逻辑。</p>
+<p>接下来我们主要学习一下两个常用的Hook： State和Effect Hook</p>
+<h2 id="3、State-Hooks"><a href="#3、State-Hooks" class="headerlink" title="3、State Hooks"></a>3、State Hooks</h2><p>我们使用类组件来实现相同的点击功能，如下</p>
+<figure class="highlight jsx"><figcaption><span>harmony</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Example</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">props</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>(props);</span><br><span class="line">    <span class="built_in">this</span>.state = &#123;</span><br><span class="line">      <span class="attr">count</span>: <span class="number">0</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>You clicked &#123;this.state.count&#125; times<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> this.setState(&#123; count: this.state.count + 1 &#125;)&#125;&gt;</span></span><br><span class="line"><span class="xml">          Click me</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在<code>construtor</code>中初始化<code>state.count</code>为0，使用<code>this.state.count</code>来获取<code>count</code>的值，使用<code>this.setState()</code>方法来更改<code>state</code></p>
+<p>调用<code>useState</code>钩子函数来新建一个state及修改其的方法。该函数的参数是state的初始值，以数组的形式返回state和修改state的方法。在上面的例子中，我们使用数组的解构赋值来获取到了它们。</p>
+<p>等号左边的名字是由我们自己决定的。另外如果有多个state的话，我们可以依次声明并且使用它们。</p>
+<p>state也不必须是基本的变量，它可以是数组或者对象。</p>
+<h2 id="4、-Effect-Hooks"><a href="#4、-Effect-Hooks" class="headerlink" title="4、 Effect Hooks"></a>4、 Effect Hooks</h2><p>在介绍Effect Hooks之前，我们需要先了解一个新的概念： 函数副作用(side effects)</p>
+<blockquote>
+<p>在计算机科学中，函数副作用指当调用函数时，除了返回函数值之外，还对主调用函数产生附加的影响。例如修改全局变量（函数外的变量），修改参数或改变外部存储。</p>
+</blockquote>
+<p>与函数副作用的几个相关概念有：</p>
+<ul>
+<li>纯函数 输入输出的数据全是显式的，函数与外界交换数据只有唯一的渠道——参数与返回值。</li>
+<li>非纯函数 函数通过隐式的方式同外界交换数据。隐式即函数除参数与返回值之外，用其他方式同外界交换方式。比如读取全局变量、修改全局变量、IO等等</li>
+<li>参照透明性 无副作用是参照透明性的必要非充分条件。参照透明意味着一个表达式（例如一次函数调用）可以被替换为它的值。这需要该表达式是纯的，也就是说该表达式必须是完全确定的（相同的输入总是导致相同的输出）而且没有副作用。</li>
+</ul>
+<p>另外如果函数参数是个引用，而函数修改了引用内的内容，则该函数同样具有副作用。比如js中某个函数的参数是一个对象，而这个函数讲这个对象的某个属性进行了修改。</p>
+<p>而在React的函数式组件中，副作用函数需要使用Effect Hooks来进行操控。</p>
+<p>如之前提过的例子</p>
+<figure class="highlight jsx"><figcaption><span>harmony</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState, useEffect &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Example</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [count, setCount] = useState(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Similar to componentDidMount and componentDidUpdate:</span></span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// Update the document title using the browser API</span></span><br><span class="line">    <span class="built_in">document</span>.title = <span class="string">`You clicked <span class="subst">$&#123;count&#125;</span> times`</span>;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">p</span>&gt;</span>You clicked &#123;count&#125; times<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> setCount(count + 1)&#125;&gt;</span></span><br><span class="line"><span class="xml">        Click me</span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>提示: 如果你熟悉 React class 的生命周期函数，你可以把 useEffect Hook 看做 componentDidMount，componentDidUpdate 和 componentWillUnmount 这三个函数的组合。</p>
+</blockquote>
+<p>按照这个提示，可以理解为useEffect在每次render之后都会执行。</p>
+<h3 id="无需清除的副作用"><a href="#无需清除的副作用" class="headerlink" title="无需清除的副作用"></a>无需清除的副作用</h3><p>无需清除的副作用通常指那些我们<strong>只想在React更新DOM之后运行的代码</strong>。诸如网络请求，手动更改DOM（上面的例子）。这些例子的特点就是我们执行完之后就可以忽略它们了。无需清除的意思也可以理解为不需要再去考虑消除我们的副作用对于代码的影响。比如我们手动更改了DOM之后不需要把DOM恢复原状。</p>
+<h3 id="需要清除的副作用"><a href="#需要清除的副作用" class="headerlink" title="需要清除的副作用"></a>需要清除的副作用</h3><p>还有一些副作用是需要清除的，最常见的一个例子就是订阅外部数据源。假如我们在渲染之后订阅了一个频道，这个行为很明显是一个副作用。而在组件卸载之后，如果我们不进行任何操作，依旧订阅这个频道，那么就会面临着内存泄漏等糟糕的问题。</p>
+<p>而使用useEffect来清除副作用的方式很简单，那就是返回一个函数来清除</p>
+<figure class="highlight jsx"><figcaption><span>harmony</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">handleStatusChange</span>(<span class="params">status</span>) </span>&#123;</span><br><span class="line">    setIsOnline(status.isOnline);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange);</span><br><span class="line">  <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>例如这个例子，我们在页面渲染之后，将Online状态置为true，表示在线。接着订阅Chat数据，这是会产生需要消除的副作用。最后我们返回了一个函数，该函数的作用是取消订阅。这样当组件卸载的时候就会执行该函数来取消订阅，从而消除副作用。</p>
+<p><strong>注意： 每次更新的时候都要运行Effect，包括其清除阶段。</strong> 这里举一个常见的bug来帮助我们理解。</p>
+<figure class="highlight jsx"><figcaption><span>harmony</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">componentDidMount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  ChatAPI.subscribeToFriendStatus(</span><br><span class="line">    <span class="built_in">this</span>.props.friend.id,</span><br><span class="line">    <span class="built_in">this</span>.handleStatusChange</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">componentWillUnmount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  ChatAPI.unsubscribeFromFriendStatus(</span><br><span class="line">    <span class="built_in">this</span>.props.friend.id,</span><br><span class="line">    <span class="built_in">this</span>.handleStatusChange</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是当组件已经显示在屏幕上时，friend prop 发生变化时会发生什么？ 我们的组件将继续展示原来的好友状态。这是一个 bug。而且我们还会因为取消订阅时使用错误的好友 ID 导致内存泄露或崩溃的问题。</p>
+<p>在class组件中，我们需要添加<code>componentDidUpdate</code> 来解决这个问题。</p>
+<figure class="highlight jsx"><figcaption><span>harmony</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">componentDidMount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  ChatAPI.subscribeToFriendStatus(</span><br><span class="line">    <span class="built_in">this</span>.props.friend.id,</span><br><span class="line">    <span class="built_in">this</span>.handleStatusChange</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">componentDidUpdate</span>(<span class="params">prevProps</span>)</span> &#123;</span><br><span class="line">  <span class="comment">// 取消订阅之前的 friend.id</span></span><br><span class="line">  ChatAPI.unsubscribeFromFriendStatus(</span><br><span class="line">    prevProps.friend.id,</span><br><span class="line">    <span class="built_in">this</span>.handleStatusChange</span><br><span class="line">  );</span><br><span class="line">  <span class="comment">// 订阅新的 friend.id</span></span><br><span class="line">  ChatAPI.subscribeToFriendStatus(</span><br><span class="line">    <span class="built_in">this</span>.props.friend.id,</span><br><span class="line">    <span class="built_in">this</span>.handleStatusChange</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">componentWillUnmount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  ChatAPI.unsubscribeFromFriendStatus(</span><br><span class="line">    <span class="built_in">this</span>.props.friend.id,</span><br><span class="line">    <span class="built_in">this</span>.handleStatusChange</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>忘记正确地处理 componentDidUpdate 是 React 应用中常见的 bug 来源。</p>
+<p>那么我们的Hook在每次更新的时候都会进行effect的运行与清除，这样就可以避免上面的bug。</p>
+<p>侠名按照时间列出一个可能会产生的订阅与取消订阅操作的调用序列，来帮助我们理解。</p>
+<figure class="highlight jsx"><figcaption><span>harmony</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Mount with &#123; friend: &#123; id: 100 &#125; &#125; props</span></span><br><span class="line">ChatAPI.subscribeToFriendStatus(<span class="number">100</span>, handleStatusChange);     <span class="comment">// 运行第一个 effect</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Update with &#123; friend: &#123; id: 200 &#125; &#125; props</span></span><br><span class="line">ChatAPI.unsubscribeFromFriendStatus(<span class="number">100</span>, handleStatusChange); <span class="comment">// 清除上一个 effect</span></span><br><span class="line">ChatAPI.subscribeToFriendStatus(<span class="number">200</span>, handleStatusChange);     <span class="comment">// 运行下一个 effect</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Update with &#123; friend: &#123; id: 300 &#125; &#125; props</span></span><br><span class="line">ChatAPI.unsubscribeFromFriendStatus(<span class="number">200</span>, handleStatusChange); <span class="comment">// 清除上一个 effect</span></span><br><span class="line">ChatAPI.subscribeToFriendStatus(<span class="number">300</span>, handleStatusChange);     <span class="comment">// 运行下一个 effect</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Unmount</span></span><br><span class="line">ChatAPI.unsubscribeFromFriendStatus(<span class="number">300</span>, handleStatusChange); <span class="comment">// 清除最后一个 effect</span></span><br></pre></td></tr></table></figure>
+
+<p>useEffect的第二个参数表示只有在第二个参数发生变化的时候才执行副作用。</p>
+<figure class="highlight jsx"><figcaption><span>harmony</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">document</span>.title = <span class="string">`You clicked <span class="subst">$&#123;count&#125;</span> times`</span>;</span><br><span class="line">&#125;, [count]); <span class="comment">// 仅在 count 更改时更新</span></span><br></pre></td></tr></table></figure>
+<p>传入一个空数组表示只在挂载的时候执行一次。</p>
+<h3 id="感悟"><a href="#感悟" class="headerlink" title="感悟"></a>感悟</h3><p>useEffect 这个hooks同类组件的生命周期相比有一个很大的优势就是可以将代码按照业务逻辑分类思考。每个Hook代表一个逻辑，我们只需要关注这个逻辑在每个周期需要做什么。而类组件的生命周期管理方式强迫我们将关注点放在一个一个阶段，这让我们对于业务的管理变得很混乱。</p>
+<p>这也是为什么函数式组件的代码显得十分简洁和易于维护的一大原因。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>React 函数式组件的特性以及用法远不止这些。后面的文档我目前还不太能看懂。上面的这些部分已经足够帮助我胜任手头的业务需求了。我决定先进行实践。等未来自己有经验了，再去回看React的函数式组件。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ydreamw.github.io/2020/02/05/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E4%BA%8C-React-Hooks/" data-id="ckslr9h6400005ovlfya10so5" data-title="课否 · 回复功能开发实践(二)： React函数式组件与Hooks" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hooks/" rel="tag">Hooks</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/React/" rel="tag">React</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-课否-回复功能开发实践-一-webstorm的使用" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/01/31/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5-%E4%B8%80-webstorm%E7%9A%84%E4%BD%BF%E7%94%A8/" class="article-date">
+  <time class="dt-published" datetime="2020-01-31T10:52:19.000Z" itemprop="datePublished">2020-01-31</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/">Web开发实践</a>►<a class="article-category-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E8%AF%BE%E5%90%A6/">课否</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/01/31/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5-%E4%B8%80-webstorm%E7%9A%84%E4%BD%BF%E7%94%A8/">课否 · 回复功能开发实践(一)： WebStorm的使用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>寒假在家躺尸，不想学习只想玩，上学期快结束的时候忙于大作业和期末考试，博客也停滞更新了。</p>
+<p>之前的色老师说的小程序课否也上线了，现在还挺多人用的，基本上是替代掉了查老师。</p>
+<p>最近色老师让我做一个回复的功能。具体来讲就是在现在的老师评价的基础上，用户可以针对某一条评价进行回复，同时也可以针对回复进行回复。大概就是这样的需求。</p>
+<p>于是我开了这个新坑，记录一下这次的开发过程。</p>
+<p>工欲善其事，必先利其器。我之前一直在使用 vscode 作为 Web 开发的 ide，色老师向我推荐了 WebStorm，并且教我设置了一些常用的快捷键</p>
+<h3 id="快捷键的设置方式"><a href="#快捷键的设置方式" class="headerlink" title="快捷键的设置方式"></a>快捷键的设置方式</h3><p>在 File-&gt; Settings 中点击 KeyMap, 右上角如下图所示，左侧可以按照功能进行搜索，右侧可以按照快捷键搜索</p>
+<p><img src="/2020/01/31/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5-%E4%B8%80-webstorm%E7%9A%84%E4%BD%BF%E7%94%A8/keymap.png" alt="keyMap_Setting"></p>
+<h3 id="常用快捷键"><a href="#常用快捷键" class="headerlink" title="常用快捷键"></a>常用快捷键</h3><ul>
+<li>两次 shift 连按两次 shift 可以进行全局搜索</li>
+<li>ctrl+B,ctrl+click 前往声明</li>
+<li>ctrl+鼠标悬停，查看变量声明、注释等</li>
+<li>ctrl+tab 切换 tab</li>
+<li>自己添加 alt+t 使用prettier进行代码格式化</li>
+<li>ctrl+K commit</li>
+<li>ctrl+y pull</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ydreamw.github.io/2020/01/31/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5-%E4%B8%80-webstorm%E7%9A%84%E4%BD%BF%E7%94%A8/" data-id="cksitg5j000001wvl9fste0e0" data-title="课否 · 回复功能开发实践(一)： WebStorm的使用" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebStorm/" rel="tag">WebStorm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-scrapy框架爬虫入门，与培养方案抓取实践" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/12/16/scrapy%E6%A1%86%E6%9E%B6%E7%88%AC%E8%99%AB%E5%85%A5%E9%97%A8%EF%BC%8C%E4%B8%8E%E5%9F%B9%E5%85%BB%E6%96%B9%E6%A1%88%E6%8A%93%E5%8F%96%E5%AE%9E%E8%B7%B5/" class="article-date">
+  <time class="dt-published" datetime="2019-12-16T13:09:55.000Z" itemprop="datePublished">2019-12-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/INA/">INA</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2019/12/16/scrapy%E6%A1%86%E6%9E%B6%E7%88%AC%E8%99%AB%E5%85%A5%E9%97%A8%EF%BC%8C%E4%B8%8E%E5%9F%B9%E5%85%BB%E6%96%B9%E6%A1%88%E6%8A%93%E5%8F%96%E5%AE%9E%E8%B7%B5/">scrapy框架爬虫入门，与培养方案抓取实践</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>最近色老师的项目想要其他学校的课程信息，于是让我去爬取别人的数据。<br>自己学习了一下scarpy，上手进行了简单的爬虫。</p>
+<h2 id="scrapy框架爬虫入门与培养方案抓取实践"><a href="#scrapy框架爬虫入门与培养方案抓取实践" class="headerlink" title="scrapy框架爬虫入门与培养方案抓取实践"></a>scrapy框架爬虫入门与培养方案抓取实践</h2><h3 id="现场爬一下蛤交的课程信息"><a href="#现场爬一下蛤交的课程信息" class="headerlink" title="现场爬一下蛤交的课程信息"></a>现场爬一下蛤交的课程信息</h3><p><a target="_blank" rel="noopener" href="https://github.com/YdreamW/sjtuSpider.git">https://github.com/YdreamW/sjtuSpider.git</a></p>
+<h2 id="scrapy文件结构"><a href="#scrapy文件结构" class="headerlink" title="scrapy文件结构"></a>scrapy文件结构</h2><ul>
+<li>sjtuSpider<ul>
+<li>spiders<ul>
+<li>stju.py</li>
+<li>getMajorUrl.py</li>
+</ul>
+</li>
+<li>items.py</li>
+<li>pipelines.py</li>
+</ul>
+</li>
+</ul>
+<h2 id="创建项目的过程"><a href="#创建项目的过程" class="headerlink" title="创建项目的过程"></a>创建项目的过程</h2><ul>
+<li><p>安装框架</p>
+</li>
+<li><p>创建项目</p>
+<ul>
+<li>新建项目。<br>  项目名可以用  …Spider</li>
+</ul>
+  <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy startproject &lt;项目名&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>新建一个爬虫。<br>  爬虫名不能和项目名称一致</li>
+</ul>
+  <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy genspider &lt;爬虫名&gt; &lt;域名限制&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="写一个爬虫"><a href="#写一个爬虫" class="headerlink" title="写一个爬虫"></a>写一个爬虫</h3><ul>
+<li><p>在此之前需要了解一下 xpath的简单语法</p>
+</li>
+<li><p>推荐一个插件  xpath helper</p>
+</li>
+<li><p>getMajorUrl.py 的例子</p>
+</li>
+<li><p>分析网站</p>
+<ul>
+<li>在chrome里找网页的逻辑</li>
+<li>network 看请求</li>
+<li>可以先用 postman 模拟请求</li>
+</ul>
+</li>
+<li><p>愉快的写代码，然后输出结果</p>
+</li>
+<li><p>运行的爬虫的指令</p>
+</li>
+</ul>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy crawl sjtu -o course1.json -s FEED_EXPORT_ENCODING=UTF-<span class="number">8</span></span><br></pre></td></tr></table></figure>
+
+
+<p>​    </p>
+<h2 id="反思"><a href="#反思" class="headerlink" title="反思"></a>反思</h2><p>了解了xpath，这个东西很简单就能入门，但是感觉要想熟练的分析页面还是需要一定的经验积累</p>
+<p>最近学业压力比较重，爬虫只局限于了实践层面。<br>对于python的generator并没有理解的很透彻，以及python的面向对象都是一知半解，以后有机会好好搞清楚generator</p>
+<p>​    我印象中 es6 也有generator</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ydreamw.github.io/2019/12/16/scrapy%E6%A1%86%E6%9E%B6%E7%88%AC%E8%99%AB%E5%85%A5%E9%97%A8%EF%BC%8C%E4%B8%8E%E5%9F%B9%E5%85%BB%E6%96%B9%E6%A1%88%E6%8A%93%E5%8F%96%E5%AE%9E%E8%B7%B5/" data-id="cksd8joyd0000zcvlgrdu1e90" data-title="scrapy框架爬虫入门，与培养方案抓取实践" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-DIP-HW6" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2019/12/07/DIP-HW6/" class="article-date">
@@ -1120,458 +1379,6 @@
 
 
   
-    <article id="post-web开发技术链条" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2019/11/19/web%E5%BC%80%E5%8F%91%E6%8A%80%E6%9C%AF%E9%93%BE%E6%9D%A1/" class="article-date">
-  <time class="dt-published" datetime="2019-11-19T12:21:48.000Z" itemprop="datePublished">2019-11-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/INA/">INA</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/11/19/web%E5%BC%80%E5%8F%91%E6%8A%80%E6%9C%AF%E9%93%BE%E6%9D%A1/">web开发技术链条</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>昨天是加入ina技术部以后的第二次会，任总来分享了GPU的薅羊毛方法。（但我目前可能不太会炼丹）</p>
-<p>色老师分享了产品设计和web开发种的工具链条。我才发现原来开发也是一件讲究的事情。</p>
-<h2 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h2><ul>
-<li><a target="_blank" rel="noopener" href="http://ui8.net/">UI8</a></li>
-<li><a target="_blank" rel="noopener" href="http://yrucd.com/">云端</a></li>
-</ul>
-<h2 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">“任何可以使用JavaScript来编写的应用，最终会由JavaScript编写。”</span><br><span class="line">					                                   ——Atwood定律</span><br></pre></td></tr></table></figure>
-<p>又一次听到了这句话。不过js最近确实使用人数越来越多。</p>
-<ul>
-<li>【web】umi 开发框架</li>
-<li>【app】react native</li>
-<li>【小程序】taro开发框架</li>
-<li>【桌面端】Electron</li>
-</ul>
-<p>umi确实很好用，最近在做miniproject，这个东西有点重。</p>
-<p>色老师说他最近开了新坑，查老师挂掉了，他们要搞个新的查老师。用的就是Taro框架，以后我们应该也要参与到开发中了。</p>
-<h2 id="后端"><a href="#后端" class="headerlink" title="后端"></a>后端</h2><ul>
-<li>【框架】Egg.js</li>
-<li><strong>postman</strong></li>
-<li>mongoDB Compass</li>
-<li>Alinode  </li>
-</ul>
-<p>色老师演示了 postman的使用方法，这个真的是神器。</p>
-<p>mongoDB最近写miniproject的时候也在看，这个数据库比MySQL好用一万倍。<br>把数据库当作对象处理，很符合js的理念比sql语句要好用的多。</p>
-<h2 id="运维"><a href="#运维" class="headerlink" title="运维"></a>运维</h2><ul>
-<li>linux的宝塔面板；</li>
-<li>docker portainer</li>
-</ul>
-<p>docker portainer我前段时间刚刚用过。docker的定义上学期开开好像例会上有提过。<br>我前段时间刚好还用过这个玩意。不过是不务正业，用docker搭了mc服务器和瑞同石大佬一起玩。</p>
-<h2 id="日志管理"><a href="#日志管理" class="headerlink" title="日志管理"></a>日志管理</h2><ul>
-<li>Sentry</li>
-<li>ELK</li>
-</ul>
-<h2 id="数据追踪"><a href="#数据追踪" class="headerlink" title="数据追踪"></a>数据追踪</h2><ul>
-<li>Metabase</li>
-<li>Google Analy</li>
-<li>Mixpanel</li>
-</ul>
-<p>这些东西从来没有接触过，感觉很工业，离我挺遥远的。</p>
-<p>##阳阳的私货分享————BPM 音乐</p>
-<ul>
-<li>BPM：<ul>
-<li>bpm 软件计算版： MixMeister BMP Analyzer</li>
-<li>自己估算：每一个拍，数一个数字。1-10数两组，用1200/秒数</li>
-<li>懒人不算</li>
-</ul>
-</li>
-<li>BPM 100-110<ul>
-<li>有氧运动：台阶  慢速跳绳。</li>
-<li>无氧运动：Focus</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ydreamw.github.io/2019/11/19/web%E5%BC%80%E5%8F%91%E6%8A%80%E6%9C%AF%E9%93%BE%E6%9D%A1/" data-id="cksd6gxpw0000p4vl1l69dyfa" data-title="web开发技术链条" class="article-share-link">分享</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-DIP-HW4" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2019/11/17/DIP-HW4/" class="article-date">
-  <time class="dt-published" datetime="2019-11-17T13:17:49.000Z" itemprop="datePublished">2019-11-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E4%B8%AA%E4%BA%BA%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/">个人课程作业</a>►<a class="article-category-link" href="/categories/%E4%B8%AA%E4%BA%BA%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/19aw/">19aw</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/11/17/DIP-HW4/">DIP-HW4</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="实验四"><a href="#实验四" class="headerlink" title="实验四"></a>实验四</h1><h3 id="一、实验目的和要求"><a href="#一、实验目的和要求" class="headerlink" title="一、实验目的和要求"></a>一、实验目的和要求</h3><ul>
-<li><strong>目的</strong><ul>
-<li>了解图像变换的种类</li>
-<li>掌握常见几何变换（平移、旋转、对称、投影、放缩）的方法。</li>
-<li>了解插值的原因、目的及原理。</li>
-<li>掌握线性插值、双线性插值的方法，并比较其效果。</li>
-</ul>
-</li>
-<li><strong>要求</strong><ul>
-<li>自己写c语言程序，实现所有操作，不得调用库。</li>
-</ul>
-</li>
-</ul>
-<h3 id="二、实验内容和原理"><a href="#二、实验内容和原理" class="headerlink" title="二、实验内容和原理"></a>二、实验内容和原理</h3><ul>
-<li><p><strong>内容：</strong> 对图像进行几何变换。</p>
-<ul>
-<li>读入24位彩图</li>
-<li>依次对图像进行平移、旋转、对称、投影和放缩变换</li>
-<li>输出变换后的图像</li>
-</ul>
-</li>
-<li><p><strong>原理：</strong> </p>
-<p>  ​        对图像进行几何变换操作的原理是，对于即将生成的新图像中每个像素点$P’=(x’,y’)$ ，我们利用图像几何变换的逆变换求得其在原始图像中对应的点 $P=(x,y)=T(x’,y’)$   。则$R(x’,y’)=R(x,y);G(x’,y’)=G(x,y);B(x’,y’)=B(x,y);$ </p>
-<p>  ​       很多情况下我们得到的 $(x,y)$ 并不是整数，这个时候我们需要选择一个方法来得到$(x,y) $应当对应的$RGB$值。这个时候就用到插值法。即利用$(x,y)$ 附近的一些像素点的$RGB$值来计算得到$(x’,y’)$的$RGB$值。</p>
-<ul>
-<li><p><strong>平移  $(dx,dy)$</strong></p>
-<p>   $$ \left{ \begin{aligned}  x = x’-dx\y = y’-dy \end{aligned} \right. $$ </p>
-</li>
-<li><p><strong>逆时针旋转 $\theta$</strong></p>
-<p>  <strong>一些常量的定义：</strong></p>
-<p>  $pw,ph  (原图的宽度和高度)$</p>
-<p>  $nw,nh  (新图的宽度和高度)$</p>
-<p>  $cx=pw/2  (原图中心点的横坐标)$</p>
-<p>  $cy=ph/2  (原图中心点的横坐标)$</p>
-<p>  $dx=(nw-pw)/2$</p>
-<p>  $dy=(nh-ph)/2$</p>
-<p>  <strong>定义两个中间变量：</strong></p>
-<p>  $a=x’-dx-cx+cx<em>cos\theta-cy</em>sin\theta$</p>
-<p>  $b=y’-dy-cy+cy<em>cos\theta+cx</em>sin\theta$</p>
-<p>  <strong>则</strong></p>
-<p>   $$ \left{ \begin{aligned}  x = b<em>sin\theta +a</em>cos\theta \y = b<em>cos\theta-a</em>sin\theta \end{aligned} \right. $$ </p>
-</li>
-<li><p>**投影  $\theta$ **</p>
-<p> x轴方向    $$ \begin{cases}  x = x’ -y’*tan\theta \y =y’ \end{cases} $$ </p>
-<p> y轴方向    $$ \begin{cases}  x = x’ \y =y’ -x’*tan\theta \end{cases} $$ </p>
-</li>
-<li><p><strong>对称</strong></p>
-<p> x轴方向     $$ \begin{cases}  x = pw -x’-1 \y =y’ \end{cases} $$ </p>
-<p> y轴方向     $$ \begin{cases}  x = x’ \y =ph-y’-1 \end{cases} $$ </p>
-</li>
-<li><p><strong>放缩，比例为$(a,b)$</strong></p>
-<p> $$ \begin{cases}  x = \frac{x’}{a} \y =\frac{y’}{b} \end{cases} $$ </p>
-</li>
-<li><p><strong>插值法</strong></p>
-<p> <strong>一些常量的定义：</strong></p>
-<p> $x,y  \rightarrow  (根据变换公式计算得到的坐标，可能为小数)$</p>
-<p> $x_1= \lfloor x \rfloor  $</p>
-<p> $y_1= \lfloor y \rfloor  $</p>
-<p> $x_2= \lceil x \rceil  $</p>
-<p> $y_2= \lceil y \rceil  $</p>
-<p> $radio_{11}=x-x_1$</p>
-<p> $radio_{12}=x_2-x$</p>
-<p> $radio_{21}=y-y1$</p>
-<p> $radio_{22}=y2-y$</p>
-<p> (理论上  $radio_{11}=\frac{x-x_1}{x_2-x_1}$   ，由于$x_2-x_1=1$ 。其他$radio$同理)</p>
-<p> $C\in {R,G,B} \rightarrow (原始图像的RGB值)$</p>
-<p> $C’\in {R’,G’,B’} \rightarrow (处理后图像的RGB值)$</p>
-<p> <strong>则：</strong></p>
-<p> $$C’(x’,y’)=radio_{21}*(radio_{11}*C(x_1,y_1)+radio_{12}<em>C(x_1,y_2))\\qquad\qquad+ radio_{22}</em>(radio_{11}*C(x_2,y_1)+radio_{12}*C(x_2,y_2))$$</p>
-<p> 上述公式即为双线性插值法。</p>
-<p> 其本质在于，利用像素点变换前的实际位置周围四个像素点的 $RGB$ 值的<strong>加权平均</strong>来计算新像素点的 $RGB$ 值。并且如果周围的像素点距离实际位置越远，其的值对实际的 $RGB$ 值影响越小。原理如下图所示。</p>
-<p> <img src="/.io//Users\Ydream\AppData\Roaming\Typora\typora-user-images\image-20191116193730438.png" alt="image-20191116193730438"></p>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="三、源代码和分析"><a href="#三、源代码和分析" class="headerlink" title="三、源代码和分析"></a>三、源代码和分析</h3><ul>
-<li><p><strong>源代码</strong>    </p>
-  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br><span class="line">517</span><br><span class="line">518</span><br><span class="line">519</span><br><span class="line">520</span><br><span class="line">521</span><br><span class="line">522</span><br><span class="line">523</span><br><span class="line">524</span><br><span class="line">525</span><br><span class="line">526</span><br><span class="line">527</span><br><span class="line">528</span><br><span class="line">529</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">本代码的坐标系统：</span></span><br><span class="line"><span class="comment">左上角对应坐标原点，水平向右为x轴正向，垂直向下为y轴正向。</span></span><br><span class="line"><span class="comment">根据bmp文件的扫描顺序，这样的坐标系统刚好符合常规的坐标系。</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> WORD unsigned short</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> DWORD unsigned int</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BYTE unsigned char</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INF 9999999</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> pi=<span class="number">3.14</span>;</span><br><span class="line"><span class="keyword">int</span> ph,pw,psize,lsize,cx,cy; </span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BMP_FILE_HEADER</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	WORD bfType;    </span><br><span class="line">	DWORD bfSize;    </span><br><span class="line">	WORD bfReserved1; </span><br><span class="line">	WORD bfReserved2; </span><br><span class="line">	DWORD bfOffBits;   </span><br><span class="line">&#125;BMPFILEHEADER; </span><br><span class="line"><span class="comment">/* 位图信息头 */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BMP_INFO</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	DWORD biSize;            <span class="comment">// 信息头的大小   </span></span><br><span class="line">	DWORD biWidth;               <span class="comment">// 图像的宽度     </span></span><br><span class="line">	DWORD biHeight;              <span class="comment">// 图像的高度     </span></span><br><span class="line">	WORD biPlanes;               <span class="comment">// 图像的位面数   </span></span><br><span class="line">	WORD biBitCount;             <span class="comment">// 每个像素的位数 </span></span><br><span class="line">	DWORD biCompression;         <span class="comment">// 压缩类型 </span></span><br><span class="line">	DWORD biSizeImage;         <span class="comment">// 图像的大小,以字节为单位 </span></span><br><span class="line">	DWORD biXPelsPerMeter;       <span class="comment">// 水平分辨率 </span></span><br><span class="line">	DWORD biYPelsPerMeter;       <span class="comment">// 垂直分辨率 </span></span><br><span class="line">	DWORD biClrUsed;             <span class="comment">// 使用的色彩数 </span></span><br><span class="line">	DWORD biClrImportant;        <span class="comment">// 重要的颜色数 </span></span><br><span class="line">&#125; BMPINF;            <span class="comment">// 40 字节	</span></span><br><span class="line">BMPFILEHEADER thisBmpFileHeader;  <span class="comment">// 定义一个 BMP 文件头的结构体</span></span><br><span class="line">BMPINF thisBmpInfo;               <span class="comment">// 定义一个 BMP 文件信息结构体</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">readFileHead</span><span class="params">(FILE *fp)</span></span>;    <span class="comment">//fp指向的文件的文件头读入到thisBMPFileHeader中</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">writeFileHead</span><span class="params">(FILE *fp)</span></span>;   <span class="comment">//thisBMPFileHeader写入到fp指向的文件的文件头中</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Translation</span><span class="params">(BYTE *p,<span class="keyword">int</span> dx,<span class="keyword">int</span> dy,<span class="keyword">int</span> flag)</span></span>;<span class="comment">//进行平移操作，dx,dy为坐标移动的增量。flag=0时，画布增大，flag=1时，画布不增大。</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Rotation</span><span class="params">(BYTE *p,<span class="keyword">double</span> theta)</span></span>;<span class="comment">//对图像旋转theta角度</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Rotation2</span><span class="params">(BYTE *p,<span class="keyword">double</span> theta)</span></span>;<span class="comment">//对图像旋转theta角度</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Shear</span><span class="params">(BYTE *p,<span class="keyword">double</span> theta,<span class="keyword">int</span> flag)</span></span>;<span class="comment">//对图像投影theta角度</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Scale</span><span class="params">(BYTE *p,<span class="keyword">float</span> a,<span class="keyword">float</span> b)</span></span>;<span class="comment">//对图像放缩变换，a，b分别表示横纵坐标方向的比例。</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Mirror</span><span class="params">(BYTE *p,<span class="keyword">int</span> flag)</span></span>;<span class="comment">//对图像进行对称变换，flag=0时x轴，flag=1时y轴</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">GetRolX</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y,<span class="keyword">double</span> theta)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">GetRolY</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y,<span class="keyword">double</span> theta)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">GetRolHW</span><span class="params">(<span class="keyword">int</span> *x,<span class="keyword">int</span> *y,<span class="keyword">double</span> theta)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Interpolation</span><span class="params">(BYTE *p,<span class="keyword">double</span> x,<span class="keyword">double</span> y,<span class="keyword">int</span> _)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">OutPutImg</span><span class="params">(BYTE *pOUT,<span class="keyword">int</span> nw,<span class="keyword">int</span> nh,<span class="keyword">char</span> *name)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	FILE *fp;                     <span class="comment">// 定义一个文件指针</span></span><br><span class="line">    <span class="keyword">if</span>((fp=fopen(<span class="string">&quot;in.bmp&quot;</span>,<span class="string">&quot;rb&quot;</span>))==<span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Can&#x27;t open the file\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;open the file\n&quot;</span>);</span><br><span class="line">    readFileHead(fp);</span><br><span class="line">    ph=thisBmpInfo.biHeight;<span class="comment">//高度 </span></span><br><span class="line">	pw=thisBmpInfo.biWidth;<span class="comment">//宽度 </span></span><br><span class="line">	psize=pw*ph*<span class="number">3</span>;<span class="comment">//图片信息字节总数 </span></span><br><span class="line">	lsize=pw*<span class="number">3</span>;<span class="comment">//每行信息字节总数 </span></span><br><span class="line">	BYTE* p=(BYTE*)<span class="built_in">malloc</span>(psize);</span><br><span class="line">	fread(p,psize,<span class="number">1</span>,fp);</span><br><span class="line">	fclose(fp);</span><br><span class="line">    Translation(p,<span class="number">-200</span>,<span class="number">-100</span>,<span class="number">0</span>);</span><br><span class="line">    Translation(p,<span class="number">-200</span>,<span class="number">-100</span>,<span class="number">1</span>);</span><br><span class="line">    Rotation(p,pi/<span class="number">3.0</span>); </span><br><span class="line">    Rotation2(p,pi/<span class="number">3.0</span>);</span><br><span class="line">    Scale(p,<span class="number">1.2</span>,<span class="number">0.8</span>);</span><br><span class="line">    Shear(p,pi/<span class="number">6</span>,<span class="number">0</span>);</span><br><span class="line">    Shear(p,pi/<span class="number">6</span>,<span class="number">1</span>);</span><br><span class="line">    Mirror(p,<span class="number">0</span>);</span><br><span class="line">    Mirror(p,<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">readFileHead</span><span class="params">(FILE *fp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    fread(&amp;thisBmpFileHeader.bfType,<span class="keyword">sizeof</span>(thisBmpFileHeader.bfType),<span class="number">1</span>,fp);</span><br><span class="line">	fread(&amp;thisBmpFileHeader.bfSize,<span class="keyword">sizeof</span>(thisBmpFileHeader.bfSize),<span class="number">1</span>,fp);</span><br><span class="line">	fread(&amp;thisBmpFileHeader.bfReserved1,<span class="keyword">sizeof</span>(thisBmpFileHeader.bfReserved1),<span class="number">1</span>,fp);</span><br><span class="line">	fread(&amp;thisBmpFileHeader.bfReserved2,<span class="keyword">sizeof</span>(thisBmpFileHeader.bfReserved2),<span class="number">1</span>,fp);</span><br><span class="line">	fread(&amp;thisBmpFileHeader.bfOffBits,<span class="keyword">sizeof</span>(thisBmpFileHeader.bfOffBits),<span class="number">1</span>,fp);</span><br><span class="line">    fread(&amp;thisBmpInfo.biSize, <span class="keyword">sizeof</span>(thisBmpInfo.biSize), <span class="number">1</span>, fp);</span><br><span class="line">	fread(&amp;thisBmpInfo.biWidth, <span class="keyword">sizeof</span>(thisBmpInfo.biWidth), <span class="number">1</span>, fp);</span><br><span class="line">	fread(&amp;thisBmpInfo.biHeight, <span class="keyword">sizeof</span>(thisBmpInfo.biHeight), <span class="number">1</span>, fp);</span><br><span class="line">	fread(&amp;thisBmpInfo.biPlanes, <span class="keyword">sizeof</span>(thisBmpInfo.biPlanes), <span class="number">1</span>, fp);</span><br><span class="line">	fread(&amp;thisBmpInfo.biBitCount, <span class="keyword">sizeof</span>(thisBmpInfo.biBitCount), <span class="number">1</span>, fp);</span><br><span class="line">	fread(&amp;thisBmpInfo.biCompression, <span class="keyword">sizeof</span>(thisBmpInfo.biCompression), <span class="number">1</span>, fp);</span><br><span class="line">	fread(&amp;thisBmpInfo.biSizeImage, <span class="keyword">sizeof</span>(thisBmpInfo.biSizeImage), <span class="number">1</span>, fp);</span><br><span class="line">	fread(&amp;thisBmpInfo.biXPelsPerMeter, <span class="keyword">sizeof</span>(thisBmpInfo.biXPelsPerMeter), <span class="number">1</span>, fp);</span><br><span class="line">	fread(&amp;thisBmpInfo.biYPelsPerMeter, <span class="keyword">sizeof</span>(thisBmpInfo.biYPelsPerMeter), <span class="number">1</span>, fp);</span><br><span class="line">	fread(&amp;thisBmpInfo.biClrUsed, <span class="keyword">sizeof</span>(thisBmpInfo.biClrUsed), <span class="number">1</span>, fp);</span><br><span class="line">	fread(&amp;thisBmpInfo.biClrImportant, <span class="keyword">sizeof</span>(thisBmpInfo.biClrImportant), <span class="number">1</span>, fp);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">writeFileHead</span><span class="params">(FILE *fp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//  写入位图文件头 </span></span><br><span class="line">	fwrite(&amp;thisBmpFileHeader.bfType,<span class="keyword">sizeof</span>(thisBmpFileHeader.bfType),<span class="number">1</span>,fp);</span><br><span class="line">	fwrite(&amp;thisBmpFileHeader.bfSize,<span class="keyword">sizeof</span>(thisBmpFileHeader.bfSize),<span class="number">1</span>,fp);</span><br><span class="line">	fwrite(&amp;thisBmpFileHeader.bfReserved1,<span class="keyword">sizeof</span>(thisBmpFileHeader.bfReserved1),<span class="number">1</span>,fp);</span><br><span class="line">	fwrite(&amp;thisBmpFileHeader.bfReserved2,<span class="keyword">sizeof</span>(thisBmpFileHeader.bfReserved2),<span class="number">1</span>,fp);</span><br><span class="line">	fwrite(&amp;thisBmpFileHeader.bfOffBits,<span class="keyword">sizeof</span>(thisBmpFileHeader.bfOffBits),<span class="number">1</span>,fp);</span><br><span class="line"><span class="comment">//  写入位图信息头 </span></span><br><span class="line">	fwrite(&amp;thisBmpInfo.biSize, <span class="keyword">sizeof</span>(thisBmpInfo.biSize), <span class="number">1</span>, fp);</span><br><span class="line">	fwrite(&amp;thisBmpInfo.biWidth, <span class="keyword">sizeof</span>(thisBmpInfo.biWidth), <span class="number">1</span>, fp);</span><br><span class="line">	fwrite(&amp;thisBmpInfo.biHeight, <span class="keyword">sizeof</span>(thisBmpInfo.biHeight), <span class="number">1</span>, fp);</span><br><span class="line">	fwrite(&amp;thisBmpInfo.biPlanes, <span class="keyword">sizeof</span>(thisBmpInfo.biPlanes), <span class="number">1</span>, fp);</span><br><span class="line">	fwrite(&amp;thisBmpInfo.biBitCount, <span class="keyword">sizeof</span>(thisBmpInfo.biBitCount), <span class="number">1</span>, fp);</span><br><span class="line">	fwrite(&amp;thisBmpInfo.biCompression, <span class="keyword">sizeof</span>(thisBmpInfo.biCompression), <span class="number">1</span>, fp);</span><br><span class="line">	fwrite(&amp;thisBmpInfo.biSizeImage, <span class="keyword">sizeof</span>(thisBmpInfo.biSizeImage), <span class="number">1</span>, fp);</span><br><span class="line">	fwrite(&amp;thisBmpInfo.biXPelsPerMeter, <span class="keyword">sizeof</span>(thisBmpInfo.biXPelsPerMeter), <span class="number">1</span>, fp);</span><br><span class="line">	fwrite(&amp;thisBmpInfo.biYPelsPerMeter, <span class="keyword">sizeof</span>(thisBmpInfo.biYPelsPerMeter), <span class="number">1</span>, fp);</span><br><span class="line">	fwrite(&amp;thisBmpInfo.biClrUsed, <span class="keyword">sizeof</span>(thisBmpInfo.biClrUsed), <span class="number">1</span>, fp);</span><br><span class="line">	fwrite(&amp;thisBmpInfo.biClrImportant, <span class="keyword">sizeof</span>(thisBmpInfo.biClrImportant), <span class="number">1</span>, fp);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Translation</span><span class="params">(BYTE *p,<span class="keyword">int</span> dx,<span class="keyword">int</span> dy,<span class="keyword">int</span> flag)</span></span></span><br><span class="line"><span class="function"></span>&#123;    </span><br><span class="line">    <span class="keyword">if</span>(flag!=<span class="number">1</span>&amp;&amp;flag!=<span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Translation Error! Please input a right value of flag!\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(dx%<span class="number">4</span>)    dx=(dx/<span class="number">4</span>+<span class="number">1</span>)*<span class="number">4</span>;<span class="comment">//保证x轴方向的偏移量为4的倍数</span></span><br><span class="line">    <span class="keyword">int</span> i,j,tmp,n;</span><br><span class="line">    <span class="keyword">if</span>(flag==<span class="number">1</span>)</span><br><span class="line">    &#123;   </span><br><span class="line">        BYTE *pOUT=(BYTE*)<span class="built_in">malloc</span>(psize);</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;ph;i++)</span><br><span class="line">            <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;pw;j++)</span><br><span class="line">            &#123;</span><br><span class="line">                tmp=lsize*i+j*<span class="number">3</span>;</span><br><span class="line">                <span class="keyword">int</span> tmpi=i-dy,tmpj=j-dx;</span><br><span class="line">                <span class="keyword">if</span>(tmpi&lt;<span class="number">0</span>)   tmpi+=ph;</span><br><span class="line">                <span class="keyword">if</span>(tmpi&gt;=ph) tmpi-=ph;</span><br><span class="line">                <span class="keyword">if</span>(tmpj&lt;<span class="number">0</span>)   tmpj+=pw;</span><br><span class="line">                <span class="keyword">if</span>(tmpj&gt;=pw) tmpj-=pw;</span><br><span class="line">                <span class="keyword">int</span> Ntmp = tmpi*lsize+tmpj*<span class="number">3</span>;</span><br><span class="line">                pOUT[tmp]=p[Ntmp];</span><br><span class="line">                pOUT[tmp+<span class="number">1</span>]=p[Ntmp+<span class="number">1</span>];</span><br><span class="line">                pOUT[tmp+<span class="number">2</span>]=p[Ntmp+<span class="number">2</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        OutPutImg(pOUT,pw,ph,<span class="string">&quot;Translation1&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> nh = ph+<span class="built_in">abs</span>(dy),nw=pw+<span class="built_in">abs</span>(dx),nsize=nw*nh*<span class="number">3</span>;</span><br><span class="line">        BYTE *pOUT=(BYTE*)<span class="built_in">malloc</span>(nw*nh*<span class="number">3</span>);</span><br><span class="line">        <span class="keyword">int</span> oi[<span class="number">2</span>],oj[<span class="number">2</span>];</span><br><span class="line">        <span class="keyword">if</span>(dx&gt;=<span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            oj[<span class="number">0</span>]=dx;</span><br><span class="line">            oj[<span class="number">1</span>]=nw<span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(dx&lt;<span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            oj[<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">            oj[<span class="number">1</span>]=ph<span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(dy&gt;=<span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            oi[<span class="number">0</span>]=dy;</span><br><span class="line">            oi[<span class="number">1</span>]=nh<span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(dy&lt;<span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            oi[<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">            oi[<span class="number">1</span>]=pw<span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;nh;i++)</span><br><span class="line">            <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;nw;j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">int</span> Ntmp = i*nw*<span class="number">3</span>+j*<span class="number">3</span>;</span><br><span class="line">                <span class="keyword">if</span>(i&gt;=oi[<span class="number">0</span>]&amp;&amp;i&lt;=oi[<span class="number">1</span>]&amp;&amp;j&gt;=oj[<span class="number">0</span>]&amp;&amp;j&lt;=oj[<span class="number">1</span>])</span><br><span class="line">                &#123;   </span><br><span class="line">                	</span><br><span class="line">                    tmp=lsize*(i-oi[<span class="number">0</span>])+(j-oj[<span class="number">0</span>])*<span class="number">3</span>;</span><br><span class="line">                    pOUT[Ntmp]=p[tmp];</span><br><span class="line">                    pOUT[Ntmp+<span class="number">1</span>]=p[tmp+<span class="number">1</span>];</span><br><span class="line">                    pOUT[Ntmp+<span class="number">2</span>]=p[tmp+<span class="number">2</span>];</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    pOUT[Ntmp]=pOUT[Ntmp+<span class="number">1</span>]=pOUT[Ntmp+<span class="number">2</span>]=<span class="number">0</span>;</span><br><span class="line">                &#125; </span><br><span class="line">            &#125;</span><br><span class="line">        OutPutImg(pOUT,nw,nh,<span class="string">&quot;Translation0&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Rotation</span><span class="params">(BYTE *p,<span class="keyword">double</span> theta)</span><span class="comment">//对图像旋转theta角度</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> nh,nw;</span><br><span class="line">    GetRolHW(&amp;nw,&amp;nh,theta);</span><br><span class="line">    BYTE *pOUT=(BYTE*)<span class="built_in">malloc</span>(nh*nw*<span class="number">3</span>);</span><br><span class="line">    <span class="keyword">int</span> dX=(nw-pw)/<span class="number">2</span>,dY=(nh-ph)/<span class="number">2</span>; <span class="comment">// 由于图像放大，计算坐标后需要移动一定距离</span></span><br><span class="line">    <span class="keyword">int</span> i,j,tmp;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;nh;i++)</span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;nw;j++)</span><br><span class="line">        &#123;</span><br><span class="line">        	<span class="keyword">int</span> _;</span><br><span class="line">        	tmp=i*nw*<span class="number">3</span>+j*<span class="number">3</span>;</span><br><span class="line">        	<span class="keyword">for</span>(_=<span class="number">0</span>;_&lt;<span class="number">3</span>;_++)</span><br><span class="line">        		pOUT[tmp+_]=<span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">            </span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;nh;i++)</span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;nw;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            tmp=nw*i*<span class="number">3</span>+j*<span class="number">3</span>;</span><br><span class="line">            <span class="keyword">double</span> a,b;</span><br><span class="line">            a=j-dX-cx+cx*<span class="built_in">cos</span>(theta)-cy*<span class="built_in">sin</span>(theta);</span><br><span class="line">            b=i-dY-cy+cy*<span class="built_in">cos</span>(theta)+cx*<span class="built_in">sin</span>(theta);</span><br><span class="line">            <span class="keyword">double</span> x,y;</span><br><span class="line">            x=b*<span class="built_in">sin</span>(theta)+a*<span class="built_in">cos</span>(theta);</span><br><span class="line">            y=b*<span class="built_in">cos</span>(theta)-a*<span class="built_in">sin</span>(theta);</span><br><span class="line">            <span class="keyword">int</span> _;</span><br><span class="line">            <span class="keyword">for</span>(_=<span class="number">0</span>;_&lt;<span class="number">3</span>;_++)</span><br><span class="line">                pOUT[tmp+_]=Interpolation(p,x,y,_);</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">int</span> x=theta*<span class="number">180</span>/pi;</span><br><span class="line">    <span class="keyword">char</span> s1[<span class="number">100</span>]=<span class="string">&quot;Rotation&quot;</span>,s[<span class="number">20</span>];</span><br><span class="line">    <span class="built_in">sprintf</span>(s,<span class="string">&quot;_%d_degree&quot;</span>,x);</span><br><span class="line">    <span class="built_in">strcat</span>(s1,s);</span><br><span class="line">    OutPutImg(pOUT,nw,nh,s1);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Shear</span><span class="params">(BYTE *p,<span class="keyword">double</span> theta,<span class="keyword">int</span> flag)</span><span class="comment">//对图像投影theta角度,flag==0 -&gt; x轴投影，1-&gt;y轴</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    BYTE* pOUT;</span><br><span class="line">    <span class="keyword">char</span> s1[<span class="number">100</span>]=<span class="string">&quot;Shear&quot;</span>,s[<span class="number">20</span>];</span><br><span class="line">    <span class="keyword">int</span> x=theta*<span class="number">180</span>/pi;</span><br><span class="line">    <span class="keyword">if</span>(flag!=<span class="number">1</span>&amp;&amp;flag!=<span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Shear Error! Please input a right value of flag!\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> nw,nh,tmp,i,j,_;</span><br><span class="line">    <span class="keyword">if</span>(flag==<span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">sprintf</span>(s,<span class="string">&quot;_X_%d_degree&quot;</span>,x);</span><br><span class="line">        nh=ph;</span><br><span class="line">        nw=pw+ph*<span class="built_in">tan</span>(theta);</span><br><span class="line">        <span class="keyword">if</span>(nw%<span class="number">4</span>) nw=(nw/<span class="number">4</span>+<span class="number">1</span>)*<span class="number">4</span>; </span><br><span class="line">        pOUT=(BYTE*)<span class="built_in">malloc</span>(nw*nh*<span class="number">3</span>);</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;nh;i++)</span><br><span class="line">            <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;nw;j++)</span><br><span class="line">                <span class="keyword">for</span>(_=<span class="number">0</span>;_&lt;<span class="number">3</span>;_++)</span><br><span class="line">                    pOUT[i*nw*<span class="number">3</span>+j*<span class="number">3</span>+_]=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;nh;i++)</span><br><span class="line">            <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;nw;j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">double</span> x=(<span class="keyword">double</span>)j-<span class="built_in">tan</span>(theta)*i,</span><br><span class="line">                       y=(<span class="keyword">double</span>)i;</span><br><span class="line">                tmp=i*nw*<span class="number">3</span>+j*<span class="number">3</span>;</span><br><span class="line">                <span class="keyword">int</span> _;</span><br><span class="line">                <span class="keyword">for</span>(_=<span class="number">0</span>;_&lt;<span class="number">3</span>;_++)</span><br><span class="line">                    pOUT[tmp+_]=Interpolation(p,x,y,_);</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">sprintf</span>(s,<span class="string">&quot;_Y_%d_degree&quot;</span>,x);</span><br><span class="line">        nh=ph+pw*<span class="built_in">tan</span>(theta);</span><br><span class="line">        nw=pw;</span><br><span class="line">        pOUT=(BYTE*)<span class="built_in">malloc</span>(nw*nh*<span class="number">3</span>);</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;nh;i++)</span><br><span class="line">            <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;nw;j++)</span><br><span class="line">                <span class="keyword">for</span>(_=<span class="number">0</span>;_&lt;<span class="number">3</span>;_++)</span><br><span class="line">                    pOUT[i*nw*<span class="number">3</span>+j*<span class="number">3</span>+_]=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;nh;i++)</span><br><span class="line">            <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;nw;j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">double</span> y=(<span class="keyword">double</span>)i-<span class="built_in">tan</span>(theta)*j,</span><br><span class="line">                       x=(<span class="keyword">double</span>)j;</span><br><span class="line">                tmp=i*nw*<span class="number">3</span>+j*<span class="number">3</span>;</span><br><span class="line">                <span class="keyword">int</span> _;</span><br><span class="line">                <span class="keyword">for</span>(_=<span class="number">0</span>;_&lt;<span class="number">3</span>;_++)</span><br><span class="line">                    pOUT[tmp+_]=Interpolation(p,x,y,_);</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">strcat</span>(s1,s);</span><br><span class="line">    OutPutImg(pOUT,nw,nh,s1);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Scale</span><span class="params">(BYTE *p,<span class="keyword">float</span> a,<span class="keyword">float</span> b)</span><span class="comment">//对图像放缩变换，a，b分别表示横纵坐标方向的比例。</span></span></span><br><span class="line"><span class="function"></span>&#123;   </span><br><span class="line">    <span class="keyword">int</span> nh=(<span class="keyword">int</span>)(ph*b),</span><br><span class="line">        nw=(<span class="keyword">int</span>)(pw*a);</span><br><span class="line">    <span class="keyword">if</span>(nw%<span class="number">4</span>)    nw=(nw/<span class="number">4</span>+<span class="number">1</span>)*<span class="number">4</span>;</span><br><span class="line">    BYTE *pOUT=(BYTE*)<span class="built_in">malloc</span>(nh*nw*<span class="number">3</span>);</span><br><span class="line">    <span class="keyword">int</span> *flag=(<span class="keyword">int</span> *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>)*nw*nh);</span><br><span class="line">    <span class="built_in">memset</span>(pOUT,<span class="number">0</span>,nh*nw*<span class="number">3</span>);</span><br><span class="line">    <span class="built_in">memset</span>(flag,<span class="number">0</span>,<span class="keyword">sizeof</span>(<span class="keyword">int</span>)*nh*nw);</span><br><span class="line">    <span class="keyword">int</span> i,j,tmp;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;nh;i++)</span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;nw;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            tmp=i*nw*<span class="number">3</span>+j*<span class="number">3</span>;</span><br><span class="line">            <span class="keyword">double</span> x=<span class="built_in">floor</span>((j*<span class="number">1.0</span>)/a),</span><br><span class="line">                y=<span class="built_in">floor</span>((i*<span class="number">1.0</span>)/b);</span><br><span class="line">            <span class="keyword">int</span> _;</span><br><span class="line">            <span class="keyword">for</span>(_=<span class="number">0</span>;_&lt;<span class="number">3</span>;_++)</span><br><span class="line">                pOUT[tmp+_]=Interpolation(p,x,y,_);</span><br><span class="line">        &#125;</span><br><span class="line">    OutPutImg(pOUT,nw,nh,<span class="string">&quot;Scale&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Mirror</span><span class="params">(BYTE *p,<span class="keyword">int</span> flag)</span><span class="comment">//对图像进行对称变换，flag=0时x轴，flag=1时y轴</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    BYTE *pOUT=(BYTE*)<span class="built_in">malloc</span>(psize);</span><br><span class="line">    <span class="keyword">int</span> i,j,tmp;</span><br><span class="line">    <span class="keyword">if</span>(flag==<span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;ph;i++)</span><br><span class="line">            <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;pw;j++)</span><br><span class="line">            &#123;</span><br><span class="line">                tmp=i*lsize+j*<span class="number">3</span>;</span><br><span class="line">                pOUT[tmp]=p[i*lsize+(pw-j<span class="number">-1</span>)*<span class="number">3</span>];</span><br><span class="line">                pOUT[tmp+<span class="number">1</span>]=p[i*lsize+(pw-j<span class="number">-1</span>)*<span class="number">3</span>+<span class="number">1</span>];</span><br><span class="line">                pOUT[tmp+<span class="number">2</span>]=p[i*lsize+(pw-j<span class="number">-1</span>)*<span class="number">3</span>+<span class="number">2</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        FILE *fp=fopen(<span class="string">&quot;MirrorX.bmp&quot;</span>,<span class="string">&quot;wb&quot;</span>);</span><br><span class="line">        writeFileHead(fp);</span><br><span class="line">        fwrite(pOUT,psize,<span class="number">1</span>,fp);</span><br><span class="line">        fclose(fp);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;MirrorX finised!\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(flag==<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;pw;j++)</span><br><span class="line">            <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;ph;i++)</span><br><span class="line">            &#123;</span><br><span class="line">                tmp=i*lsize+j*<span class="number">3</span>;</span><br><span class="line">                pOUT[tmp]=p[(ph-i<span class="number">-1</span>)*lsize+j*<span class="number">3</span>];</span><br><span class="line">                pOUT[tmp+<span class="number">1</span>]=p[(ph-i<span class="number">-1</span>)*lsize+j*<span class="number">3</span>+<span class="number">1</span>];</span><br><span class="line">                pOUT[tmp+<span class="number">2</span>]=p[(ph-i<span class="number">-1</span>)*lsize+j*<span class="number">3</span>+<span class="number">2</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        FILE *fp=fopen(<span class="string">&quot;MirrorY.bmp&quot;</span>,<span class="string">&quot;wb&quot;</span>);</span><br><span class="line">        writeFileHead(fp);</span><br><span class="line">        fwrite(pOUT,psize,<span class="number">1</span>,fp);</span><br><span class="line">        fclose(fp);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;MirrorY finised!\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">GetRolX</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y,<span class="keyword">double</span> theta)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cx=pw/<span class="number">2</span>;</span><br><span class="line">    cy=ph/<span class="number">2</span>;</span><br><span class="line">    x-=cx;</span><br><span class="line">    y-=cy;</span><br><span class="line">    <span class="keyword">double</span> RolX=x*<span class="built_in">cos</span>(theta)-y*<span class="built_in">sin</span>(theta);</span><br><span class="line">    <span class="keyword">return</span> RolX=RolX+cx;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">GetRolY</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y,<span class="keyword">double</span> theta)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cx=pw/<span class="number">2</span>;</span><br><span class="line">    cy=ph/<span class="number">2</span>;</span><br><span class="line">    x-=cx;</span><br><span class="line">    y-=cy;</span><br><span class="line">    <span class="keyword">double</span> RolY=x*<span class="built_in">sin</span>(theta)+y*<span class="built_in">cos</span>(theta);</span><br><span class="line">    <span class="keyword">return</span> RolY=RolY+cy;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">GetRolHW</span><span class="params">(<span class="keyword">int</span> *x,<span class="keyword">int</span> *y,<span class="keyword">double</span> theta)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">double</span> tmpx[<span class="number">4</span>],tmpy[<span class="number">4</span>],Maxx=<span class="number">-1</span>,Minx=INF,Maxy=<span class="number">-1</span>,Miny=INF;</span><br><span class="line">    <span class="keyword">int</span> fx[<span class="number">4</span>]=&#123;<span class="number">0</span>&#125;,fy[<span class="number">4</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">    fx[<span class="number">2</span>]=fx[<span class="number">1</span>]=pw;</span><br><span class="line">    fy[<span class="number">2</span>]=fy[<span class="number">3</span>]=ph;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">4</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        tmpx[i]=GetRolX(fx[i],fy[i],theta);</span><br><span class="line">        tmpy[i]=GetRolY(fx[i],fy[i],theta);</span><br><span class="line">        <span class="keyword">if</span>(tmpx[i]&gt;Maxx) Maxx=tmpx[i];</span><br><span class="line">        <span class="keyword">if</span>(tmpx[i]&lt;Minx) Minx=tmpx[i];</span><br><span class="line">        <span class="keyword">if</span>(tmpy[i]&gt;Maxy) Maxy=tmpy[i];</span><br><span class="line">        <span class="keyword">if</span>(tmpy[i]&lt;Miny) Miny=tmpy[i];</span><br><span class="line">    &#125;</span><br><span class="line">    *x=(<span class="keyword">int</span>)(Maxx-Minx)+<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span>((*x)%<span class="number">4</span>)    *x=(*x/<span class="number">4</span>+<span class="number">1</span>)*<span class="number">4</span>;</span><br><span class="line">    *y=(<span class="keyword">int</span>)(Maxy-Miny)+<span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Interpolation</span><span class="params">(BYTE *p,<span class="keyword">double</span> x,<span class="keyword">double</span> y,<span class="keyword">int</span> _)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x1,x2,y1,y2;</span><br><span class="line">    x1=<span class="built_in">floor</span>(x);y1=<span class="built_in">floor</span>(y);</span><br><span class="line">    x2=x1+<span class="number">1</span>;y2=y1+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(x1&gt;=<span class="number">0</span>&amp;&amp;x1&lt;pw<span class="number">-1</span>&amp;&amp;y1&gt;=<span class="number">0</span>&amp;&amp;y1&lt;ph<span class="number">-1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">float</span> radio11=x-x1,radio12=x2-x,</span><br><span class="line">              radio21=y-y1,radio22=y2-y;</span><br><span class="line">        <span class="keyword">int</span> tmp1,tmp2,tmp3,tmp4;</span><br><span class="line">        tmp1=y1*lsize+x1*<span class="number">3</span>;</span><br><span class="line">        tmp2=y1*lsize+x2*<span class="number">3</span>;</span><br><span class="line">        tmp3=y2*lsize+x1*<span class="number">3</span>;</span><br><span class="line">        tmp4=y2*lsize+x2*<span class="number">3</span>;</span><br><span class="line">        <span class="keyword">int</span> X1,X2;</span><br><span class="line">        X1=p[tmp1+_]*radio11+p[tmp2+_]*radio12;</span><br><span class="line">        X2=p[tmp3+_]*radio11+p[tmp4+_]*radio12;</span><br><span class="line">        <span class="keyword">return</span> X1*radio21+X2*radio22;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">OutPutImg</span><span class="params">(BYTE *pOUT,<span class="keyword">int</span> nw,<span class="keyword">int</span> nh,<span class="keyword">char</span> *name)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> postfix[<span class="number">10</span>]=<span class="string">&quot;.bmp&quot;</span>,tmp[<span class="number">100</span>];</span><br><span class="line">    <span class="built_in">strcpy</span>(tmp,name);</span><br><span class="line">    <span class="built_in">strcat</span>(tmp,postfix);</span><br><span class="line">    FILE *fp=fopen(tmp,<span class="string">&quot;wb&quot;</span>);</span><br><span class="line">    thisBmpFileHeader.bfSize=thisBmpFileHeader.bfSize-psize+nh*nw*<span class="number">3</span>;</span><br><span class="line">    thisBmpInfo.biWidth=nw;</span><br><span class="line">    thisBmpInfo.biHeight=nh;</span><br><span class="line">    thisBmpInfo.biSizeImage=nw*nh*<span class="number">3</span>;</span><br><span class="line">    writeFileHead(fp);</span><br><span class="line">    fwrite(pOUT,nw*nh*<span class="number">3</span>,<span class="number">1</span>,fp);</span><br><span class="line">    fclose(fp);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>,name);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot; finised!\n&quot;</span>);</span><br><span class="line">    thisBmpInfo.biWidth=pw;</span><br><span class="line">    thisBmpInfo.biHeight=ph;</span><br><span class="line">    thisBmpInfo.biSizeImage=pw*ph*<span class="number">3</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Rotation2</span><span class="params">(BYTE *p,<span class="keyword">double</span> theta)</span><span class="comment">//对图像旋转theta角度</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> nh,nw;</span><br><span class="line">    GetRolHW(&amp;nw,&amp;nh,theta);</span><br><span class="line">    <span class="keyword">int</span> *fMinX=(<span class="keyword">int</span> *)<span class="built_in">malloc</span>(nh*<span class="keyword">sizeof</span>(<span class="keyword">int</span>)),</span><br><span class="line">        *fMaxX=(<span class="keyword">int</span> *)<span class="built_in">malloc</span>(nh*<span class="keyword">sizeof</span>(<span class="keyword">int</span>)),<span class="comment">//记录旋转后图像每一行最大、小的横坐标</span></span><br><span class="line">        *fMinY=(<span class="keyword">int</span> *)<span class="built_in">malloc</span>(nw*<span class="keyword">sizeof</span>(<span class="keyword">int</span>)),</span><br><span class="line">        *fMaxY=(<span class="keyword">int</span> *)<span class="built_in">malloc</span>(nw*<span class="keyword">sizeof</span>(<span class="keyword">int</span>));<span class="comment">//记录旋转后图像每一列最大、小的纵坐标</span></span><br><span class="line">    <span class="keyword">int</span> *flag=(<span class="keyword">int</span> *)<span class="built_in">malloc</span>(nw*nh*<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">    BYTE *pOUT=(BYTE*)<span class="built_in">malloc</span>(nh*nw*<span class="number">3</span>);</span><br><span class="line">    <span class="keyword">int</span> dX=(nw-pw)/<span class="number">2</span>,dY=(nh-ph)/<span class="number">2</span>; <span class="comment">// 由于图像放大，计算坐标后需要移动一定距离</span></span><br><span class="line">    <span class="keyword">int</span> i,j,tmp;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;nh;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        fMinX[i]=INF;</span><br><span class="line">        fMaxX[i]=<span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;nw;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        fMinY[i]=INF;</span><br><span class="line">        fMaxY[i]=<span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;nh;i++)</span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;nw;j++)</span><br><span class="line">        &#123;</span><br><span class="line">        	flag[i*nw+j]=<span class="number">0</span>;</span><br><span class="line">        	<span class="keyword">int</span> _;</span><br><span class="line">        	tmp=i*nw*<span class="number">3</span>+j*<span class="number">3</span>;</span><br><span class="line">        	<span class="keyword">for</span>(_=<span class="number">0</span>;_&lt;<span class="number">3</span>;_++)</span><br><span class="line">        		pOUT[tmp+_]=<span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">            </span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;ph;i++)</span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;pw;j++)</span><br><span class="line">        &#123;</span><br><span class="line">			</span><br><span class="line">            tmp=lsize*i+j*<span class="number">3</span>;</span><br><span class="line">            <span class="keyword">int</span> tx=(<span class="keyword">int</span>)GetRolX(j,i,theta)+dX,</span><br><span class="line">                ty=(<span class="keyword">int</span>)GetRolY(j,i,theta)+dY,</span><br><span class="line">                Ntmp=ty*nw*<span class="number">3</span>+tx*<span class="number">3</span>;  </span><br><span class="line">            pOUT[Ntmp]=p[tmp];</span><br><span class="line">            pOUT[Ntmp+<span class="number">1</span>]=p[tmp+<span class="number">1</span>];</span><br><span class="line">            pOUT[Ntmp+<span class="number">2</span>]=p[tmp+<span class="number">2</span>];</span><br><span class="line">            <span class="keyword">if</span>(tx&lt;fMinX[ty])    fMinX[ty]=tx;</span><br><span class="line">            <span class="keyword">if</span>(tx&gt;fMaxX[ty])    fMaxX[ty]=tx;</span><br><span class="line">            <span class="keyword">if</span>(ty&lt;fMinY[tx])    fMinY[tx]=ty;</span><br><span class="line">            <span class="keyword">if</span>(ty&gt;fMaxY[tx])    fMaxY[tx]=ty;  </span><br><span class="line">          </span><br><span class="line">            flag[ty*nw+tx]=<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;nh;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> lastj=<span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;nw;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            tmp=i*nw*<span class="number">3</span>+j*<span class="number">3</span>;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span>(j&lt;fMinX[i]||j&gt;fMaxX[i])</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">int</span> _=<span class="number">0</span>;</span><br><span class="line">                <span class="keyword">for</span>(_=<span class="number">0</span>;_&lt;<span class="number">3</span>;_++)</span><br><span class="line">                    pOUT[tmp+_]=<span class="number">0</span>;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(flag[i*nw+j]==<span class="number">1</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                lastj=j;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">int</span> nextj=j;</span><br><span class="line">                <span class="keyword">while</span>(nextj&lt;nw&amp;&amp;flag[i*nw+nextj]==<span class="number">0</span>)	nextj++;</span><br><span class="line">                <span class="keyword">int</span> _,tmpl=i*nw*<span class="number">3</span>+lastj*<span class="number">3</span>,tmpn=i*nw*<span class="number">3</span>+nextj*<span class="number">3</span>;</span><br><span class="line">                <span class="keyword">if</span>(nextj&gt;=nw)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span>(lastj==<span class="number">-1</span>)    <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">else</span></span><br><span class="line">                        <span class="keyword">for</span>(_=<span class="number">0</span>;_&lt;<span class="number">3</span>;_++)</span><br><span class="line">                            pOUT[tmp+_]=pOUT[tmpl+_];</span><br><span class="line">                    </span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span>(lastj==<span class="number">-1</span>)</span><br><span class="line">                        <span class="keyword">for</span>(_=<span class="number">0</span>;_&lt;<span class="number">3</span>;_++)</span><br><span class="line">                            pOUT[tmp+_]=pOUT[tmpn+_];</span><br><span class="line">                    <span class="keyword">else</span></span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">float</span> radio1=(j-lastj)*<span class="number">1.0</span>/(nextj-lastj),</span><br><span class="line">                              radio2=(nextj-j)*<span class="number">1.0</span>/(nextj-lastj);</span><br><span class="line">                        <span class="keyword">for</span>(_=<span class="number">0</span>;_&lt;<span class="number">3</span>;_++)</span><br><span class="line">                            pOUT[tmp+_]=radio2*pOUT[tmpn+_]+radio1*pOUT[tmpl+_];</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> x=theta*<span class="number">180</span>/pi;</span><br><span class="line">    <span class="keyword">char</span> s1[<span class="number">100</span>]=<span class="string">&quot;Rotation2&quot;</span>,s[<span class="number">20</span>];</span><br><span class="line">    <span class="built_in">sprintf</span>(s,<span class="string">&quot;_%d_degree&quot;</span>,x);</span><br><span class="line">    <span class="built_in">strcat</span>(s1,s);</span><br><span class="line">    OutPutImg(pOUT,nw,nh,s1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>  ​    </p>
-</li>
-<li><p><strong>分析</strong></p>
-<ul>
-<li><p><strong>坐标系统和存储系统</strong></p>
-<ul>
-<li><p>代码中像素点的颜色信息存储在 $P$  数组中。$P$ 是个一维数组，我们可以把它排列成二维数组，通过计算可以获取下标。$P[tmp]\rightarrow P[i][j] ,(tmp=i<em>w</em>h+j*3)$</p>
-</li>
-<li><p>代码中的坐标系统是把下标为$P[0][0]$ 的像素点作为坐标原点，每一行下标增长的方向作为 $X$ 轴的正方向。每一列下标增长的方向作为 $Y$ 轴的正方向。</p>
-<p>  即 坐标为 $(i,j)$ 的像素点对应的下标为 $P[j][i]$</p>
-</li>
-<li><p>bmp图像的数据扫描顺序是，每一行从左向右扫描，而行则是从下往上扫描。即数组中的第一行是图片中最后一行的数据。这样我们<strong>代码中选取的坐标系统与图片中常用的坐标是相符的</strong></p>
-</li>
-</ul>
-</li>
-<li><p><strong>全局变量的含义</strong></p>
-  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> pi=<span class="number">3.14</span>; <span class="comment">//定义常量pi</span></span><br><span class="line"><span class="keyword">int</span> ph,pw, <span class="comment">//原始图像的高度和宽度</span></span><br><span class="line">	psize, <span class="comment">//原始图像的字节数</span></span><br><span class="line">	lsize, <span class="comment">//原始图像每行的字节数</span></span><br><span class="line">	cx,cy; <span class="comment">//原始图像的中心点的坐标。</span></span><br><span class="line">BMPFILEHEADER thisBmpFileHeader;  <span class="comment">// 定义一个 BMP 文件头的结构体</span></span><br><span class="line">BMPINF thisBmpInfo;               <span class="comment">// 定义一个 BMP 文件信息结构体</span></span><br></pre></td></tr></table></figure>
-
-<p>  主函数中读入<strong>in.bmp</strong>，将文件头信息存储到 <em><strong>thisBmpFileHeader</strong></em> 和 <em><strong>thisBmpInfo</strong></em> 中。从文件头信息中读取 <strong>ph,pw</strong> 的值。</p>
-<p>  根据公式 $\begin{cases}psize = pw<em>ph</em>3\size=pw*3\cx=pw/2\cy=ph/2\end{cases}$ 计算出各个变量的值，作为全局变量供所有函数使用。</p>
-</li>
-</ul>
-</li>
-<li><p><strong>函数的作用及参数表</strong></p>
-  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//fp指向的文件的文件头读入到thisBmpFileHeader和thisBmpInfo中。</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">readFileHead</span><span class="params">(FILE *fp)</span></span>;</span><br><span class="line"><span class="comment">//thisBmpFileHeader和thisBmpInfo中的信息写入到fp指向的文件中。</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">writeFileHead</span><span class="params">(FILE *fp)</span></span>;</span><br><span class="line"><span class="comment">//进行平移操作，dx,dy为坐标移动的增量。flag=0时，画布增大，flag=1时，画布不增大。</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Translation</span><span class="params">(BYTE *p,<span class="keyword">int</span> dx,<span class="keyword">int</span> dy,<span class="keyword">int</span> flag)</span></span>;</span><br><span class="line"><span class="comment">//对图像逆时针旋转theta角度（双线性插值法）</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Rotation</span><span class="params">(BYTE *p,<span class="keyword">double</span> theta)</span></span>;</span><br><span class="line"><span class="comment">//对图像逆时针旋转theta角度（先旋转，后补全空缺的像素点）</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Rotation2</span><span class="params">(BYTE *p,<span class="keyword">double</span> theta)</span></span>;</span><br><span class="line"><span class="comment">//对图像投影theta角度，flag=0 -&gt; X轴方向投影，flag=0 -&gt; y轴方向投影。</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Shear</span><span class="params">(BYTE *p,<span class="keyword">double</span> theta,<span class="keyword">int</span> flag)</span></span>;</span><br><span class="line"><span class="comment">//对图像放缩变换，a，b分别表示横纵坐标方向的比例。</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Scale</span><span class="params">(BYTE *p,<span class="keyword">float</span> a,<span class="keyword">float</span> b)</span></span>;</span><br><span class="line"><span class="comment">//对图像进行对称变换，flag=0时x轴，flag=1时y轴</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Mirror</span><span class="params">(BYTE *p,<span class="keyword">int</span> flag)</span></span>;</span><br><span class="line"><span class="comment">//获取原图中(x,y)像素点绕图片中心逆时针旋转theta后的坐标。</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">GetRolX</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y,<span class="keyword">double</span> theta)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">GetRolY</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y,<span class="keyword">double</span> theta)</span></span>;</span><br><span class="line"><span class="comment">//获取原图经旋转后得到的新的宽度和高度，分别存储在x,y指针中</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">GetRolHW</span><span class="params">(<span class="keyword">int</span> *x,<span class="keyword">int</span> *y,<span class="keyword">double</span> theta)</span></span>;</span><br><span class="line"><span class="comment">//(x,y)在原图中双线性插值后的结果。 _ 变量表示RGB三个分量之一</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Interpolation</span><span class="params">(BYTE *p,<span class="keyword">double</span> x,<span class="keyword">double</span> y,<span class="keyword">int</span> _)</span></span>;</span><br><span class="line"><span class="comment">//输出图像，图片名称为 name </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">OutPutImg</span><span class="params">(BYTE *pOUT,<span class="keyword">int</span> nw,<span class="keyword">int</span> nh,<span class="keyword">char</span> *name)</span></span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>文件读入输出。</strong></p>
-  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">readFileHead</span><span class="params">(FILE *fp)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">writeFileHead</span><span class="params">(FILE *fp)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">OutPutImg</span><span class="params">(BYTE *pOUT,<span class="keyword">int</span> nw,<span class="keyword">int</span> nh,<span class="keyword">char</span> *name)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>  这三个函数的功能与之前实验中功能相同并且实现起来很简单，不做赘述。</p>
-<ul>
-<li><p><strong>双线性插值算法</strong></p>
-  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Interpolation</span><span class="params">(BYTE *p,<span class="keyword">double</span> x,<span class="keyword">double</span> y,<span class="keyword">int</span> _)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">	    <span class="keyword">int</span> x1,x2,y1,y2;</span><br><span class="line">	    x1=<span class="built_in">floor</span>(x);y1=<span class="built_in">floor</span>(y);</span><br><span class="line">	    x2=x1+<span class="number">1</span>;y2=y1+<span class="number">1</span>;</span><br><span class="line">	    <span class="keyword">if</span>(x1&gt;=<span class="number">0</span>&amp;&amp;x1&lt;pw<span class="number">-1</span>&amp;&amp;y1&gt;=<span class="number">0</span>&amp;&amp;y1&lt;ph<span class="number">-1</span>)</span><br><span class="line">	    &#123;</span><br><span class="line">	        <span class="keyword">float</span> radio11=x-x1,radio12=x2-x,</span><br><span class="line">	              radio21=y-y1,radio22=y2-y;</span><br><span class="line">	        <span class="keyword">int</span> tmp1,tmp2,tmp3,tmp4;</span><br><span class="line">	        tmp1=y1*lsize+x1*<span class="number">3</span>;</span><br><span class="line">	        tmp2=y1*lsize+x2*<span class="number">3</span>;</span><br><span class="line">	        tmp3=y2*lsize+x1*<span class="number">3</span>;</span><br><span class="line">	        tmp4=y2*lsize+x2*<span class="number">3</span>;</span><br><span class="line">	        <span class="keyword">int</span> X1,X2;</span><br><span class="line">	        X1=p[tmp1+_]*radio11+p[tmp2+_]*radio12;</span><br><span class="line">	        X2=p[tmp3+_]*radio11+p[tmp4+_]*radio12;</span><br><span class="line">	        <span class="keyword">return</span> X1*radio21+X2*radio22;</span><br><span class="line">	    &#125;</span><br><span class="line">	    <span class="keyword">else</span></span><br><span class="line">	        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-
-<p>  利用公式 $$C’(x’,y’)=radio_{21}*(radio_{11}*C(x_1,y_1)+radio_{12}<em>C(x_1,y_2))\\qquad\qquad+ radio_{22}</em>(radio_{11}*C(x_2,y_1)+radio_{12}*C(x_2,y_2))$$<br>进行模拟即可</p>
-</li>
-<li><p><strong>平移  Translation</strong></p>
-  <figure class="highlight pascal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">Translation(BYTE *p,int dx,int dy,int flag)</span><br><span class="line">	    <span class="keyword">if</span>(dx%<span class="number">4</span>)    dx=(dx/<span class="number">4</span>+<span class="number">1</span>)*<span class="number">4</span>;<span class="comment">//保证x轴方向的偏移量为4的倍数</span></span><br><span class="line">	    int i,j,tmp,n;</span><br><span class="line">	    <span class="keyword">if</span>(flag==<span class="number">1</span>)  </span><br><span class="line">	        <span class="keyword">for</span> each pixel (i,j) <span class="keyword">in</span> new img</span><br><span class="line">	            x:=j-dx</span><br><span class="line">	            y:=i-dy</span><br><span class="line">	            <span class="keyword">if</span>(x&gt;=pw) x:=x-pw;</span><br><span class="line">	        	<span class="keyword">if</span>(x&lt;<span class="number">0</span>)	x:=x+pw;</span><br><span class="line">	        	<span class="keyword">if</span>(y&gt;=ph) y:=y-ph;</span><br><span class="line">	        	<span class="keyword">if</span>(y&lt;<span class="number">0</span>)	y:=y+ph;</span><br><span class="line">	        	pOUT(i,j) := p(y,x)</span><br><span class="line">	        <span class="keyword">end</span></span><br><span class="line">	    <span class="keyword">end</span></span><br><span class="line">	    <span class="keyword">else</span></span><br><span class="line">	        Get the width nw <span class="keyword">and</span> height nh <span class="keyword">of</span> new img.</span><br><span class="line">	        Get the coordidates <span class="keyword">of</span> the pixels which are border.</span><br><span class="line">	        Assume (x0,y0) <span class="keyword">is</span> the right-top border</span><br><span class="line">	        <span class="keyword">for</span> each pixel (i,j) <span class="keyword">in</span> new img</span><br><span class="line">	        	x:=j-x0-dx</span><br><span class="line">	        	y:=i-y0-dy</span><br><span class="line">	        	<span class="keyword">if</span> (x,y)<span class="keyword">in</span> the old img</span><br><span class="line">	        		pOUT(i,j) := p(y,x)</span><br><span class="line">	    <span class="keyword">end</span></span><br><span class="line">	<span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p>  当<em><strong>flag</strong></em>的值是1时，我们做的平移操作不改变图像的尺寸。按照公式$$ \left{ \begin{aligned}  x = x’-dx\y = y’-dy \end{aligned} \right. $$ 计算得到 $(x,y)$ 的值，如果 $(x,y)$ 超出了图片的范围，我们把它移动到图片另一侧。</p>
-<p>  当<em><strong>flag</strong></em>的值是0时，我们做的平移操作会改变图像的尺寸。首先获取新的图像的尺寸。其次，根据不同的平移情况，获取有图案的部分位于画布的位置，也就是在画布上的四个边界顶点的坐标。设左上点的坐标是$ (x_0,y_0)$  。则坐标公式为$$ \left{ \begin{aligned}  x = j-x_0-dx\y = i-y_0-dy \end{aligned} \right. $$ 。最后进行对应的赋值。</p>
-</li>
-<li><p><strong>旋转（插值法）</strong> </p>
-</li>
-</ul>
-  <figure class="highlight pascal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Rotation(BYTE *p,double theta)</span><br><span class="line">   GetRolHW(&amp;nw,&amp;nh,theta);</span><br><span class="line">    dX:=(nw-pw)/<span class="number">2</span>,dY:=(nh-ph)/<span class="number">2</span>; </span><br><span class="line">    <span class="keyword">for</span> each pixel (i,j) <span class="keyword">in</span> new img</span><br><span class="line">    	a:=j-dX-cx+cx*cos(theta)-cy*sin(theta);</span><br><span class="line">        b:=i-dY-cy+cy*cos(theta)+cx*sin(theta); </span><br><span class="line">        x:=b*sin(theta)+a*cos(theta);</span><br><span class="line">        y:=b*cos(theta)-a*sin(theta);</span><br><span class="line">        pOUT=Interpolation(p,x,y,_);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<pre><code>  $\begin&#123;cases&#125;a=x&#39;-dx-cx+cx*cos\theta-cy*sin\theta\\b=y&#39;-dy-cy+cy*cos\theta+cx*sin\theta\end&#123;cases&#125;$   $$ \left\&#123; \begin&#123;aligned&#125;  x = b*sin\theta +a*cos\theta \\y = b*cos\theta-a*sin\theta \end&#123;aligned&#125; \right. $$ 
-</code></pre>
-<p>  首先利用函数  <em><strong>GetRolHW</strong></em>  获取新图像的宽度和高度。</p>
-<p>  然后根据上面的公式计算得到每个像素点对应的初始坐标（x，y）。</p>
-<p>  然后用函数 <em><strong>Interpolation</strong></em> 做双线性插值。</p>
-</li>
-<li><p><strong>旋转（补空法）</strong> </p>
-<pre><code>  <figure class="highlight pascal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">void Rotation2(BYTE *p,double theta)<span class="comment">//对图像旋转theta角度</span></span><br><span class="line">	    GetRolHW(&amp;nw,&amp;nh,theta);</span><br><span class="line">    dX=(nw-pw)/<span class="number">2</span>,dY=(nh-ph)/<span class="number">2</span></span><br><span class="line">	    Get the value <span class="keyword">of</span> fMinX、fMaxX、fMinY、fMaxY <span class="comment">//图像的边界</span></span><br><span class="line">	    <span class="keyword">for</span> each pixel (i,j) <span class="keyword">in</span> origin img</span><br><span class="line">	    	get (x,y) rotate (i,j) </span><br><span class="line">	    	Mark (i,j)</span><br><span class="line">	    <span class="keyword">end</span></span><br><span class="line">	    <span class="keyword">for</span> each pixel (i,j) <span class="keyword">in</span> new img</span><br><span class="line">	    	<span class="keyword">if</span> (i,j) <span class="keyword">is</span> <span class="keyword">not</span> marked</span><br><span class="line">	    		<span class="keyword">if</span> (i,j) <span class="keyword">is</span> the last marked pixel <span class="keyword">in</span> the row</span><br><span class="line">	    			(i,j) = the pixel before it which <span class="keyword">is</span> marked </span><br><span class="line">	    		<span class="keyword">if</span> (i,j) <span class="keyword">is</span> the first marked pixel <span class="keyword">in</span> the row</span><br><span class="line">	    			(i,j) = the pixel after it which <span class="keyword">is</span> marked</span><br><span class="line">	    		<span class="keyword">if</span> (i,j) <span class="keyword">is</span> <span class="keyword">in</span> the middle</span><br><span class="line">	    			(i,j) = radio1*pafter + radio2*pbefore</span><br><span class="line">	    	<span class="keyword">end</span></span><br><span class="line">	    <span class="keyword">end</span></span><br><span class="line">	<span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-  首先利用函数  ***GetRolHW***  获取新图像的宽度和高度。
-  
-  遍历原始图像中的各个像素点，然后进行旋转操作得到其对应的新图像的坐标，赋值后标记这些点。
-
-  遍历新图像中的各个像素点，如果其在图像边界之内，并且没有被标记，则用新图像中其周围的像素点的信息来计算像素点的值。
-
-  如果这个像素点之前的所有点均未被标记，则这个像素点的值为其后第一个被标记的点的像素点。
-
-  如果这个像素点之后的所有点均未被标记，则这个像素点的值为其前第一个被标记的点的像素点。
-
-  如果这个像素点前后均有点被标记，则这个像素点的值为其前第一个被标记的点的像素点和其后第一个被标记的点的像素点的加权平均。
-</code></pre>
-<p>  ```</p>
-</li>
-</ul>
-<p>​<br>​    </p>
-<ul>
-<li><p><strong>放缩、对称和投影</strong></p>
-<p>  这三个函数的操作非常简单，利用原理部分的公式，计算得到(x,y)后，进行插值算法。</p>
-<p>  其代码和旋转操作代码十分相似，只有坐标计算公式不同。</p>
-</li>
-<li><p><strong>结果展示</strong></p>
-<p>  平移</p>
-<p>  <img src="/.io//19aw\dip\hw4\Translation0.bmp" alt="Translation0"></p>
-<p>  平移</p>
-<p>  <img src="/.io//19aw\dip\hw4\Translation1.bmp" alt="Translation1"></p>
-<p>  X轴方向对称</p>
-<p>  <img src="/.io//19aw\dip\hw4\MirrorX.bmp" alt="MirrorX"></p>
-<p>  Y轴方向对称</p>
-<p>  <img src="/.io//19aw\dip\hw4\MirrorY.bmp" alt="MirrorY"></p>
-<p>  逆时针旋转60度</p>
-<p>  <img src="/.io//19aw\dip\hw4\Rotation_60_degree.bmp" alt="Rotation_60_degree"></p>
-<p>  放缩</p>
-<p>  <img src="/.io//19aw\dip\hw4\Scale.bmp" alt="Scale"></p>
-<p>  水平投影30度</p>
-<p>  <img src="/.io//19aw\dip\hw4\Shear_X_30_degree.bmp" alt="Shear_X_30_degree"></p>
-<p>  垂直投影30度</p>
-<p>  <img src="/.io//19aw\dip\hw4\Shear_Y_30_degree.bmp" alt="Shear_Y_30_degree"></p>
-</li>
-<li><p><strong>两种不同算法的旋转操作的结果比较</strong></p>
-<p> 对原图和两种算法得到的旋转图像分别作出直方图如下</p>
-<p> <img src="/.io//Users\Ydream\AppData\Roaming\Typora\typora-user-images\image-20191117141147551.png" alt="image-20191117141147551"></p>
-<p> <img src="/.io//Users\Ydream\AppData\Roaming\Typora\typora-user-images\image-20191117141200983.png" alt="image-20191117141200983"></p>
-<p> <img src="/.io//Users\Ydream\AppData\Roaming\Typora\typora-user-images\image-20191117141211497.png" alt="image-20191117141211497"></p>
-<p> 根据直方图我们可以得出结论两种算法得到的旋转图像均保留了图像的样貌。</p>
-</li>
-</ul>
-<h3 id="四、心得体会"><a href="#四、心得体会" class="headerlink" title="四、心得体会"></a>四、心得体会</h3><ul>
-<li><p>对图像变换的理解</p>
-<p>  通过这次实验，我明白了图像的几何变换就是对像素点的坐标进行几何变换，可以借助矩阵运算来更加方便的计算坐标。</p>
-</li>
-<li><p>对插值法的理解<br>  我们插值的目的在于，通过几何变换计算坐标时，并不总是能够得到整数的值。当我们计算得到的值是小数的时候，就需要利用这个点周围的像素点RGB值来求其对应的值。很明显距离越远的的点对它造成的影响应当越少。自然而然可以想到按照距离进行加权平均，这也正是双线性插值的公式</p>
-</li>
-<li><p>写代码过程中的问题</p>
-<ul>
-<li><p>坐标到数组下标的转化</p>
-<p>  在根据坐标计算其在数组中对应的下标时，由于新老图片尺寸等问题，在计算时犯了很多低级错误，导致出现奇怪的bug。思考之后有两个改进方案。其一是改进存储方法，不使用一个数组来存储整张图片信息，而是用一个结构体数组来存储，每个结构体含有R,G,B三个成员。这样在计算坐标的时候，就不会出现问题。第一个方法则是把这个计算关系写成一个函数。</p>
-</li>
-<li><p>最开始写的时候没有对程序有好的架构。导致不同的几何变换中出现了大量重复的操作，代码显得十分冗长。后来进行了一次重构，将重复的操作提炼成函数，这样使代码更加简洁明了。</p>
-</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ydreamw.github.io/2019/11/17/DIP-HW4/" data-id="cksd8joyi0004zcvl5yhoh324" data-title="DIP-HW4" class="article-share-link">分享</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-多译 · 更新日志页面开发(二)：初识redux" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2019/11/16/%E5%A4%9A%E8%AF%91%20%C2%B7%20%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97%E9%A1%B5%E9%9D%A2%E5%BC%80%E5%8F%91(%E4%BA%8C)%EF%BC%9A%E5%88%9D%E8%AF%86redux/" class="article-date">
-  <time class="dt-published" datetime="2019-11-16T04:49:57.000Z" itemprop="datePublished">2019-11-16</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/">Web开发实践</a>►<a class="article-category-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E5%A4%9A%E8%AF%91/">多译</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2019/11/16/%E5%A4%9A%E8%AF%91%20%C2%B7%20%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97%E9%A1%B5%E9%9D%A2%E5%BC%80%E5%8F%91(%E4%BA%8C)%EF%BC%9A%E5%88%9D%E8%AF%86redux/">多译 · 更新日志页面开发(二)：初识Redux</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>最近课程压力不算特别重，多花一些时间去做miniproject。</p>
-<p>前几天看完《React16.4 开发简书项目 从零基础入门到实践》系列中的React基础部分，感悟颇深。React的这种设计理念，让我觉得写web是一件十分优雅的事情。这种数据驱动的理念让曾经一些复杂交互的实现变得十分简单。</p>
-<p>然鹅React虽然很优雅，但是不够强大。</p>
-<p>之前的实践中，我们的应用逻辑很简单，可能只有一个页面和两三个组件。但是尽管如此，在本系列的上一篇文章 <a href>初识 React</a> 中的最后一节中，子组件向父组件传递数据已经是一件比较复杂的事情了。</p>
-<p>设想倘若一个项目中有10个页面和数十个组件，这些组件批次之间必然会互相使用并且修改一些相同的数据。这个时候我们的React对于这些数据的传递就会十分复杂，从而让我们抓狂。</p>
-<p>幸运的是我们有Redux</p>
-<h2 id="1、为什么要有Redux"><a href="#1、为什么要有Redux" class="headerlink" title="1、为什么要有Redux"></a>1、为什么要有Redux</h2><blockquote>
-<p>如果你不知道是否需要Redux， 那就是不需要它</p>
-</blockquote>
-<blockquote>
-<p>只有遇到React实在解决不了的问题，你才需要Redux</p>
-</blockquote>
-<p>这两句话也是对我们上面进行的场景思考的印证。</p>
-<p>反过来想，Redux解决的就是比较复杂的情形 </p>
-<p><a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2016/09/redux_tutorial_part_one_basic_usages.html">阮一峰的博客</a>中有给出具体的例子</p>
-<p>如果UI层非常简单，没有很多互动，Redux 就是不必要的，用了反而增加复杂性。比如：</p>
-<ul>
-<li>用户的使用方式非常简单</li>
-<li>用户之间没有协作</li>
-<li>不需要与服务器大量交互，也没有使用 WebSocket</li>
-<li>视图层（View）只从单一来源获取数据</li>
-</ul>
-<p>而如下情况则需要使用 Redux:多交互、多数据源。</p>
-<ul>
-<li>用户的使用方式复杂</li>
-<li>不同身份的用户有不同的使用方式（比如普通用户和管理员）</li>
-<li>多个用户之间可以协作</li>
-<li>与服务器大量交互，或者使用了WebSocket</li>
-<li>View要从多个来源获取数据</li>
-</ul>
-<p>从组件角度看，如果有以下场景，可以考虑使用 Redux。</p>
-<ul>
-<li>某个组件的状态，需要共享</li>
-<li>某个状态需要在任何地方都可以拿到</li>
-<li>一个组件需要改变全局状态</li>
-<li>一个组件需要改变另一个组件的状态</li>
-</ul>
-<h2 id="2、设计思想"><a href="#2、设计思想" class="headerlink" title="2、设计思想"></a>2、设计思想</h2><p>Redux 的设计思想就是进行状态管理</p>
-<blockquote>
-<ol>
-<li>Web 应用是一个状态机，状态与视图一一对应</li>
-<li>所有的状态都保存在一个对象里面</li>
-</ol>
-</blockquote>
-<h2 id="3、Redux的工作流程"><a href="#3、Redux的工作流程" class="headerlink" title="3、Redux的工作流程"></a>3、Redux的工作流程</h2><p><img src="https://raw.githubusercontent.com/YdreamW/Images/master/Blog/%E5%A4%9A%E8%AF%91-%E5%88%9D%E8%AF%86Redux/Redux.png" alt="Redux Flow"></p>
-<h3 id="Store"><a href="#Store" class="headerlink" title="Store"></a>Store</h3><p>Store保存了所有的state</p>
-<p>整个应用只能有一个Store</p>
-<p>Redux 提供了 <code>createStore</code> 方法，接收另一个函数生成store对象</p>
-<h3 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h3><p>State和View是一一对应的，View可以很容易的获取State，但是View如何操控State呢，这时候就需要Action的定义</p>
-<p>action表示 View 发出的通知，通知 Store来改变State</p>
-<p>action是一个对象，type属性是必须的，一个action的规范</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> action = &#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&#x27;save&#x27;</span>,</span><br><span class="line">  <span class="attr">payload</span>:&#123;<span class="comment">/*some data*/</span>&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>一个好的习惯是 <strong>将type的字符串以同名变量保存</strong>，这样有助于维护与debug，以免因为输入错误而导致action失效。要知道这种输入错误往往是很难找到的。<br>例如</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> ACTION = &#123;</span><br><span class="line">  <span class="attr">SAVE</span>: <span class="string">&#x27;save&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> action = &#123;</span><br><span class="line">  <span class="attr">type</span>: ACTION.SAVE,</span><br><span class="line">  <span class="attr">payload</span>:&#123;<span class="comment">/*some data*/</span>&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>如果Action很多的话可以定义一个函数来生成Action,这个函数就是 <strong>Action Creator</strong></p>
-<p><strong>store.dispatch()</strong> 是View发出Action的唯一方式，它接收一个action并且发送</p>
-<h3 id="Reducer"><a href="#Reducer" class="headerlink" title="Reducer"></a>Reducer</h3><p>Store 收到 Action 以后，必须给出一个新的 State，这样 View 才会发生变化。这种 State 的计算过程就叫做 Reducer。</p>
-<p>Reducer 是一个函数，它接受 Action 和当前 State 作为参数，返回一个新的 State。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> reducer = <span class="function">(<span class="params">state = defaultState, action</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">switch</span> (action.type) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;ADD&#x27;</span>:</span><br><span class="line">      <span class="keyword">return</span> state + action.payload;</span><br><span class="line">    <span class="keyword">default</span>: </span><br><span class="line">      <span class="keyword">return</span> state;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>store.dispatch方法会触发 Reducer 的自动执行。为此，Store 需要知道 Reducer 函数，做法就是在生成 Store 的时候，将 Reducer 传入createStore方法</p>
-<p>这个reducer的命名很容易让我们联想到reduce方法，其实仔细思考一下这是有道理的。reducer本质上也是对 preState 和 data 生成一个nextState</p>
-<h3 id="纯函数"><a href="#纯函数" class="headerlink" title="纯函数"></a>纯函数</h3><p>Reducer 函数最重要的特征是，它是一个纯函数。也就是说，只要是同样的输入，必定得到同样的输出。</p>
-<p>纯函数是函数式编程的概念，必须遵守以下一些约束。</p>
-<ul>
-<li>不得改写参数</li>
-<li>不能调用系统 I/O 的API</li>
-<li>不能调用Date.now()或者Math.random()等不纯的方法，因为每次会得到不一样的结果</li>
-</ul>
-<p>这和我们之前的文章中，不允许直接改变state中的list，而是要拷贝一份list然后返回新的数组给state 是一致的</p>
-<h2 id="4、个人感悟"><a href="#4、个人感悟" class="headerlink" title="4、个人感悟"></a>4、个人感悟</h2><p>经过最近为时一周的React+Redux学习经历，我对于React的理念有了基本的概念。</p>
-<p>React的本质就是对于组件的组织与维护，其组织体现在通过布局等方式将这些组件排列，展现在用户面前。而维护的本质则在于组件的状态管理，不论是组件内部的状态管理还是通过Redux对于状态进行管理。</p>
-<p>我们通过状态管理来操控页面的变化。</p>
-<p>参考资料：  <a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2016/09/redux_tutorial_part_one_basic_usages.html">Redux 入门教程（一）：基本用法</a> 作者： 阮一峰</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ydreamw.github.io/2019/11/16/%E5%A4%9A%E8%AF%91%20%C2%B7%20%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97%E9%A1%B5%E9%9D%A2%E5%BC%80%E5%8F%91(%E4%BA%8C)%EF%BC%9A%E5%88%9D%E8%AF%86redux/" data-id="cksg75jp3000as0vl5mveg7nl" data-title="多译 · 更新日志页面开发(二)：初识Redux" class="article-share-link">分享</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redux/" rel="tag">Redux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web/" rel="tag">Web</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -1587,7 +1394,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/">20ss</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/ADS/">ADS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/DBS/">DBS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86/">安全编程原理</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/INA/">INA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/">Web开发实践</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E5%A4%9A%E8%AF%91/">多译</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E8%AF%BE%E5%90%A6/">课否</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/">个人课程作业</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/19aw/">19aw</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E9%9A%8F%E7%AC%94/">个人随笔</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/">20ss</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/ADS/">ADS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/DBS/">DBS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86/">安全编程原理</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/INA/">INA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/">Web开发实践</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E5%A4%9A%E8%AF%91/">多译</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E8%AF%BE%E5%90%A6/">课否</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/">个人课程作业</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/19aw/">19aw</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E9%9A%8F%E7%AC%94/">个人随笔</a></li></ul>
     </div>
   </div>
 
@@ -1597,7 +1404,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ant-Design/" rel="tag">Ant Design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dva/" rel="tag">Dva</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Egg-js/" rel="tag">Egg.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hooks/" rel="tag">Hooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/" rel="tag">MongoDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redux/" rel="tag">Redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TODO/" rel="tag">TODO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Umi/" rel="tag">Umi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebStorm/" rel="tag">WebStorm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/" rel="tag">database</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ant-Design/" rel="tag">Ant Design</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dva/" rel="tag">Dva</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Egg-js/" rel="tag">Egg.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hooks/" rel="tag">Hooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/" rel="tag">MongoDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redux/" rel="tag">Redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TODO/" rel="tag">TODO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Umi/" rel="tag">Umi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/" rel="tag">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WebStorm/" rel="tag">WebStorm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/" rel="tag">database</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a></li></ul>
     </div>
   </div>
 
@@ -1607,7 +1414,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Ant-Design/" style="font-size: 10px;">Ant Design</a> <a href="/tags/Dva/" style="font-size: 10px;">Dva</a> <a href="/tags/Egg-js/" style="font-size: 10px;">Egg.js</a> <a href="/tags/Hooks/" style="font-size: 10px;">Hooks</a> <a href="/tags/Linux/" style="font-size: 16.67px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/React/" style="font-size: 16.67px;">React</a> <a href="/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/tags/TODO/" style="font-size: 13.33px;">TODO</a> <a href="/tags/TypeScript/" style="font-size: 10px;">TypeScript</a> <a href="/tags/Umi/" style="font-size: 10px;">Umi</a> <a href="/tags/Web/" style="font-size: 16.67px;">Web</a> <a href="/tags/WebStorm/" style="font-size: 10px;">WebStorm</a> <a href="/tags/database/" style="font-size: 20px;">database</a> <a href="/tags/shell/" style="font-size: 13.33px;">shell</a>
+      <a href="/tags/Ant-Design/" style="font-size: 10px;">Ant Design</a> <a href="/tags/Dva/" style="font-size: 10px;">Dva</a> <a href="/tags/Egg-js/" style="font-size: 10px;">Egg.js</a> <a href="/tags/Hooks/" style="font-size: 10px;">Hooks</a> <a href="/tags/JavaScript/" style="font-size: 16.67px;">JavaScript</a> <a href="/tags/Linux/" style="font-size: 16.67px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/React/" style="font-size: 16.67px;">React</a> <a href="/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/tags/TODO/" style="font-size: 13.33px;">TODO</a> <a href="/tags/TypeScript/" style="font-size: 10px;">TypeScript</a> <a href="/tags/Umi/" style="font-size: 10px;">Umi</a> <a href="/tags/Web/" style="font-size: 16.67px;">Web</a> <a href="/tags/WebStorm/" style="font-size: 10px;">WebStorm</a> <a href="/tags/database/" style="font-size: 20px;">database</a> <a href="/tags/shell/" style="font-size: 13.33px;">shell</a>
     </div>
   </div>
 
@@ -1616,7 +1423,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
     </div>
   </div>
 
@@ -1629,14 +1436,6 @@
       <ul>
         
           <li>
-            <a href="/2021/08/19/%E3%80%8A%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BAnodejs%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/">《深入浅出nodejs》阅读笔记</a>
-          </li>
-        
-          <li>
-            <a href="/2021/08/17/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JS%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/">《你不知道的JavaScript（上）》阅读笔记</a>
-          </li>
-        
-          <li>
             <a href="/2021/08/15/hello-world/">Hello World</a>
           </li>
         
@@ -1645,7 +1444,15 @@
           </li>
         
           <li>
-            <a href="/2020/06/21/Linux-Lab3/">Linux-Lab3</a>
+            <a href="/2020/11/19/%E3%80%8A%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BAnodejs%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/">《深入浅出nodejs》阅读笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/13/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E4%B8%89-prototype/">你不知道的JavaScript上阅读笔记三-prototype</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/28/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E4%BA%8C-this%E4%B8%8E%E5%87%BD%E6%95%B0%E6%9F%AF%E9%87%8C%E5%8C%96/">你不知道的JavaScript上阅读笔记二-this与函数柯里化</a>
           </li>
         
       </ul>

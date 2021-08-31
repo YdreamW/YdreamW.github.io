@@ -75,6 +75,76 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-示教器APP开发实践-二" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/08/23/%E7%A4%BA%E6%95%99%E5%99%A8APP%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5-%E4%BA%8C/" class="article-date">
+  <time class="dt-published" datetime="2021-08-23T15:48:38.000Z" itemprop="datePublished">2021-08-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/">Web开发实践</a>►<a class="article-category-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E7%A4%BA%E6%95%99%E5%99%A8APP/">示教器APP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2021/08/23/%E7%A4%BA%E6%95%99%E5%99%A8APP%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5-%E4%BA%8C/">示教器APP· 开发实践(二)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>这周给外包项目添加了坐标系和工具箱的配置页面，主要提供两者的CRUD功能。</p>
+<p>甲方提供了坐标系和工具箱的接口。每一个坐标系或者工具箱都包含了名称和id以及一系列点，其中坐标系包含3个点，坐标系包含6个点。而每个点则具有12个属性。</p>
+<p>甲方要求坐标系和工具箱分开进行配置，并且放在之前的安全界面。</p>
+<p>经过和美工组同学的讨论之后，他们很快设计好了UI，交由我来制作。</p>
+<p>这个业务最大的特点就是表单庞大，需要提交的内容很多。</p>
+<p>但其实很明显，坐标系和工具箱之间有很多逻辑是可以复用的。</p>
+<p>于是我构建了两个组件，一个是<code>PointGroup</code>，一个是 <code>CoordinateControl</code></p>
+<h2 id="PointGroup-组件"><a href="#PointGroup-组件" class="headerlink" title="PointGroup 组件"></a>PointGroup 组件</h2><p>该组件的功能就是提供某个点的配置功能，含有12个input。</p>
+<p>该组件接收2个属性，分别代表点的类型和序号.</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> PointGroupProps &#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="built_in">number</span>;</span><br><span class="line">  index: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中type表示坐标系还是工具箱，index则表示点的序号。</p>
+<p><strong>关于Input的value和placeholder</strong>： </p>
+<p>这一点在之前我从来没有特意关注过，可能是因为之前的输入框主要是输入字符串。这次我们的输入框的内容都是数字。我最开始为每个输入框的value定义了类型是number的state。state的初始值设为0.此时我发现input的placeholder失效了。并且输入的时候没有办法将0删除并重新输入。</p>
+<p>通过查阅资料，我发现input的value最好设定为string类型，然后在onchange事件中进行非法字符的判断。只有这样才不影响用户的输入体验。</p>
+<h2 id="CoordinateControl-组件"><a href="#CoordinateControl-组件" class="headerlink" title="CoordinateControl 组件"></a>CoordinateControl 组件</h2><p>该组件提供了对于坐标系或者工具箱的name和point的管理功能。</p>
+<p>接收一个属性：type，用来区分其是坐标系还是工具箱。</p>
+<p>该组件首先使用一个下拉菜单来呈现当前数据库中所有的坐标系。并且在这个下拉菜单中提供增加坐标系的功能。</p>
+<p>在该功能的实现上，我起初考虑了Antd rn 的Selector组件，但是在阅读文档之后，感觉其定制能力较弱。考虑再三后选择了比较熟悉的 ElementUI 的Tooltip组件。</p>
+<p>组件下方提供了3或者6个按钮，以方便用户选择切换点。</p>
+<h2 id="通过Redux来实现复用"><a href="#通过Redux来实现复用" class="headerlink" title="通过Redux来实现复用"></a>通过Redux来实现复用</h2><p>由于工具箱和坐标系是可以同时编辑的，因此我们要分别对其进行状态的维护与管理。其内部的管理大同小异，我们以坐标系为例。</p>
+<p>坐标系包括了3个点，每个点的状态都要进行保存。</p>
+<p>同时我们UI中有个小功能是，当用户配置完某个点时，controller中对应的按钮要变色。</p>
+<p>因此我们设定了每个点的check flag</p>
+<p>这样，我们用户编辑完一个点之后，需要点击PointGroup的保存按钮来保存该点的状态。此时我们对输入进行合法性检验，检验完毕之后，dispatch到store之中。并且对check flag属性也进行变更。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在实现这个功能之后，我觉得我们在拿到一个业务之后，不要急于下手去干，而是要仔细分析，先在脑海里有一个大体的程序结构，再去把它们实现。</p>
+<p>正是因为有了架构，在这次开发中我才没有犯很大的错误，功能的实现进行的比较顺利。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ydreamw.github.io/2021/08/23/%E7%A4%BA%E6%95%99%E5%99%A8APP%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5-%E4%BA%8C/" data-id="ckt08xky000009gvl895xe8jc" data-title="示教器APP· 开发实践(二)" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web/" rel="tag">Web</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-读博or就业" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2021/08/13/%E8%AF%BB%E5%8D%9Aor%E5%B0%B1%E4%B8%9A/" class="article-date">
@@ -920,94 +990,6 @@
 
 
   
-    <article id="post-安全编程原理-LAB2-GCC" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2020/06/10/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB2-GCC/" class="article-date">
-  <time class="dt-published" datetime="2020-06-09T17:05:57.000Z" itemprop="datePublished">2020-06-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/20ss/">20ss</a>►<a class="article-category-link" href="/categories/20ss/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86/">安全编程原理</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/06/10/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB2-GCC/">安全编程原理-LAB2-GCC</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="Running-a-Hello-World-Program-in-C-using-GCC"><a href="#Running-a-Hello-World-Program-in-C-using-GCC" class="headerlink" title="Running a Hello World Program in C using GCC"></a>Running a Hello World Program in C using GCC</h1><h3 id="一、打开终端"><a href="#一、打开终端" class="headerlink" title="一、打开终端"></a>一、打开终端</h3><p>由于直接使用虚拟机的终端界面过小且不清晰，故本实验在windows下使用ssh协议连接到了虚拟机</p>
-<p>如图</p>
-<p><img src="/2020/06/10/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB2-GCC/image-20200610120551601.png" alt="image-20200610120551601"></p>
-<h3 id="二、创建debug-me-c"><a href="#二、创建debug-me-c" class="headerlink" title="二、创建debug_me.c"></a>二、创建<code>debug_me.c</code></h3><p><img src="/2020/06/10/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB2-GCC/image-20200610121248605.png" alt="image-20200610121248605"></p>
-<p>保存后检查结果</p>
-<p><img src="/2020/06/10/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB2-GCC/image-20200610121317429.png" alt="image-20200610121317429"></p>
-<h3 id="三、编译运行"><a href="#三、编译运行" class="headerlink" title="三、编译运行"></a>三、编译运行</h3><p><img src="/2020/06/10/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB2-GCC/image-20200610122004477.png" alt="image-20200610122004477"></p>
-<p>输入</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gcc -g debug_me.c -o debug_me</span><br><span class="line">gdb debug_me</span><br><span class="line">run &quot;hello, world&quot; &quot;goodbye, world&quot;</span><br></pre></td></tr></table></figure>
-
-<p>出现运行结果：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String &#x27;1&#x27; - &#x27;hello,world&#x27;</span><br><span class="line">String &#x27;2&#x27; - &#x27;goodbye world&#x27;</span><br></pre></td></tr></table></figure>
-
-<p>符合预期结果</p>
-<h3 id="调试尝试"><a href="#调试尝试" class="headerlink" title="调试尝试"></a>调试尝试</h3><ul>
-<li><p>设置断点</p>
-  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">break main</span><br></pre></td></tr></table></figure>
-
-<p>  <img src="/2020/06/10/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB2-GCC/image-20200610162324985.png" alt="image-20200610162324985"></p>
-</li>
-<li><p>输入<code>run debug_me &quot;hello, world&quot; &quot;goodbye, world&quot;</code></p>
-<p>  程序运行到main函数之中</p>
-</li>
-<li><p>连续几次 n(next的缩写)，运行到 print_string 函数时，输入n 程序直接运行出第一次输出的结果 ： String ‘1’ - ‘debug_me’</p>
-</li>
-<li><p>继续调试，程序再次运行到 print_string 函数时，输入 s （step）,我们发现程序进入到了 print_string 函数内部。</p>
-</li>
-<li><p>step 和 next的区别</p>
-<p>  step表示单步进入，当当前语句是一个函数时，程序将进入该函数内部</p>
-<p>  next表示单步运行，当当前语句是一个函数时，程序不会进入到函数内部，而是直接运行出结果。</p>
-</li>
-<li><p>继续调试，输入where，得到结果</p>
-<p>  <code>#0 print_string ......</code> </p>
-<p>  <code>#1 .... in main</code></p>
-</li>
-<li><pre><code class="shell">  (gdb) frame 0
-  (gdb) print i
-  ...
-  (gdb) frame 1
-  (gdb) print i
-</code></pre>
-<p>  得到结果</p>
-<p>  前者  No symbol “i” in current context</p>
-<p>  后者 $$1 = 2$</p>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ydreamw.github.io/2020/06/10/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB2-GCC/" data-id="cksxgypoj000040vl27a10194" data-title="安全编程原理-LAB2-GCC" class="article-share-link">分享</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -1023,7 +1005,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/">20ss</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/ADS/">ADS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/DBS/">DBS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86/">安全编程原理</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/INA/">INA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/">Web开发实践</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E5%A4%9A%E8%AF%91/">多译</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E8%AF%BE%E5%90%A6/">课否</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/">个人课程作业</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/19aw/">19aw</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E9%9A%8F%E7%AC%94/">个人随笔</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/">20ss</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/ADS/">ADS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/DBS/">DBS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/20ss/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86/">安全编程原理</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/INA/">INA</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/">Web开发实践</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E5%A4%9A%E8%AF%91/">多译</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E7%A4%BA%E6%95%99%E5%99%A8APP/">示教器APP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E8%AF%BE%E5%90%A6/">课否</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/">个人课程作业</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/19aw/">19aw</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E9%9A%8F%E7%AC%94/">个人随笔</a></li></ul>
     </div>
   </div>
 
@@ -1043,7 +1025,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Ant-Design/" style="font-size: 10px;">Ant Design</a> <a href="/tags/Dva/" style="font-size: 10px;">Dva</a> <a href="/tags/Egg-js/" style="font-size: 10px;">Egg.js</a> <a href="/tags/Hooks/" style="font-size: 10px;">Hooks</a> <a href="/tags/JavaScript/" style="font-size: 16.67px;">JavaScript</a> <a href="/tags/Linux/" style="font-size: 16.67px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/React/" style="font-size: 16.67px;">React</a> <a href="/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/tags/TODO/" style="font-size: 13.33px;">TODO</a> <a href="/tags/TypeScript/" style="font-size: 10px;">TypeScript</a> <a href="/tags/Umi/" style="font-size: 10px;">Umi</a> <a href="/tags/Web/" style="font-size: 16.67px;">Web</a> <a href="/tags/WebStorm/" style="font-size: 10px;">WebStorm</a> <a href="/tags/database/" style="font-size: 20px;">database</a> <a href="/tags/shell/" style="font-size: 13.33px;">shell</a>
+      <a href="/tags/Ant-Design/" style="font-size: 10px;">Ant Design</a> <a href="/tags/Dva/" style="font-size: 10px;">Dva</a> <a href="/tags/Egg-js/" style="font-size: 10px;">Egg.js</a> <a href="/tags/Hooks/" style="font-size: 10px;">Hooks</a> <a href="/tags/JavaScript/" style="font-size: 16.67px;">JavaScript</a> <a href="/tags/Linux/" style="font-size: 16.67px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/React/" style="font-size: 20px;">React</a> <a href="/tags/Redux/" style="font-size: 10px;">Redux</a> <a href="/tags/TODO/" style="font-size: 13.33px;">TODO</a> <a href="/tags/TypeScript/" style="font-size: 10px;">TypeScript</a> <a href="/tags/Umi/" style="font-size: 10px;">Umi</a> <a href="/tags/Web/" style="font-size: 20px;">Web</a> <a href="/tags/WebStorm/" style="font-size: 10px;">WebStorm</a> <a href="/tags/database/" style="font-size: 20px;">database</a> <a href="/tags/shell/" style="font-size: 13.33px;">shell</a>
     </div>
   </div>
 
@@ -1065,6 +1047,10 @@
       <ul>
         
           <li>
+            <a href="/2021/08/23/%E7%A4%BA%E6%95%99%E5%99%A8APP%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5-%E4%BA%8C/">示教器APP· 开发实践(二)</a>
+          </li>
+        
+          <li>
             <a href="/2021/08/13/%E8%AF%BB%E5%8D%9Aor%E5%B0%B1%E4%B8%9A/">读博还是就业？</a>
           </li>
         
@@ -1078,10 +1064,6 @@
         
           <li>
             <a href="/2020/08/28/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E4%BA%8C-this%E4%B8%8E%E5%87%BD%E6%95%B0%E6%9F%AF%E9%87%8C%E5%8C%96/">你不知道的JavaScript上阅读笔记二-this与函数柯里化</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/19/%E9%97%AD%E5%8C%85%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">闭包到底是什么？</a>
           </li>
         
       </ul>

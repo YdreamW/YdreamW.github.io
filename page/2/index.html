@@ -75,6 +75,100 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-安全编程原理-LAB3-overflow" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/06/17/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB3-overflow/" class="article-date">
+  <time class="dt-published" datetime="2020-06-16T17:08:10.000Z" itemprop="datePublished">2020-06-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/20ss/">20ss</a>►<a class="article-category-link" href="/categories/20ss/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86/">安全编程原理</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/06/17/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB3-overflow/">安全编程原理-LAB3-overflow</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Lab2-3-Buffer-Overflow-Vulnerability"><a href="#Lab2-3-Buffer-Overflow-Vulnerability" class="headerlink" title="Lab2.3 Buffer Overflow Vulnerability"></a>Lab2.3 Buffer Overflow Vulnerability</h1><h3 id="1、Disable-Address-Space-Randomization"><a href="#1、Disable-Address-Space-Randomization" class="headerlink" title="1、Disable Address Space Randomization."></a>1、Disable Address Space Randomization.</h3><p><img src="/2020/06/17/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB3-overflow/image-20200615104901938.png" alt="image-20200615104901938"></p>
+<h3 id="2、Create-Vulnerable-Program"><a href="#2、Create-Vulnerable-Program" class="headerlink" title="2、Create Vulnerable Program"></a>2、Create Vulnerable Program</h3><p>为了方便，使用ftp直接将stack.c上传到虚拟机上。使用cat命令检查文件。</p>
+<p><img src="/2020/06/17/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB3-overflow/image-20200615153013635.png" alt="image-20200615153013635"></p>
+<h3 id="3、-Compile-the-Vulnerable-Program-and-make-it-set-root-uid"><a href="#3、-Compile-the-Vulnerable-Program-and-make-it-set-root-uid" class="headerlink" title="3、 Compile the Vulnerable Program and make it set-root-uid."></a>3、 Compile the Vulnerable Program and make it set-root-uid.</h3><p>由于ubuntu没有root账户，首先创建root账户</p>
+<p>接着按照要求进行编译（使用编译选项允许栈运行并且关闭Stack Guard的安全机制）</p>
+<p>为了方便，我们加上-m32的编译选项，编译出32位的可执行文件。</p>
+<p><img src="/2020/06/17/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB3-overflow/image-20200617153532545.png" alt="image-20200617153532545"></p>
+<h3 id="4、Complete-the-vulnerability-code"><a href="#4、Complete-the-vulnerability-code" class="headerlink" title="4、Complete the vulnerability code."></a>4、Complete the vulnerability code.</h3><p><strong>4-1 使用gdb对stack进行反汇编调试：</strong></p>
+<ul>
+<li><p><code>disass bof</code></p>
+<p>  得到 <code>bof</code> 函数的反汇编结果。根据c语言的堆栈传递参数模式，我们知道 <code>0x8048485</code> 处可以得到函数的返回地址。故在 <code>0x8048485</code> 处设置断点1。调用<code>strcpy</code>函数前面有两个赋值语句，根据c语言函数调用过程可知，第二个赋值是 <code>buffer</code> 的地址。故在 <code>0x08048494</code> 设置断点二。</p>
+</li>
+<li><p>获取返回的地址</p>
+<p>  程序运行到断点1</p>
+<p>  此时 <code>esp</code> 寄存器内的值 = 返回地址 - 4 .   这个4是 <code>push</code> 进来的 <code>ebp</code></p>
+<p>  使用<code>i r</code>指令查看，可以知道结果为 <code>0xffffd4a8 + 4 = 0xffffd4ab</code></p>
+<p>  即返回地址为 <code>0xffffd4ab</code></p>
+</li>
+<li><p>获取 <code>buffer</code> 的地址</p>
+<p>  程序运行到断点2</p>
+<p>  此时 <code>eax</code> 寄存器内的值即为 <code>buffer</code> 的地址</p>
+<p>  可以看到结果为 <code>0xffffd494</code></p>
+</li>
+<li><p>计算偏移地址数目</p>
+<p>  <code>0xffffd4ab</code>  -  <code>0xffffd494</code> = <code>0x18</code>  =24</p>
+<p>  因此我们应当将需要跳转的地址放在 <code>buffer+24</code> 处</p>
+</li>
+</ul>
+<p><img src="/2020/06/17/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB3-overflow/image-20200617153713379.png" alt="image-20200617153713379"></p>
+<p><strong>4-2 完善 <code>exploit.c</code></strong>  </p>
+<ul>
+<li><p>将 <code>shellcode</code> 放到 <code>badfile</code> 文件后 <code>0x100</code> 处。则所需跳转的地址为  <code>&amp;buffer + 0x100</code> </p>
+</li>
+<li><pre><code class="c">  char addr[4] = &#123; 0x94 , 0xd5 , 0xff , 0xff &#125;; //小端规则 实际地址 0xffffd494 + 0x100
+                                                //               0xffffd594
+  memcpy(buffer+24,addr,4);        
+  memcpy(buffer+0x100,code,50);
+</code></pre>
+</li>
+</ul>
+<h3 id="5、Results"><a href="#5、Results" class="headerlink" title="5、Results"></a>5、Results</h3><p>编译运行 exploit  和  stack. 成功进入shell。如下图</p>
+<img src="/2020/06/17/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB3-overflow/image-20200617155230184.png" alt style="zoom:150%;">
+
+
+<h3 id="6、感悟"><a href="#6、感悟" class="headerlink" title="6、感悟"></a>6、感悟</h3><ul>
+<li><p>本次实验最开始使用64位，但是不太清楚64位的汇编语法，故后使用32位完成了实验</p>
+</li>
+<li><p>gcc反汇编的mov语句和vc不太相同，需要注意</p>
+</li>
+<li><p>禁止动态分配内存每次重启都需要设置。</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ydreamw.github.io/2020/06/17/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB3-overflow/" data-id="cksxgypok000140vl1a568r79" data-title="安全编程原理-LAB3-overflow" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-安全编程原理-LAB2-GCC" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2020/06/10/%E5%AE%89%E5%85%A8%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86-LAB2-GCC/" class="article-date">
@@ -854,66 +948,6 @@
 
 
   
-    <article id="post-课否-回复功能开发实践三-对于业务的思考" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2020/02/29/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E4%B8%89-%E5%AF%B9%E4%BA%8E%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%80%9D%E8%80%83/" class="article-date">
-  <time class="dt-published" datetime="2020-02-29T15:17:48.000Z" itemprop="datePublished">2020-02-29</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/">Web开发实践</a>►<a class="article-category-link" href="/categories/Web%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/%E8%AF%BE%E5%90%A6/">课否</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/02/29/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E4%B8%89-%E5%AF%B9%E4%BA%8E%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%80%9D%E8%80%83/">课否 · 回复功能开发实践(三)： 对于业务的思考</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>这个月大部分闲暇时间都在开发《课否》的这个回复功能，今天终于把完整的代码commit并且push掉了。在这期间，我走了一些弯路，同时也有了一些感悟，想要记录下来。</p>
-<p>首先先来聊一聊我们的这个回复功能到底是什么吧。</p>
-<p>课否之前的界面是这样的，对于每一个老师展示其所有的评价。（回复按钮由我新增）</p>
- <img src="/2020/02/29/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E4%B8%89-%E5%AF%B9%E4%BA%8E%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%80%9D%E8%80%83/kefou.jpg" width="300" height="200" alt="课否原界面" align="center">
-
-<p>我们的需求是针对每一条评价进行回复，并且对于回复也可以进行回复。我仿照了浙大云朵朵小程序的设计方式：在每一条评论的下面显示若干条回复，如果回复较多，则提供展开回复的按钮，通过点击按钮来展现左右的回复。按照这个思路，我在数据库中为每一个comment下添加了replies字段。</p>
-<p>这里我同色老师进行过一次交流，针对设计方案的选择进行讨论。色老师提议采用微博的回复方式，在每一条评论下放置几条回复以及一个查看所有回复的按钮，点击按钮之后跳转到一个新的界面，这个界面上方呈现被评论的评价，下方呈现该评价的各种回复。</p>
-<p>色老师的这个建议让我拨开云雾见到了青天。</p>
-<p>在此之前，我对于数据库的设计十分纠结，不知道是该服用comment还是新建一个replies的表。按照色老师的建议，我们自然而然的想到，要新建一个replies的表，每个reply保存其root是哪个comment，而在comment下保存reply的外键数组。</p>
-<p>解决了数据库的结构和界面的设计问题之后，我很快的完成了这些功能。</p>
-<p>这次实践给了我很多反思。</p>
-<p>其一是技术层面的，关于redux和state的选择。在开发时，我最开始把很多数据都一股脑塞进了redux中，后来我才回想起redux的作用是为了不同组件共享数据。于是我才想到应当把一些数据写进组件里，用state就足够了。</p>
-<p>其二则是开发经验上的。在此之前我总觉得前端开发就是学框架、学语言。框架会用了，自然就会开发了。但是经过这次开发我才发现，我们如何完成需求往往才开发人员要做的。或者说，我们应当用怎样的方式去设计、去完成这个需求。</p>
-<p>写到这里，我对于这篇博客很不满意。觉得自己不知所云。觉得自己没有把内心的那种感悟写出来。不知道是不是我的表达能力出了问题。</p>
-<p>也可能是我经验还不够足，对于开发的认知也很浅薄。</p>
-<p>总之，在以后的开发中，我应当先好好地分析需求，分析业务逻辑，再去写代码。而不是写了半天不知道自己在写什么。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ydreamw.github.io/2020/02/29/%E8%AF%BE%E5%90%A6-%E5%9B%9E%E5%A4%8D%E5%8A%9F%E8%83%BD%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E4%B8%89-%E5%AF%B9%E4%BA%8E%E4%B8%9A%E5%8A%A1%E7%9A%84%E6%80%9D%E8%80%83/" data-id="ckslxhyci0000qkvl5mk53jxe" data-title="课否 · 回复功能开发实践(三)： 对于业务的思考" class="article-share-link">分享</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web/" rel="tag">Web</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -958,7 +992,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
     </div>
   </div>
 
@@ -983,11 +1017,11 @@
           </li>
         
           <li>
-            <a href="/2020/09/13/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E4%B8%89-prototype/">你不知道的JavaScript上阅读笔记三-prototype</a>
+            <a href="/2020/10/11/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E4%B8%AD%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0-%E5%BC%82%E6%AD%A5/">《你不知道的JavaScript（中）》阅读笔记 —— 异步</a>
           </li>
         
           <li>
-            <a href="/2020/08/28/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E4%BA%8C-this%E4%B8%8E%E5%87%BD%E6%95%B0%E6%9F%AF%E9%87%8C%E5%8C%96/">你不知道的JavaScript上阅读笔记二-this与函数柯里化</a>
+            <a href="/2020/09/13/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E4%B8%89-prototype/">《你不知道的JavaScript（上）》阅读笔记（三）- prototype</a>
           </li>
         
       </ul>

@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   
   
-  <title>你不知道的JavaScript上阅读笔记三-prototype | Ydream&#39;s Blog</title>
+  <title>《你不知道的JavaScript（上）》阅读笔记（三）- prototype | Ydream&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="这一篇博客不做读书笔记了，结合之前qc做的内训，直接谈谈我对于prototype的理解。直到今天我才真正地理解了js的原型、原型链。 比较嘲讽的是qc的内训时间是2018年的12月15日，现在是2020年，过去了几乎两年的时间。还记得当时内训的时候，我对于C++的面向对象模式都还是一知半解。那个时候听不懂也可以理解。 1、面向对象和面向类借用《你不知道的JavaScript》作者对于面向对象的说法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="你不知道的JavaScript上阅读笔记三-prototype">
+<meta property="og:title" content="《你不知道的JavaScript（上）》阅读笔记（三）- prototype">
 <meta property="og:url" content="https://ydreamw.github.io/2020/09/13/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E4%B8%89-prototype/index.html">
 <meta property="og:site_name" content="Ydream&#39;s Blog">
 <meta property="og:description" content="这一篇博客不做读书笔记了，结合之前qc做的内训，直接谈谈我对于prototype的理解。直到今天我才真正地理解了js的原型、原型链。 比较嘲讽的是qc的内训时间是2018年的12月15日，现在是2020年，过去了几乎两年的时间。还记得当时内训的时候，我对于C++的面向对象模式都还是一知半解。那个时候听不懂也可以理解。 1、面向对象和面向类借用《你不知道的JavaScript》作者对于面向对象的说法">
@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://ydreamw.github.io/2020/09/13/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E4%B8%89-prototype/prototype2.png">
 <meta property="og:image" content="https://ydreamw.github.io/2020/09/13/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E4%B8%89-prototype/QQ%E5%9B%BE%E7%89%8720210830235248.png">
 <meta property="article:published_time" content="2020-09-13T11:05:01.000Z">
-<meta property="article:modified_time" content="2021-08-30T16:02:43.926Z">
+<meta property="article:modified_time" content="2021-09-02T15:29:59.849Z">
 <meta property="article:author" content="Ydream">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://ydreamw.github.io/2020/09/13/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E4%B8%89-prototype/prototype.png">
@@ -87,6 +87,10 @@
   <time class="dt-published" datetime="2020-09-13T11:05:01.000Z" itemprop="datePublished">2020-09-13</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -95,7 +99,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      你不知道的JavaScript上阅读笔记三-prototype
+      《你不知道的JavaScript（上）》阅读笔记（三）- prototype
     </h1>
   
 
@@ -144,7 +148,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ydreamw.github.io/2020/09/13/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E4%B8%89-prototype/" data-id="cksyjbwws0001hgvl79ktdkc0" data-title="你不知道的JavaScript上阅读笔记三-prototype" class="article-share-link">分享</a>
+      <a data-url="https://ydreamw.github.io/2020/09/13/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E4%B8%89-prototype/" data-id="cksyjbwws0001hgvl79ktdkc0" data-title="《你不知道的JavaScript（上）》阅读笔记（三）- prototype" class="article-share-link">分享</a>
       
       
       
@@ -154,11 +158,11 @@
     
 <nav id="article-nav">
   
-    <a href="/2020/11/19/%E3%80%8A%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BAnodejs%E3%80%8B%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/10/11/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E4%B8%AD%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0-%E5%BC%82%E6%AD%A5/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">前一篇</strong>
       <div class="article-nav-title">
         
-          《深入浅出nodejs》阅读笔记
+          《你不知道的JavaScript（中）》阅读笔记 —— 异步
         
       </div>
     </a>
@@ -166,7 +170,7 @@
   
     <a href="/2020/08/28/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E4%BA%8C-this%E4%B8%8E%E5%87%BD%E6%95%B0%E6%9F%AF%E9%87%8C%E5%8C%96/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">后一篇</strong>
-      <div class="article-nav-title">你不知道的JavaScript上阅读笔记二-this与函数柯里化</div>
+      <div class="article-nav-title">《你不知道的JavaScript（上）》阅读笔记（二）—— this与函数柯里化</div>
     </a>
   
 </nav>
@@ -212,7 +216,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">九月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
     </div>
   </div>
 
@@ -237,11 +241,11 @@
           </li>
         
           <li>
-            <a href="/2020/09/13/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E4%B8%89-prototype/">你不知道的JavaScript上阅读笔记三-prototype</a>
+            <a href="/2020/10/11/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E4%B8%AD%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0-%E5%BC%82%E6%AD%A5/">《你不知道的JavaScript（中）》阅读笔记 —— 异步</a>
           </li>
         
           <li>
-            <a href="/2020/08/28/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E4%BA%8C-this%E4%B8%8E%E5%87%BD%E6%95%B0%E6%9F%AF%E9%87%8C%E5%8C%96/">你不知道的JavaScript上阅读笔记二-this与函数柯里化</a>
+            <a href="/2020/09/13/%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E4%B8%8A%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%E4%B8%89-prototype/">《你不知道的JavaScript（上）》阅读笔记（三）- prototype</a>
           </li>
         
       </ul>
